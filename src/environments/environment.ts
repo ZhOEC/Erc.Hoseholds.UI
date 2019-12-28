@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  authUri: 'http://10.67.1.238:8080/auth/realms/master/protocol/openid-connect/auth',
+  clientId: 'erc-households',
+  responseType: 'code',
+  tokenUri: "http://10.67.1.238:8080/auth/realms/master/protocol/openid-connect/token"
 };
 
 /*
