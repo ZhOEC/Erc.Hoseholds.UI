@@ -55,6 +55,7 @@ export class AuthService {
   private async GetToken(code?: string) {
     let body = new HttpParams()
       .set('client_id', environment.clientId)
+      .set('client_secret', environment.client_secret)
       .set('grant_type', code ? 'authorization_code' : 'refresh_token');
     if (code) {
       body = body
