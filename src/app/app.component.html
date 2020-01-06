@@ -36,16 +36,25 @@
   </nz-sider>
   <nz-layout>
     <nz-header>
-      <div class="app-header" nz-row nzType="flex">
-        <span nz-col class="header-trigger" (click)="isCollapsed = !isCollapsed">
+      <div class="app-header">
+        <span class="header-trigger" >
             <i class="trigger"
                nz-icon
                [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+               (click)="isCollapsed = !isCollapsed"
             ></i>
         </span>
+        <span class="header-right" >
+          <nz-select [(ngModel)]="selectedValue" nzAllowClear class="local-office-select" nzPlaceHolder="Виберіть ЦОК">
+            <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
+            <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
+            <nz-option nzValue="disabled" nzLabel="Disabled" nzDisabled></nz-option>
+          </nz-select>
+        </span>
        <span class="header-user">
-        <i nz-icon nzType="user"></i>
+        <nz-avatar nzIcon="user" [nzSize]="30" style="background-color:#1d3d79;"></nz-avatar>
       </span> 
+      
       </div>
     </nz-header>
     <nz-content>

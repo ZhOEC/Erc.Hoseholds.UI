@@ -17,21 +17,34 @@
 }
 
 %header-element {
-  height: 64px;
-  padding-right: 24px;
-  padding-left: 24px;
+  margin-right: 24px;
+  margin-left: 24px;
   font-size: 20px;
   transition: all .3s,padding 0s;
 }
 
+.trigger {
+ cursor: pointer;
+}
+
 .header-trigger {
   @extend %header-element;
-  cursor: pointer;
+}
+
+.local-office-select
+{
+width: 200px;
+}
+
+.header-right {
+  margin-left: auto;
+  padding-right: 24px;
+  padding-left: 24px;
 }
 
 .header-user {
-  @extend %header-element;
-  margin-left: auto;
+  padding-right: 24px;
+  padding-left: 24px;
  }
 
 .trigger:hover {
@@ -77,6 +90,7 @@ nz-header {
   padding: 0;
   background: #fff;
   box-shadow: 0 1px 4px rgba(0,21,41,.08);
+  display: flex;
 }
 
 nz-content {
