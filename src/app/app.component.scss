@@ -9,13 +9,6 @@
   height: 100vh;
 }
 
-.menu-sidebar {
-  position: relative;
-  z-index: 10;
-  min-height: 100vh;
-  box-shadow: 2px 0 6px rgba(0,21,41,.35);
-}
-
 %header-element {
   margin-right: 24px;
   margin-left: 24px;
@@ -31,9 +24,8 @@
   @extend %header-element;
 }
 
-.local-office-select
-{
-width: 200px;
+.local-office-select {
+  width: 200px;
 }
 
 .header-right {
@@ -45,7 +37,12 @@ width: 200px;
 .header-user {
   padding-right: 24px;
   padding-left: 24px;
- }
+}
+
+.header-username {
+  padding-left: 12px;
+  font-size: 16px;
+}
 
 .trigger:hover {
   color: #1890ff;
@@ -57,14 +54,14 @@ width: 200px;
   padding-left: 24px;
   overflow: hidden;
   line-height: 64px;
-  background: #001529;
   transition: all .3s;
+  background: #001529;
 }
 
 .sidebar-logo img {
   display: inline-block;
   height: 32px;
-  width: 32px;
+  width: 54px;
   vertical-align: middle;
 }
 
@@ -101,4 +98,8 @@ nz-content {
   padding: 24px;
   background: #fff;
   height: 100%;
+}
+
+.ant-drawer-wrapper-body {
+  background: #001529;
 }
