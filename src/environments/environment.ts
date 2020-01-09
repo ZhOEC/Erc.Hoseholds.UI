@@ -8,7 +8,8 @@ export const environment = {
   clientId: 'erc-households',
   responseType: 'code',
   tokenUri: "http://10.67.1.238:8080/auth/realms/master/protocol/openid-connect/token",
-  client_secret: '5ee672aa-4daa-4cfc-aafb-30deb8eb42d7'
+  client_secret: '5ee672aa-4daa-4cfc-aafb-30deb8eb42d7',
+  apiServer: 'http://localhost:54535/api/'
 };
 
 /*

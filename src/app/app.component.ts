@@ -17,12 +17,6 @@ export class AppComponent {
   jwtHelper = new JwtHelperService();
   currentUser: Promise<string>;
 
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-    .pipe(
-      map(result => result.matches),
-      shareReplay()
-  );
-
   ngOnInit() {
     this.currentUser = this.getUser();
   }
