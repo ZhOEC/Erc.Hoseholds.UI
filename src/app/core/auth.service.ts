@@ -3,12 +3,14 @@ import { Router, ActivatedRoute, RouterEvent, NavigationEnd } from '@angular/rou
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AccessToken } from './auth.token';
+import { JwtHelperService } from '@auth0/angular-jwt/src/jwthelper.service';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
+  private readonly jwtHelper = new JwtHelperService();
   private readonly tokenItemName: string = 'tokens';
   accessTokens: AccessToken
 
@@ -98,9 +100,19 @@ export class AuthService {
   }
 
   login() {
-    console.log('login');
     if (!this.accessTokens) {
       window.location.href = `${environment.authUri}?redirect_uri=${window.location.href}&client_id=${environment.clientId}&response_type=${environment.responseType}`;
     }
+  }
+
+  async getUsername() {
+    var decodedToken = this.jwtHelper.decodeToken(this.accessTokens.access_token);
+
+    return new Promise<string>((resolve) => resolve(decodedToken.username));
+  }
+
+  logout() {
+    localStorage.clear();
+    window.location.href = `${environment.logoutUri}?redirect_uri=${window.location.href}&client_id=${environment.clientId}&response_type=${environment.responseType}`;
   }
 }

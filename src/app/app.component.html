@@ -38,10 +38,22 @@
             <nz-option nzValue="zr" nzLabel="Зарічанський"></nz-option>
           </nz-select>
         </span>
-       <span class="header-user">
-        <nz-avatar nzIcon="user" [nzSize]="30" style="background-color:#1d3d79;"></nz-avatar>
-        <span class="header-username">{{(currentUser | async)}}</span>
-      </span> 
+      <span class="header-user">
+        <a title="{{(currentUser | async)}}">
+            <nz-avatar
+              nzIcon="user"
+              [nzSize]="32" 
+              nz-popover
+              nzPopoverTitle="Ви залогінені, як: {{(currentUser | async)}}"
+              nzPopoverTrigger="click"
+              [nzPopoverContent]="userMenu"
+              nzPopoverPlacement="bottomRight"
+              style="background-color:#1d3d79;"></nz-avatar>
+        </a>
+        <ng-template #userMenu>
+          <a nz-button (click)="logout()" class="header-user-menu-item">Вихід</a>
+        </ng-template>
+      </span>
       
       </div>
     </nz-header>

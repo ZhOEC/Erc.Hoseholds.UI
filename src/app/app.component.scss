@@ -17,7 +17,7 @@
 }
 
 .trigger {
- cursor: pointer;
+  cursor: pointer;
 }
 
 .header-trigger {
@@ -100,6 +100,7 @@ nz-content {
   height: 100%;
 }
 
-.ant-drawer-wrapper-body {
-  background: #001529;
+.header-user-menu-item {
+  display: block;
+  width: 100%;
 }

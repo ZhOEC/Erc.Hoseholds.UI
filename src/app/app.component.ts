@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { AuthService } from './core/auth.service';
-import { JwtHelperService } from '@auth0/angular-jwt/src/jwthelper.service';
 import { Observable } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map, shareReplay } from 'rxjs/operators';
@@ -11,23 +10,19 @@ import { map, shareReplay } from 'rxjs/operators';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  currentUser: Promise<string>;
+  avatarText: string;
+
   visibilityDrawer = false;
   placementDrawer = 'left';
 
-  jwtHelper = new JwtHelperService();
-  currentUser: Promise<string>;
+  constructor(private authService: AuthService) {}
 
   ngOnInit() {
-    this.currentUser = this.getUser();
+    this.currentUser = this.authService.getUsername();
   }
 
-  constructor(private breakpointObserver: BreakpointObserver, private authService: AuthService) {}
-
-  async getUser() {
-    var tokens = JSON.parse(localStorage.tokens)
-    var access_token = tokens.access_token
-    var decodedToken = this.jwtHelper.decodeToken(access_token);
-    
-    return new Promise<string>((resolve) => resolve(decodedToken.username));
+  logout() {
+    this.authService.logout();
   }
 }
