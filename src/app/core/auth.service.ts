@@ -106,9 +106,13 @@ export class AuthService {
   }
 
   async getUsername() {
-    var decodedToken = this.jwtHelper.decodeToken(this.accessTokens.access_token);
+    if (this.accessTokens) {
+      var decodedToken = this.jwtHelper.decodeToken(this.accessTokens.access_token);
 
-    return new Promise<string>((resolve) => resolve(decodedToken.username));
+      return new Promise<string>((resolve) => resolve(decodedToken.username));
+    }
+    else
+      return new Promise<string>((resolve) => resolve(null));
   }
 
   logout() {
@@ -116,8 +120,7 @@ export class AuthService {
     window.location.href = `${environment.logoutUri}?redirect_uri=${window.location.href}&client_id=${environment.clientId}&response_type=${environment.responseType}`;
   }
 
-  getAccessToken()
-  {
-    return this.accessTokens.access_token;
+  getAccessToken() {
+    return this.accessTokens ? this.accessTokens.access_token : null;
   }
 }
