@@ -12,7 +12,7 @@ import { JwtHelperService } from '@auth0/angular-jwt/src/jwthelper.service';
 export class AuthService {
   private readonly jwtHelper = new JwtHelperService();
   private readonly tokenItemName: string = 'tokens';
-  accessTokens: AccessToken
+  private accessTokens: AccessToken
 
   constructor(private router: Router, activatedRoute: ActivatedRoute, private httpClient: HttpClient) {
     this.accessTokens = JSON.parse(localStorage.getItem(this.tokenItemName))
@@ -114,5 +114,10 @@ export class AuthService {
   logout() {
     localStorage.clear();
     window.location.href = `${environment.logoutUri}?redirect_uri=${window.location.href}&client_id=${environment.clientId}&response_type=${environment.responseType}`;
+  }
+
+  getAccessToken()
+  {
+    return this.accessTokens.access_token;
   }
 }

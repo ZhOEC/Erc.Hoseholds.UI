@@ -10,8 +10,8 @@ import { NgZorroAntdModule, NZ_I18N, uk_UA } from 'ng-zorro-antd';
 import { FormsModule } from '@angular/forms';
 import { registerLocaleData } from '@angular/common';
 import uk from '@angular/common/locales/uk';
-import { TokenInterceptor } from './core/api.interceptor';
-import { ApiService } from './core/api.service';
+import { AuthInterceptor } from './core/auth.interceptor';
+import { BranchOfficeService } from './baranch-office/branch-office.service';
 
 registerLocaleData(uk);
 
@@ -30,9 +30,9 @@ registerLocaleData(uk);
     FormsModule
   ],
   providers: [
-    ApiService,
+    BranchOfficeService,
     { provide: NZ_I18N, useValue: uk_UA },
-    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

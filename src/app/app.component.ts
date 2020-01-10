@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from './core/auth.service';
-import { ApiService } from './core/api.service';
-import { BranchOffice } from './core/api.branchoffice';
+import { BranchOfficeService } from './baranch-office/branch-office.service';
+import { BranchOffice } from './baranch-office/branch-office';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +16,7 @@ export class AppComponent {
   visibilityDrawer = false;
   placementDrawer = 'left';
 
-  constructor(private authService: AuthService, private apiService: ApiService) {}
+  constructor(private authService: AuthService, private apiService: BranchOfficeService) {}
 
   ngOnInit() {
     this.getBranchOffices();
