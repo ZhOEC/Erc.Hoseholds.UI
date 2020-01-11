@@ -15,13 +15,15 @@ import { AuthInterceptor } from './core/auth.interceptor';
 import { BranchOfficeService } from './baranch-office/branch-office.service';
 import { AddRecordpointService } from './add-recordpoint/add-recordpoint.service';
 import { TariffsComponent } from './pages/tariffs/tariffs.component';
+import { TariffRateComponent } from './pages/tariff-rate/tariff-rate.component';
 
 registerLocaleData(uk);
 
 @NgModule({
   declarations: [
     AppComponent,
-    TariffsComponent
+    TariffsComponent,
+    TariffRateComponent
   ],
   imports: [
     BrowserModule,

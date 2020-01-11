@@ -19,26 +19,32 @@
                     </ng-template>
                 </td>
                 <td>
-                    <a title="Редагувати запис"><i nz-icon nzType="edit" nzTheme="outline" *ngIf="editRowId!=data.id; else saveCancelBtnsTpl" (click)="editRowId=data.id" class="edit-icon"></i></a>
+                    <a title="Редагувати запис"><i nz-icon nzType="edit" nzTheme="outline"
+                            *ngIf="editRowId!=data.id; else saveCancelBtnsTpl" (click)="editRowId=data.id"
+                            class="edit-icon"></i></a>
                     <ng-template #saveCancelBtnsTpl>
-                        <a title="Зберегти"><i nz-icon nzType="save" nzTheme="outline" class="edit-icon" (click)="updateTariff(data)"></i></a>
-                        <a title="Скасувати"><i nz-icon nzType="undo" nzTheme="outline" class="edit-icon" (click)="editRowId=-1"></i></a>
+                        <a title="Зберегти"><i nz-icon nzType="save" nzTheme="outline" class="edit-icon"
+                                (click)="updateTariff(data)"></i></a>
+                        <a title="Скасувати"><i nz-icon nzType="undo" nzTheme="outline" class="edit-icon"
+                                (click)="editRowId=-1"></i></a>
                     </ng-template>
                 </td>
             </tr>
             <tr [nzExpand]="data.expand">
                 <td></td>
-                <td colspan="7">
+                <td colspan="2">
                     <nz-table #innerTable [nzData]="data.rates" nzSize="middle" [nzShowPagination]="false">
                         <thead>
                             <tr>
+                                <th><a title="Нове значення"><i nz-icon nzType="plus" nzTheme="outline"></i></a></th>
                                 <th>Дата початку дії</th>
                                 <th>Значення, Грн.</th>
-                                <th>Обсяг споживання, Грн.</th>
+                                <th>Обсяг споживання, кВт⋅год</th>
                                 <th>Значення в оплювальний перріод, Грн.</th>
-                                <th>Обсяг споживання в оплювальний перріод, Квт год.</th>
+                                <th>Обсяг споживання в оплювальний перріод, кВт⋅год</th>
                                 <th>Почтаок опалювального перріоду</th>
                                 <th>Кінець опалювального перріоду</th>
+                                <th></th>
                             </tr>
                         </thead>
     <tbody>
@@ -76,6 +82,7 @@
         </tr>
     </tbody>
 </nz-table>
+
 </td>
 </tr>
 </ng-template>
