@@ -14,12 +14,14 @@ import uk from '@angular/common/locales/uk';
 import { AuthInterceptor } from './core/auth.interceptor';
 import { BranchOfficeService } from './baranch-office/branch-office.service';
 import { AddRecordpointService } from './add-recordpoint/add-recordpoint.service';
+import { TariffsComponent } from './pages/tariffs/tariffs.component';
 
 registerLocaleData(uk);
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TariffsComponent
   ],
   imports: [
     BrowserModule,
