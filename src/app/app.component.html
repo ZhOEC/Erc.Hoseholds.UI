@@ -1,6 +1,5 @@
 <nz-layout class="app-layout">
   <nz-drawer
-    [nzClosable]="false"
     [nzVisible]="visibilityDrawer"
     [nzPlacement]="placementDrawer"
     [nzBodyStyle]="{ 'height': '100%', 'padding': '0px', background: '#001529'}"
@@ -13,13 +12,15 @@
         </a>
       </div>
       <ul nzTheme="dark" nz-menu nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-        <li nz-submenu nzOpen nzTitle="Головна" nzIcon="dashboard">
+        <li nz-menu-item nzSelected routerLink="/welcome" (click)="visibilityDrawer = false">
+          <i nz-icon><svg-icon src="assets/users.svg" [svgStyle]="{ 'width.px':16 }"></svg-icon></i>
+          <span>Споживачі</span>
+        </li>
+        <li nz-submenu nzTitle="Інше" nzIcon="appstore">
           <ul>
-            <li nz-menu-item nzMatchRouter>
-              <a routerLink="/welcome">Споживачі</a>
-            </li>
-            <li nz-menu-item nzMatchRouter>
-              <a>Звіти</a>
+            <li nz-menu-item nzMatchRouter routerLink="/add-recordpoint" (click)="visibilityDrawer = false">
+              <i nz-icon nzType="plus"></i>
+              <span>Нова точку обліку</span>
             </li>
           </ul>
         </li>
@@ -36,23 +37,23 @@
             <nz-option *ngFor="let branchOffice of branchOfficesList" [nzValue]="branchOffice.id" [nzLabel]="branchOffice.name"></nz-option>
           </nz-select>
         </span>
-      <span class="header-user">
-        <a title="{{(currentUser | async)}}">
-            <nz-avatar
-              nzIcon="user"
-              [nzSize]="32" 
-              nz-popover
-              nzPopoverTitle="Ви увійшли як: {{(currentUser | async)}}"
-              nzPopoverTrigger="click"
-              [nzPopoverContent]="userMenu"
-              nzPopoverPlacement="bottomRight"
-              style="background-color:#1d3d79;"></nz-avatar>
-        </a>
-        <ng-template #userMenu>
-          <a nz-button (click)="logout()" class="header-user-menu-item">Вихід</a>
-        </ng-template>
-      </span>
-      
+        <span class="header-user">
+          <a title="{{(currentUser | async)}}">
+              <nz-avatar
+                nzIcon="user"
+                [nzSize]="32"
+                nz-popover
+                nzPopoverTitle="Ви увійшли як: {{(currentUser | async)}}"
+                nzPopoverTrigger="click"
+                [nzPopoverContent]="userMenu"
+                nzPopoverPlacement="bottomRight"
+                style="background-color:#1d3d79;">
+              </nz-avatar>
+          </a>
+          <ng-template #userMenu>
+            <a nz-button (click)="logout()" class="header-user-menu-item">Вихід</a>
+          </ng-template>
+        </span>
       </div>
     </nz-header>
     <nz-content>
