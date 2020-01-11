@@ -23,9 +23,9 @@
             </li>
           </ul>
         </li>
-        <li nz-submenu nzTitle="Параметри" nzIcon="setting">
+        <li nz-submenu nzTitle="Налаштування" nzIcon="setting">
           <ul>
-            <li nz-menu-item>Тарифи</li>
+            <li nz-menu-item><a [routerLink]="['/tariffs']" routerLinkActive="router-link-active"  routerLinkActive="router-link-active" (click)="visibilityDrawer = false">Тарифи</a></li>
           </ul>
         </li>
       </ul>
