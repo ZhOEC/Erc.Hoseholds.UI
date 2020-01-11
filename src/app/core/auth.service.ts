@@ -3,14 +3,16 @@ import { Router, ActivatedRoute, RouterEvent, NavigationEnd } from '@angular/rou
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AccessToken } from './auth.token';
+import { JwtHelperService } from '@auth0/angular-jwt/src/jwthelper.service';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
+  private readonly jwtHelper = new JwtHelperService();
   private readonly tokenItemName: string = 'tokens';
-  accessTokens: AccessToken
+  private accessTokens: AccessToken
 
   constructor(private router: Router, activatedRoute: ActivatedRoute, private httpClient: HttpClient) {
     this.accessTokens = JSON.parse(localStorage.getItem(this.tokenItemName))
@@ -98,9 +100,27 @@ export class AuthService {
   }
 
   login() {
-    console.log('login');
     if (!this.accessTokens) {
       window.location.href = `${environment.authUri}?redirect_uri=${window.location.href}&client_id=${environment.clientId}&response_type=${environment.responseType}`;
     }
+  }
+
+  async getUsername() {
+    if (this.accessTokens) {
+      var decodedToken = this.jwtHelper.decodeToken(this.accessTokens.access_token);
+
+      return new Promise<string>((resolve) => resolve(decodedToken.username));
+    }
+    else
+      return new Promise<string>((resolve) => resolve(null));
+  }
+
+  logout() {
+    localStorage.clear();
+    window.location.href = `${environment.logoutUri}?redirect_uri=${window.location.href}&client_id=${environment.clientId}&response_type=${environment.responseType}`;
+  }
+
+  getAccessToken() {
+    return this.accessTokens ? this.accessTokens.access_token : null;
   }
 }

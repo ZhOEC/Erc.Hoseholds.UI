@@ -1,38 +1,39 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HomeComponent } from './home/home.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
-import { HttpClientModule } from '@angular/common/http';
-import { ToolbarComponent } from './home/toolbar/toolbar.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { IconsProviderModule } from './icons-provider.module';
+import { NgZorroAntdModule, NZ_I18N, uk_UA } from 'ng-zorro-antd';
+import { FormsModule } from '@angular/forms';
+import { registerLocaleData } from '@angular/common';
+import uk from '@angular/common/locales/uk';
+import { AuthInterceptor } from './core/auth.interceptor';
+import { BranchOfficeService } from './baranch-office/branch-office.service';
+
+registerLocaleData(uk);
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HomeComponent,
-    ToolbarComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     LayoutModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
-    HttpClientModule
+    HttpClientModule,
+    IconsProviderModule,
+    NgZorroAntdModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [
+    BranchOfficeService,
+    { provide: NZ_I18N, useValue: uk_UA },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
