@@ -4,9 +4,7 @@ export interface TariffRate {
     value: number;
     consumptionLimit?: number;
     heatingConsumptionLimit?: number;
-    heatingStartDay?: number;
-    heatingStartMonth?: number;
-    heatingEndDay?: number;
-    heatingEndMonth?: number;
+    heatingStartDay?: Date;
+    heatingEndDay?: Date;
     tariffId: number;
 }

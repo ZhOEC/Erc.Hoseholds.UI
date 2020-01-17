@@ -20,7 +20,7 @@ export class AppComponent {
 
   ngOnInit() {
     this.getBranchOffices();
-    this.currentUser = this.authService.getUsername();
+    this.currentUser = this.authService.getUserName();
   }
 
   getBranchOffices() {

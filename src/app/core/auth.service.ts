@@ -105,7 +105,7 @@ export class AuthService {
     }
   }
 
-  async getUsername() {
+  async getUserName() {
     if (this.accessTokens) {
       var decodedToken = this.jwtHelper.decodeToken(this.accessTokens.access_token);
 

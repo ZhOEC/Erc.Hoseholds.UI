@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TariffsComponent } from './tariffs.component';
+import { TariffListComponent } from './tariff-list.component';
 
 describe('TariffsComponent', () => {
-  let component: TariffsComponent;
-  let fixture: ComponentFixture<TariffsComponent>;
+  let component: TariffListComponent;
+  let fixture: ComponentFixture<TariffListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TariffsComponent ]
+      declarations: [ TariffListComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TariffsComponent);
+    fixture = TestBed.createComponent(TariffListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
