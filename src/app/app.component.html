@@ -37,6 +37,9 @@
         <span class="header-trigger">
             <i nz-icon nzType="menu" nzTheme="outline" (click)="visibilityDrawer = true"></i>
         </span>
+        <span>
+          <app-accounting-points-search></app-accounting-points-search>
+        </span>
         <span class="header-right" >
           <nz-select [(ngModel)]="selectedBranchOffice" nzAllowClear class="local-office-select" nzPlaceHolder="Виберіть ЦОК">
             <nz-option *ngFor="let branchOffice of branchOfficesList" [nzValue]="branchOffice.id" [nzLabel]="branchOffice.name"></nz-option>
