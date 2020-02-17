@@ -11,7 +11,7 @@ import { TariffRate } from '../shared/tariff-rate';
 })
 export class TariffListComponent implements OnInit {
 
-  @ViewChild(TariffRateComponent, { static: false })
+  @ViewChild(TariffRateComponent)
   private tariffRateComponent: TariffRateComponent;
 
   tariffs: Tariff[];
