@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { AccountingPointsService } from '../shared/accounting-points.service';
 
 @Component({
   selector: 'app-accounting-points-search',
@@ -8,23 +9,19 @@ import { Component } from '@angular/core';
 })
 export class AccountingPointsSearchComponent {
   selectedValue = null;
-  listOfOption: Array<{ value: string; text: string }> = [];
+  searchResults: Array<{ id: number; text: string }> = [];
   nzFilterOption = () => true;
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private accountingPointsService: AccountingPointsService) { }
 
   search(value: string): void {
-    this.httpClient
-      .jsonp<{ result: Array<[string, string]> }>(`https://suggest.taobao.com/sug?code=utf-8&q=${value}`, 'callback')
-      .subscribe(data => {
-        const listOfOption: Array<{ value: string; text: string }> = [];
-        data.result.forEach(item => {
-          listOfOption.push({
-            value: item[0],
-            text: item[0]
-          });
+    if ((value.length >= 8 && Number(value.substr(0, 2)) && value[2] == '-') || (value.length >= 2 && !Number(value.substr(0, 2) || value.length >= 5))) {
+      this.searchResults = [];
+      this.accountingPointsService.search(value).subscribe((data: Array<any>) => {
+        data.forEach(element => {
+          this.searchResults.push({ id: element.id, text: `${element.name}, ${element.address}, ${element.owner}` })
         });
-        this.listOfOption = listOfOption;
       });
+    }
   }
 }
