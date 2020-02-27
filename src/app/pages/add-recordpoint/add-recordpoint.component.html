@@ -1,0 +1,31 @@
+<div nz-row>
+    <div nz-col nzSpan="8">
+        <span>Назва</span>
+        <input nz-input placeholder="Введіть назву точки обліку" />
+    </div>
+</div>
+<br/>
+<div nz-row>
+    <div nz-col nzSpan="8">
+        <span>Оператор системи розподілу</span>
+        <nz-select [(ngModel)]="selectedDistributionSystemOperator" nzPlaceHolder="Оберіть оператора системи розподілу">
+            <nz-option *ngFor="let distributionSystemOperator of distributionSystemOperatorsList" 
+                [nzValue]="distributionSystemOperator.id" 
+                [nzLabel]="distributionSystemOperator.name">
+            </nz-option>
+        </nz-select>
+    </div>
+</div>
+<br/>
+<div nz-row>
+    <div nz-col nzSpan="8">
+        <span>Тариф* To-DO</span> <!-- To-DO-->
+        <nz-select [(ngModel)]="selectedTariff" nzPlaceHolder="Оберіть тариф">
+            <nz-option *ngFor="let distributionSystemOperator of distributionSystemOperatorsList" 
+                [nzValue]="distributionSystemOperator.id" 
+                [nzLabel]="distributionSystemOperator.name">
+            </nz-option>
+        </nz-select>
+    </div>
+</div>
+

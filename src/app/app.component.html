@@ -1,6 +1,5 @@
 <nz-layout class="app-layout">
   <nz-drawer
-    [nzClosable]="false"
     [nzVisible]="visibilityDrawer"
     [nzPlacement]="placementDrawer"
     [nzBodyStyle]="{ 'height': '100%', 'padding': '0px', background: '#001529'}"
@@ -12,52 +11,57 @@
           <h1>ТОВ "ЖОЕК"</h1>
         </a>
       </div>
-      <ul nzTheme="dark" nz-menu nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-        <li nz-submenu nzOpen nzTitle="Головна" nzIcon="dashboard">
+      <ul nzTheme="dark" nz-menu nzMode="inline" >
+        <li nz-menu-item nzSelected routerLink="/welcome" (click)="visibilityDrawer = false">
+          <i nz-icon><svg-icon src="assets/users.svg" [svgStyle]="{ 'width.px':16 }"></svg-icon></i>
+          <span>Споживачі</span>
+        </li>
+        <li nz-submenu nzTitle="Інше" nzIcon="appstore">
           <ul>
-            <li nz-menu-item nzMatchRouter>
-              <a routerLink="/welcome">Споживачі</a>
-            </li>
-            <li nz-menu-item nzMatchRouter>
-              <a>Звіти</a>
+            <li nz-menu-item nzMatchRouter routerLink="/add-recordpoint" (click)="visibilityDrawer = false">
+              <i nz-icon nzType="plus"></i>
+              <span>Нова точку обліку</span>
             </li>
           </ul>
         </li>
-        <li nz-submenu nzTitle="Параметри" nzIcon="setting">
+        <li nz-submenu nzTitle="Налаштування" nzIcon="setting">
           <ul>
-            <li nz-menu-item>Тарифи</li>
+            <li nz-menu-item><a [routerLink]="['/tariffs']" routerLinkActive="router-link-active"  routerLinkActive="router-link-active" (click)="visibilityDrawer = false">Тарифи</a></li>
           </ul>
         </li>
       </ul>
   </nz-drawer>
   <nz-layout>
     <nz-header>
-      <div class="app-header">
-        <span class="header-trigger">
-            <i nz-icon nzType="menu" nzTheme="outline" (click)="visibilityDrawer = true"></i>
-        </span>
-        <span class="header-right" >
-          <nz-select [(ngModel)]="selectedBranchOffice" nzAllowClear class="local-office-select" nzPlaceHolder="Виберіть ЦОК">
+      <div class="app-header" nz-row >
+        <div class="header-trigger" nz-col nzSpan="1">
+            <i nz-icon nzType="menu" nzTheme="outline" (click)="visibilityDrawer = true" class="trigger"></i>
+        </div>
+        <div nz-col nzSpan="18" >
+          <app-accounting-points-search></app-accounting-points-search>
+        </div>
+        <div nz-col nzSpan="3" >
+          <nz-select [(ngModel)]="selectedBranchOffice.id" nzAllowClear class="local-office-select" nzPlaceHolder="Виберіть ЦОК">
             <nz-option *ngFor="let branchOffice of branchOfficesList" [nzValue]="branchOffice.id" [nzLabel]="branchOffice.name"></nz-option>
           </nz-select>
-        </span>
-      <span class="header-user">
-        <a title="{{(currentUser | async)}}">
-            <nz-avatar
-              nzIcon="user"
-              [nzSize]="32" 
-              nz-popover
-              nzPopoverTitle="Ви увійшли як: {{(currentUser | async)}}"
-              nzPopoverTrigger="click"
-              [nzPopoverContent]="userMenu"
-              nzPopoverPlacement="bottomRight"
-              style="background-color:#1d3d79;"></nz-avatar>
-        </a>
-        <ng-template #userMenu>
-          <a nz-button (click)="logout()" class="header-user-menu-item">Вихід</a>
-        </ng-template>
-      </span>
-      
+        </div>
+        <div nz-col nzSpan="1" style="display: flex; justify-content: flex-end">
+          <a title="{{currentUser}}">
+              <nz-avatar
+                nzIcon="user"
+                [nzSize]="32"
+                nz-popover
+                nzPopoverTitle="Ви увійшли як: {{currentUser}}"
+                nzPopoverTrigger="click"
+                [nzPopoverContent]="userMenu"
+                nzPopoverPlacement="bottomRight"
+                style="background-color:#1d3d79;">
+              </nz-avatar>
+          </a>
+          <ng-template #userMenu>
+            <a nz-button (click)="logout()" class="header-user-menu-item">Вихід</a>
+          </ng-template>
+        </div>
       </div>
     </nz-header>
     <nz-content>

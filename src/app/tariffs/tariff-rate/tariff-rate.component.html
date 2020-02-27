@@ -1,0 +1,47 @@
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="title" (nzOnCancel)="isVisible=false" (nzOnOk)="onSubmit()" nzOkText="Зберегти" [nzOkDisabled]="!tariffRateForm.valid || !tariffRateForm.touched"
+    nzWidth="600">
+    <form nz-form (ngSubmit)="onSubmit()" [formGroup]="tariffRateForm">
+        <nz-form-item>
+            <nz-form-label [nzLg]="15" nzRequired nzFor="startDate">Дата початку дії</nz-form-label>
+            <nz-form-control [nzLg]="9" nzErrorTip="Дата обов'язкове поле!">
+                <nz-date-picker id="startDate" formControlName="startDate" name="startDate" ></nz-date-picker>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzLg]="15" nzRequired nzFor="value">Значення, Грн</nz-form-label>
+            <nz-form-control [nzLg]="9" nzErrorTip="Значення обов'язкове поле!">
+                <input id="value" nz-input name="value" min="0.1" max="100" step="0.0001" formControlName="value"
+                    type="number" style="width: 194px" />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzLg]="15" nzFor="consumptionLimit">Обсяг споживання, кВт⋅год</nz-form-label>
+            <nz-form-control [nzLg]="9" nzErrorTip="The input is not valid consumption limit!">
+                <input nz-input min="1" max="1000000" formControlName="consumptionLimit" name="consumptionLimit" type="number"
+                    style="width: 194px" />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzLg]="15" nzFor="heatingConsumptionLimit">Обсяг споживання в опалювальний період, кВт⋅год
+            </nz-form-label>
+            <nz-form-control [nzLg]="9" nzErrorTip="The input is not valid consumption limit!">
+                <input type="number" nz-input id="heatingConsumptionLimit" formControlName="heatingConsumptionLimit" 
+                    name="heatingConsumptionLimit" style="width: 194px" />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzLg]="15" nzFor="startDate">Почтаок опалювального перріоду
+            </nz-form-label>
+            <nz-form-control [nzLg]="9" nzErrorTip="The input is not valid consumption heatingStart!">
+                <nz-date-picker id="heatingStartDay" formControlName="heatingStartDay" name="heatingStartDay" style="width: 194px" [nzFormat]="'d MMMM'"></nz-date-picker>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzLg]="15" nzFor="startDate">Кінець опалювального перріоду
+            </nz-form-label>
+            <nz-form-control [nzLg]="9" nzErrorTip="The input is not valid consumption heatingEnd!">
+                <nz-date-picker id="heatingEndDay" formControlName="heatingEndDay" name="heatingEndDay" style="width: 194px" [nzFormat]="'d MMMM'"></nz-date-picker>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</nz-modal>
