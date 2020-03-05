@@ -1,4 +1,4 @@
-<div nz-row>
+<!-- <div nz-row>
     <div nz-col nzSpan="8">
         <span>Назва</span>
         <input nz-input placeholder="Введіть назву точки обліку" />
@@ -19,13 +19,78 @@
 <br/>
 <div nz-row>
     <div nz-col nzSpan="8">
-        <span>Тариф* To-DO</span> <!-- To-DO-->
+        <span>Тариф</span>
         <nz-select [(ngModel)]="selectedTariff" nzPlaceHolder="Оберіть тариф">
+            <nz-option *ngFor="let tariff of tariffsList" 
+                [nzValue]="tariff.id" 
+                [nzLabel]="tariff.name">
+            </nz-option>
+        </nz-select>
+    </div>
+</div> -->
+
+<form nz-form [formGroup]="recordpointForm" (ngSubmit)="submitForm()">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="5" nzRequired nzFor="name">Назва</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzErrorTip="Не введено назву">
+        <input id="name" type="text" nz-input formControlName="name" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="5" nzFor="distributionSystemOperator" nzRequired>Оператор системи розподілу</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzErrorTip="Не обрано оператора системи розподілу">
+        <nz-select formControlName="selectedDistributionSystemOperator" nzPlaceHolder="Оберіть оператора системи розподілу">
             <nz-option *ngFor="let distributionSystemOperator of distributionSystemOperatorsList" 
                 [nzValue]="distributionSystemOperator.id" 
                 [nzLabel]="distributionSystemOperator.name">
             </nz-option>
         </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSpan]="5" nzFor="tariffs" nzRequired>Тариф</nz-form-label>
+        <nz-form-control [nzSpan]="12" nzErrorTip="Не обрано тариф">
+            <nz-select formControlName="selectedTariff" nzPlaceHolder="Оберіть тариф">
+                <nz-option *ngFor="let tariff of tariffsList" 
+                    [nzValue]="tariff.id" 
+                    [nzLabel]="tariff.name">
+                </nz-option>
+            </nz-select>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSpan]="5" nzRequired nzFor="name">Місто</nz-form-label>
+        <nz-form-control [nzSpan]="12" nzErrorTip="Не введено назву">
+          <input id="name" type="text" nz-input formControlName="name" />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSpan]="5" nzRequired nzFor="name">Вулиця</nz-form-label>
+        <nz-form-control [nzSpan]="12" nzErrorTip="Не введено назву">
+          <input id="name" type="text" nz-input formControlName="name" />
+        </nz-form-control>
+    </nz-form-item>
+    <div nz-row [nzGutter]="4">
+        <div nz-col [nzSpan]="10">
+            <nz-form-item>
+                <nz-form-label [nzSpan]="12" nzRequired nzFor="name">Будинок</nz-form-label>
+                <nz-form-control [nzSpan]="12" nzErrorTip="Не введено назву">
+                <input id="name" type="text" nz-input formControlName="name" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="10">
+            <nz-form-item>
+                <nz-form-label [nzSpan]="3" nzFor="name">Квартира</nz-form-label>
+                <nz-form-control [nzSpan]="8" nzErrorTip="Не введено назву">
+                    <input id="name" type="text" nz-input formControlName="name" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
     </div>
-</div>
-
+    <nz-form-item>
+      <nz-form-control [nzSpan]="12" [nzOffset]="5">
+        <button nz-button nzType="primary">Зберегти</button>
+      </nz-form-control>
+    </nz-form-item>
+</form>

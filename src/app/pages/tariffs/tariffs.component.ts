@@ -23,7 +23,7 @@ export class TariffsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.tariffsSvc.getList()
+    this.tariffsSvc.getTariffs()
       .subscribe(data => { this.tariffs = data });
   }
 

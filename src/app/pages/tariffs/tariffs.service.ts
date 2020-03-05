@@ -16,7 +16,7 @@ export class TariffsService {
 
   constructor(private http: HttpClient) { }
 
-  getList() {
+  getTariffs() {
     return this.http
       .get<Tariff[]>(this.api.get);
   }

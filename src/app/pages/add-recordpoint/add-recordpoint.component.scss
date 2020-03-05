@@ -2,3 +2,8 @@ nz-select {
     display: block;
     width: 100%;
 }
+
+[nz-form]:not(.ant-form-inline):not(.ant-form-vertical) {
+    margin: 0 auto;
+    max-width: 1700px;
+}
