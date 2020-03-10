@@ -131,5 +131,8 @@
       }
     }
   },
-  "defaultProject": "erc-households-ui"
+  "defaultProject": "erc-households-ui",
+  "cli": {
+    "analytics": false
+  }
 }
