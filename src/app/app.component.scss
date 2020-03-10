@@ -21,8 +21,11 @@
 }
 
 .header-trigger {
-  @extend %header-element;
-  cursor: pointer;
+  margin-right: 24px;
+  margin-left: 24px;
+  font-size: 20px;
+  transition: all .3s,padding 0s;
+  
 }
 
 .local-office-select {
@@ -38,6 +41,7 @@
 .header-user {
   padding-right: 24px;
   padding-left: 24px;
+  margin-right: 1px;
 }
 
 .header-username {
@@ -78,21 +82,21 @@
 
 nz-header {
   padding: 0;
-  width: 100%;
+  //width: 100%;
   z-index: 2;
 }
 
 .app-header {
-  position: relative;
+  //position: relative;
   height: 64px;
-  padding: 0;
+  //padding: 0;
   background: #fff;
   box-shadow: 0 1px 4px rgba(0,21,41,.08);
-  display: flex;
+  // display: flex;
 }
 
 nz-content {
-  margin: 24px;
+  margin: 0px ;
 }
 
 .inner-content {

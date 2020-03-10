@@ -1,39 +1,8 @@
-<!-- <div nz-row>
-    <div nz-col nzSpan="8">
-        <span>Назва</span>
-        <input nz-input placeholder="Введіть назву точки обліку" />
-    </div>
-</div>
-<br/>
-<div nz-row>
-    <div nz-col nzSpan="8">
-        <span>Оператор системи розподілу</span>
-        <nz-select [(ngModel)]="selectedDistributionSystemOperator" nzPlaceHolder="Оберіть оператора системи розподілу">
-            <nz-option *ngFor="let distributionSystemOperator of distributionSystemOperatorsList" 
-                [nzValue]="distributionSystemOperator.id" 
-                [nzLabel]="distributionSystemOperator.name">
-            </nz-option>
-        </nz-select>
-    </div>
-</div>
-<br/>
-<div nz-row>
-    <div nz-col nzSpan="8">
-        <span>Тариф</span>
-        <nz-select [(ngModel)]="selectedTariff" nzPlaceHolder="Оберіть тариф">
-            <nz-option *ngFor="let tariff of tariffsList" 
-                [nzValue]="tariff.id" 
-                [nzLabel]="tariff.name">
-            </nz-option>
-        </nz-select>
-    </div>
-</div> -->
-
-<form nz-form [formGroup]="recordpointForm" (ngSubmit)="submitForm()">
+<form nz-form [formGroup]="accountingPointForm" (ngSubmit)="submitForm()">
     <nz-form-item>
-      <nz-form-label [nzSpan]="5" nzRequired nzFor="name">Назва</nz-form-label>
+      <nz-form-label [nzSpan]="5" nzRequired nzFor="name">Назва (особовий рахунок)</nz-form-label>
       <nz-form-control [nzSpan]="12" nzErrorTip="Не введено назву">
-        <input id="name" type="text" nz-input formControlName="name" />
+        <input id="name" type="text" nz-input formControlName="name" [ngModel]="accountingPoint?.name"/>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
@@ -48,7 +17,7 @@
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-        <nz-form-label [nzSpan]="5" nzFor="tariffs" nzRequired>Тариф</nz-form-label>
+        <nz-form-label [nzSpan]="5" nzFor="tariff" nzRequired>Тариф</nz-form-label>
         <nz-form-control [nzSpan]="12" nzErrorTip="Не обрано тариф">
             <nz-select formControlName="selectedTariff" nzPlaceHolder="Оберіть тариф">
                 <nz-option *ngFor="let tariff of tariffsList" 
@@ -59,31 +28,31 @@
         </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-        <nz-form-label [nzSpan]="5" nzRequired nzFor="name">Місто</nz-form-label>
-        <nz-form-control [nzSpan]="12" nzErrorTip="Не введено назву">
-          <input id="name" type="text" nz-input formControlName="name" />
+        <nz-form-label [nzSpan]="5" nzFor="city" nzRequired>Місто</nz-form-label>
+        <nz-form-control [nzSpan]="12" nzErrorTip="Не введено назву міста">
+          <input id="city" type="text" nz-input/>
         </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-        <nz-form-label [nzSpan]="5" nzRequired nzFor="name">Вулиця</nz-form-label>
+        <nz-form-label [nzSpan]="5" nzRequired nzFor="street">Вулиця</nz-form-label>
         <nz-form-control [nzSpan]="12" nzErrorTip="Не введено назву">
-          <input id="name" type="text" nz-input formControlName="name" />
+          <input id="street" type="text" nz-input/>
         </nz-form-control>
     </nz-form-item>
     <div nz-row [nzGutter]="4">
         <div nz-col [nzSpan]="10">
             <nz-form-item>
-                <nz-form-label [nzSpan]="12" nzRequired nzFor="name">Будинок</nz-form-label>
+                <nz-form-label [nzSpan]="12" nzRequired nzFor="building">Будинок</nz-form-label>
                 <nz-form-control [nzSpan]="12" nzErrorTip="Не введено назву">
-                <input id="name" type="text" nz-input formControlName="name" />
+                <input id="building" type="text" nz-input/>
                 </nz-form-control>
             </nz-form-item>
         </div>
         <div nz-col [nzSpan]="10">
             <nz-form-item>
-                <nz-form-label [nzSpan]="3" nzFor="name">Квартира</nz-form-label>
+                <nz-form-label [nzSpan]="3" nzFor="apartment">Квартира</nz-form-label>
                 <nz-form-control [nzSpan]="8" nzErrorTip="Не введено назву">
-                    <input id="name" type="text" nz-input formControlName="name" />
+                    <input id="apartment" type="text" nz-input/>
                 </nz-form-control>
             </nz-form-item>
         </div>

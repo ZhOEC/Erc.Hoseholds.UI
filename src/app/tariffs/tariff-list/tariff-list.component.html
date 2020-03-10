@@ -1,0 +1,64 @@
+<nz-table [nzShowPagination]="false" #tariffsTable [nzData]="tariffs" nzTitle="Тарифи на електроенергію">
+    <tbody>
+        <ng-template ngFor let-tariff [ngForOf]="tariffsTable.data">
+            <tr>
+                <td nzShowExpand [(nzExpand)]="tariff.expand"></td>
+                <td width="80%">
+                    <ng-container *ngIf="editRowId!=tariff.id; else nameInputTpl">
+                        {{ tariff.name }}
+                    </ng-container>
+                    <ng-template #nameInputTpl>
+                        <input type="text" nz-input [(ngModel)]="tariff.name" />
+                    </ng-template>
+                </td>
+                <td>
+                    <a title="Редагувати запис"><i nz-icon nzType="edit" nzTheme="outline"
+                            *ngIf="editRowId!=tariff.id; else saveCancelBtnsTpl" (click)="editRowId=tariff.id"
+                            class="edit-icon"></i></a>
+                    <ng-template #saveCancelBtnsTpl>
+                        <a title="Зберегти"><i nz-icon nzType="save" nzTheme="outline" class="edit-icon"
+                                (click)="updateTariff(tariff)"></i></a>
+                        <a title="Скасувати"><i nz-icon nzType="undo" nzTheme="outline" class="edit-icon"
+                                (click)="editRowId=-1"></i></a>
+                    </ng-template>
+                </td>
+            </tr>
+            <tr [nzExpand]="tariff.expand">
+                <td></td>
+                <td colspan="2">
+                    <nz-table nzSize="middle" [nzShowPagination]="false" #tariffRatesTable [nzData]="tariff.rates">
+                        <thead>
+                            <tr>
+                                <th>Дата початку дії</th>
+                                <th>Значення</th>
+                                <th>Споживання, кВт⋅год</th>
+                                <th>Споживання в опалювальний період, кВт⋅год</th>
+                                <th>Почтаок опалювального періоду</th>
+                                <th>Кінець опалювального періоду</th>
+                                <th><a (click)="addNewRate(tariff)" title="Нове значення" ><i nz-icon nzType="plus-circle" nzTheme="outline"></i></a></th>
+                            </tr>
+                        </thead>
+    <tbody>
+        <tr *ngFor="let rate of tariff.rates">
+            <td>{{ rate.startDate | date:'mediumDate' }}</td>
+            <td>{{ rate.value | number:'1.2-6'}}</td>
+            <td>{{ rate.consumptionLimit }}</td>
+            <td>{{ rate.heatingConsumptionLimit }}</td>
+            <td>{{ rate.heatingStartDay | date:'d MMMM' }}</td>
+            <td>{{ rate.heatingEndDay | date:'d MMMM'}}</td>
+            <td>
+                <span class="table-operation">
+                    <a title="Редагувати запис" (click)="editRate(rate)"><i nz-icon nzType="edit" nzTheme="outline"></i></a>
+                    <nz-divider nzType="vertical"></nz-divider>
+                    <a class="operation" title="Видалити запис"><i nz-icon nzType="delete" nzTheme="outline" (click)="deleteRate(tariff.id, rate.id)"></i></a>
+                </span>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+</td>
+</tr>
+</ng-template>
+</tbody>
+</nz-table>
+<app-tariff-rate></app-tariff-rate>
