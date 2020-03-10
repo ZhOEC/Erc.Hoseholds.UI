@@ -21,11 +21,15 @@ export class AuthService {
   constructor(private router: Router, activatedRoute: ActivatedRoute, private httpClient: HttpClient) {
     this.accessTokens = JSON.parse(localStorage.getItem(this.tokenItemName))
     if (!this.accessTokens || new Date(this.accessTokens.refresh_expires_at) < new Date()) {
+      console.log('token expired');
+      
       this.router.events.subscribe(
         (event: RouterEvent) => {
           if (event instanceof NavigationEnd) {
             let code = activatedRoute.snapshot.queryParamMap.get('code');
             if (code) {
+              console.log('we have the code');
+              
               this.getAccessTokens(code);
             }
             else {
@@ -62,7 +66,7 @@ export class AuthService {
   }
 
   async getAccessTokenAsync() {
-    if (!this.accessTokens || (new Date(this.accessTokens.expires_at) <= new Date())) {
+    if (!this.accessTokens || (new Date(this.accessTokens.refresh_expires_at) > new Date())) {
       this.accessTokens = await this.obtainAccessTokens().toPromise();
       localStorage.setItem(this.tokenItemName, JSON.stringify(this.accessTokens));
     }
@@ -71,6 +75,8 @@ export class AuthService {
 
   private getAccessTokens(code?: string) {
     this.obtainAccessTokens(code).subscribe(tokens => {
+      console.log('We are obtaining tokens');
+      
       this.accessTokens = tokens;
       localStorage.setItem(this.tokenItemName, JSON.stringify(this.accessTokens));
       if (code) {
