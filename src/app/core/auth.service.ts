@@ -62,7 +62,7 @@ export class AuthService {
   }
 
   async getAccessTokenAsync() {
-    if (!this.accessTokens || (new Date(this.accessTokens.expires_at) <= new Date())) {
+    if (!this.accessTokens || (new Date(this.accessTokens.refresh_expires_at) <= new Date())) {
       this.accessTokens = await this.obtainAccessTokens().toPromise();
       localStorage.setItem(this.tokenItemName, JSON.stringify(this.accessTokens));
     }
