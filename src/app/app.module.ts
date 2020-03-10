@@ -17,6 +17,7 @@ import { AccountingPointsService } from './accounting-points/shared/accounting-p
 import { TariffListComponent } from './tariffs/tariff-list/tariff-list.component';
 import { TariffRateComponent } from './tariffs/tariff-rate/tariff-rate.component';
 import { AccountingPointsModule } from './accounting-points/accounting-points.module';
+import { DistributionSystemOperatorService } from './distribution-system-operator/distribution-system-operator.service';
 
 registerLocaleData(uk);
 
@@ -40,6 +41,7 @@ registerLocaleData(uk);
     AccountingPointsModule
   ],
   providers: [
+    DistributionSystemOperatorService,
     BranchOfficeService,
     AccountingPointsService,
     { provide: NZ_I18N, useValue: uk_UA },
