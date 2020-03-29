@@ -12,14 +12,14 @@
     </nz-form-item>
     <nz-form-item>
       <nz-form-label [nzSpan]="5" nzRequired nzFor="name">Назва (особовий рахунок)</nz-form-label>
-      <nz-form-control [nzSpan]="12" nzErrorTip="Не введено назву">
-        <input id="name" type="text" nz-input formControlName="name" />
+      <nz-form-control [nzSpan]="12" nzErrorTip="Не введено назву (особового рахунку) точки обліку" (ngModel)="accountingPoint.name">
+        <input id="name" type="text" nz-input formControlName="name"/>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
       <nz-form-label [nzSpan]="5" nzFor="distributionSystemOperator" nzRequired>Оператор системи розподілу</nz-form-label>
       <nz-form-control [nzSpan]="12" nzErrorTip="Не обрано оператора системи розподілу">
-        <nz-select nzPlaceHolder="Оберіть оператора системи розподілу" formControlName="distributionSystemOperator" >
+        <nz-select nzPlaceHolder="Оберіть оператора системи розподілу" formControlName="distributionSystemOperator">
           <nz-option *ngFor="let distributionSystemOperator of distributionSystemOperatorsList" 
             [nzValue]="distributionSystemOperator.id" 
             [nzLabel]="distributionSystemOperator.name">
@@ -30,7 +30,7 @@
     <nz-form-item>
         <nz-form-label [nzSpan]="5" nzFor="tariff" nzRequired>Тариф</nz-form-label>
         <nz-form-control [nzSpan]="12" nzErrorTip="Не обрано тариф">
-            <nz-select nzPlaceHolder="Оберіть тариф" formControlName="tariff" >
+            <nz-select nzPlaceHolder="Оберіть тариф" formControlName="tariff">
                 <nz-option *ngFor="let tariff of tariffsList" 
                     [nzValue]="tariff.id" 
                     [nzLabel]="tariff.name">
@@ -55,7 +55,7 @@
             <nz-form-item>
                 <nz-form-label [nzSpan]="12" nzRequired nzFor="buildingNumber">Будинок</nz-form-label>
                 <nz-form-control [nzSpan]="12" nzErrorTip="Не введено номер будинку">
-                <input id="buildingNumber" type="text" nz-input formControlName="buildingNumber"/>
+                  <input id="buildingNumber" type="text" nz-input formControlName="buildingNumber"/>
                 </nz-form-control>
             </nz-form-item>
         </div>
@@ -68,9 +68,107 @@
             </nz-form-item>
         </div>
     </div>
+
+    <nz-card nzTitle="Персона">
+      <div nz-row nzType="flex" nzJustify="center">
+        <div nz-col nzXs="17" nzSm="17" nzMd="14" nzLg="6" nzXl="5" nzXXl="4">
+          <button nz-button type="button" nzType="primary" (click)="personInputsTrigger()">Додати нового споживача</button>
+        </div>
+        <div nz-col nzXs="17" nzSm="17" nzMd="14" nzLg="2" nzXl="2" nzXXl="2">
+          <span> - або - </span>
+        </div>
+        <div nz-col nzXs="17" nzSm="17" nzMd="14" nzLg="12" nzXl="11" nzXXl="11">
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Не обрано споживача">
+              <nz-select
+                nzShowSearch
+                nzServerSearch
+                nzPlaceHolder="Пошук"
+                (nzOnSearch)="search($event)"
+                (ngModelChange)="setDataPerson($event)"
+                formControlName="searchPerson"
+                [nzCustomTemplate]="selectedPersonTemplate"
+              >
+                <nz-option nzCustomContent *ngFor="let person of findPersons" [nzLabel]="person" [nzValue]="person">
+                  <p><b>ПІБ:</b> {{person.lastName}} {{person.firstName}} {{person.patronymic}}</p>
+                  <p><b>Номер паспорта:</b> {{person.idCardNumber}} <b>Іден. номер:</b> {{person.taxCode}}</p>
+                </nz-option>
+              </nz-select>
+              <ng-template #selectedPersonTemplate let-person>
+                <span>{{ person.nzLabel.lastName }} {{ person.nzLabel.firstName }} {{ person.nzLabel.patronymic }} <b>{{ person.nzLabel.taxCode }} : {{ person.nzLabel.idCardNumber }}</b></span>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <nz-divider></nz-divider>
+      
+      <div *ngIf="personInputsShown">
+        <div nz-col>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="7" nzRequired nzFor="taxCode">ІНН</nz-form-label>
+            <nz-form-control [nzSpan]="10" nzErrorTip="Не введено ІНН">
+              <input id="taxCode" type="text" nz-input formControlName="taxCode"/>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="7" nzRequired nzFor="idCardNumber">Номер паспорту</nz-form-label>
+            <nz-form-control [nzSpan]="10" nzErrorTip="Не введено номер паспорту">
+              <input id="idCardNumber" type="text" nz-input formControlName="idCardNumber"/>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col>
+          <div nz-col>
+            <nz-form-item>
+              <nz-form-label [nzSpan]="7" nzRequired nzFor="idCardIssueDate">Дата видачі</nz-form-label>
+              <nz-form-control [nzSpan]="10" nzErrorTip="Не обрано дату видачі">
+                <nz-date-picker [nzFormat]="dateFormat" formControlName="idCardIssueDate"></nz-date-picker>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div nz-col>  
+              <nz-form-item>
+                <nz-form-label [nzSpan]="7" nzRequired nzFor="idCardExpirationDate">Дата закінчення ID картки</nz-form-label>
+                <nz-form-control [nzSpan]="10" nzErrorTip="Не обрано дату закінчення ID картки">
+                  <nz-date-picker [nzFormat]="dateFormat" formControlName="idCardExpirationDate"></nz-date-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+        </div>
+
+        <div nz-col>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="7" nzFor="personName">Ім'я</nz-form-label>
+            <nz-form-control [nzSpan]="10" nzErrorTip="Не введено ім'я">
+              <input id="personName" type="text" nz-input formControlName="personName"/>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="7" nzFor="personSurname">Прізвище</nz-form-label>
+            <nz-form-control [nzSpan]="10" nzErrorTip="Не введено прізвище">
+              <input id="personSurname" type="text" nz-input formControlName="personSurname"/>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="7" nzFor="personPatronymic">По батькові</nz-form-label>
+            <nz-form-control [nzSpan]="10" nzErrorTip="Не введено по батькові">
+              <input id="personPatronymic" type="text" nz-input formControlName="personPatronymic"/>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </nz-card>
+
     <nz-form-item>
       <nz-form-control [nzSpan]="12" [nzOffset]="5">
-        <button nz-button nzType="primary">Зберегти</button>
+        <button type="submit" nz-button nzType="primary">Зберегти</button>
+        <button type="button" nz-button (click)="resetForm()">Очистити</button>
       </nz-form-control>
     </nz-form-item>
 </form>

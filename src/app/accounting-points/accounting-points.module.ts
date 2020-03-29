@@ -8,9 +8,16 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 
 @NgModule({
-  declarations: [AccountingPointNewComponent, AccountingPointsSearchComponent],
+  declarations: [
+    AccountingPointNewComponent, 
+    AccountingPointsSearchComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -19,7 +26,11 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     NzGridModule,
     NzInputModule,
     NzFormModule,
-    NzButtonModule
+    NzButtonModule,
+    NzCardModule,
+    NzDatePickerModule,
+    NzDividerModule,
+    NzDescriptionsModule
   ],
   exports: [AccountingPointNewComponent, AccountingPointsSearchComponent]
 })
