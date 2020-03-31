@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { AccountingPointsService } from '../shared/accounting-points.service';
 
@@ -15,7 +14,7 @@ export class AccountingPointsSearchComponent {
   constructor(private accountingPointsService: AccountingPointsService) { }
 
   search(value: string): void {
-    if ((value.length >= 8 && Number(value.substr(0, 2)) && value[2] == '-') || (value.length >= 2 && !Number(value.substr(0, 2) || value.length >= 5))) {
+    if (value.length >= 8 ) {
       this.searchResults = [];
       this.accountingPointsService.search(value).subscribe((data: Array<any>) => {
         data.forEach(element => {
