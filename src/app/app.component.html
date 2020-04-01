@@ -37,15 +37,11 @@
         <div class="header-trigger" nz-col nzSpan="1">
             <i nz-icon nzType="menu" nzTheme="outline" (click)="visibilityDrawer = true" class="trigger"></i>
         </div>
-        <div nz-col nzSpan="18" >
+        <div nz-col nzSpan="21" >
           <app-accounting-points-search></app-accounting-points-search>
         </div>
-        <div nz-col nzSpan="3" >
-          <nz-select [(ngModel)]="selectedBranchOffice.id" nzAllowClear class="local-office-select" nzPlaceHolder="Виберіть ЦОК">
-            <nz-option *ngFor="let branchOffice of branchOfficesList" [nzValue]="branchOffice.id" [nzLabel]="branchOffice.name"></nz-option>
-          </nz-select>
-        </div>
-        <div nz-col nzSpan="1" style="display: flex; justify-content: flex-end">
+     
+        <div nz-col nzSpan="1">
           <a title="{{currentUser}}">
               <nz-avatar
                 nzIcon="user"
