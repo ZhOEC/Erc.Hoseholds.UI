@@ -7,8 +7,10 @@ import { Tariff } from '../../tariffs/shared/tariff';
 import { BranchOfficeService } from '../../baranch-office/branch-office.service';
 import { BranchOffice } from '../../baranch-office/branch-office';
 import { AccountingPointsService } from '../shared/accounting-points.service'
-import { Person } from '../shared/person';
-import { AccountingPoint } from '../shared/accounting-point';
+import { IPerson } from '../shared/person';
+import { ICity } from '../../address/shared/city';
+import { IStreet } from '../../address/shared/street';
+import { AddressService } from 'src/app/address/address.service';
 
 @Component({
   selector: 'app-accounting-point-new',
@@ -20,19 +22,24 @@ export class AccountingPointNewComponent {
   dateFormat = 'dd.MM.yyyy'
   accountingPointForm: FormGroup
   
-  accountingPoint: AccountingPoint
   branchOfficesList: BranchOffice[]
+  citiesList: ICity[]
+  streetsList: IStreet[]
   distributionSystemOperatorsList: DistributionSystemOperator[]
   tariffsList: Tariff[]
 
-  findPersons: Person[]
-  personInputsShown: boolean
+  findPersons: IPerson[]
+  isPersonInputsShown: boolean = false
+  isLoadingSearch: boolean = false
+  isLoadingCities: boolean = false
+  isLoadingStreets: boolean = false
 
-  constructor(private apiAccountingPoint: AccountingPointsService,
-    private apiDistributionSystemOperator: DistributionSystemOperatorService,
-    private apiBranchOffice: BranchOfficeService,
-    private apiTariffsService: TariffsService,
-    private formBuilder: FormBuilder
+  constructor(private accountingPointService: AccountingPointsService,
+    private distributionSystemOperatorService: DistributionSystemOperatorService,
+    private branchOfficeService: BranchOfficeService,
+    private addressService: AddressService,
+    private tariffService: TariffsService,
+    private formBuilder: FormBuilder,
   ) {}
 
   ngOnInit() {
@@ -41,19 +48,21 @@ export class AccountingPointNewComponent {
       name: [null, [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
       distributionSystemOperator: [null, [Validators.required]],
       tariff: [null, [Validators.required]],
-      city: [null, [Validators.required]],
-      street: [null, [Validators.required]],
+      city: [{value: null, disabled: true}, [Validators.required]],
+      street: [{value: null, disabled: true}, [Validators.required]],
       buildingNumber: [null, [Validators.required]],
       apartmentNumber: [null],
 
       searchPerson: [null, [Validators.required]],
-      taxCode: [{value: null, disabled: true}, [Validators.required]],
-      idCardNumber: [{value: null}, [Validators.required]],
-      idCardIssueDate: [{value: null, disabled: true}, [Validators.required]],
-      idCardExpirationDate: [{value: null, disabled: true}, [Validators.required]],
-      personName: [{value: null, disabled: true}, [Validators.required]],
-      personSurname: [{value: null, disabled: true}, [Validators.required]],
-      personPatronymic: [{value: null, disabled: true}, [Validators.required]],
+      person: this.formBuilder.group({
+        taxCode: [{value: null, disabled: true}, [Validators.required]],
+        idCardNumber: [{value: null}, [Validators.required]],
+        idCardIssueDate: [{value: null, disabled: true}, [Validators.required]],
+        idCardExpirationDate: [{value: null, disabled: true}, [Validators.required]],
+        personName: [{value: null, disabled: true}, [Validators.required]],
+        personSurname: [{value: null, disabled: true}, [Validators.required]],
+        personPatronymic: [{value: null, disabled: true}, [Validators.required]]
+      })
     });
 
     this.getBranchOffices();
@@ -62,7 +71,7 @@ export class AccountingPointNewComponent {
   }
 
   getBranchOffices() {
-    this.apiBranchOffice.getBranchOffices().subscribe(data => {
+    this.branchOfficeService.getBranchOffices().subscribe(data => {
       this.branchOfficesList = data.sort((a, b) => a.name.localeCompare(b.name));
       if (this.branchOfficesList.length == 1) {
         this.accountingPointForm.get('branchOffice').setValue(this.branchOfficesList[0].id);
@@ -70,8 +79,32 @@ export class AccountingPointNewComponent {
     });
   }
 
+  getCities(branchOfficeId: number) {
+    this.accountingPointForm.controls.city.reset()
+    if(branchOfficeId) {
+      this.isLoadingCities = true
+      this.addressService.getCities(branchOfficeId).subscribe(cities => {
+        this.citiesList = cities
+        this.accountingPointForm.controls.city.enable()
+        this.isLoadingCities = false
+      })
+    }
+  }
+
+  getStreets(cityId: number) {
+    this.accountingPointForm.controls.street.reset()
+    if(cityId) {
+      this.isLoadingStreets = true
+      this.addressService.getStreets(cityId).subscribe(streets => {
+        this.streetsList = streets
+        this.accountingPointForm.controls.street.enable()
+        this.isLoadingStreets = false
+      })
+    }
+  }
+
   getDistributionSystemOperators() {
-    this.apiDistributionSystemOperator.getDistributionSystemOperators().subscribe(data => {
+    this.distributionSystemOperatorService.getDistributionSystemOperators().subscribe(data => {
       this.distributionSystemOperatorsList = data.sort((a, b) => a.name.localeCompare(b.name));
       if (this.distributionSystemOperatorsList.length == 1) {
         this.accountingPointForm.get('distributionSystemOperator').setValue(this.distributionSystemOperatorsList[0].id);
@@ -80,82 +113,90 @@ export class AccountingPointNewComponent {
   }
 
   getTariffs() {
-    this.apiTariffsService.getTariffList().subscribe(tariffs => {
+    this.tariffService.getTariffList().subscribe(tariffs => {
       this.tariffsList = tariffs
     });
   }
 
   search(searchString: string): void {
     if(searchString.length > 6) {
-      this.apiAccountingPoint.search(searchString).subscribe(person => {
+      this.isLoadingSearch = true
+      this.accountingPointService.search(searchString).subscribe(person => {
         this.findPersons = person
+        this.isLoadingSearch = false
       })
     }
   }
 
-  setDataPerson(selectedPerson: Person) {
-    this.personInputsShown = true
+  setDataPerson(selectedPerson: IPerson) {
+    this.isPersonInputsShown = true
     if(selectedPerson != null) {
-      this.accountingPointForm.get('taxCode').setValue(selectedPerson.taxCode)
-      this.accountingPointForm.get('idCardNumber').setValue(selectedPerson.idCardNumber)
-      this.accountingPointForm.get('idCardIssueDate').setValue(selectedPerson.idCardExpDate) // Need change to right value in prod
-      this.accountingPointForm.get('idCardExpirationDate').setValue(selectedPerson.idCardExpDate)
-      this.accountingPointForm.get('personName').setValue(selectedPerson.firstName)
-      this.accountingPointForm.get('personSurname').setValue(selectedPerson.lastName)
-      this.accountingPointForm.get('personPatronymic').setValue(selectedPerson.patronymic)
+      this.accountingPointForm.controls.person.patchValue({
+        taxCode: selectedPerson.taxCode,
+        idCardNumber: selectedPerson.idCardNumber,
+        idCardIssueDate: selectedPerson.idCardExpDate, // Need change to right value in prod
+        idCardExpirationDate: selectedPerson.idCardExpDate,
+        personName: selectedPerson.firstName,
+        personSurname: selectedPerson.lastName,
+        personPatronymic: selectedPerson.patronymic
+      })
 
-      this.accountingPointForm.get('taxCode').disable()
-      this.accountingPointForm.get('idCardIssueDate').disable()
-      this.accountingPointForm.get('idCardExpirationDate').disable()
-      this.accountingPointForm.get('personName').disable()
-      this.accountingPointForm.get('personSurname').disable()
-      this.accountingPointForm.get('personPatronymic').disable()
+      this.accountingPointForm.controls.person.get('taxCode').disable()
+      this.accountingPointForm.controls.person.get('idCardIssueDate').disable()
+      this.accountingPointForm.controls.person.get('idCardExpirationDate').disable()
+      this.accountingPointForm.controls.person.get('personName').disable()
+      this.accountingPointForm.controls.person.get('personSurname').disable()
+      this.accountingPointForm.controls.person.get('personPatronymic').disable()
     }
   }
 
   personInputsTrigger() {
-    this.personInputsShown = true
+    this.isPersonInputsShown = true
 
-    this.accountingPointForm.enable()
-    this.accountingPointForm.get('searchPerson').reset()
-    this.accountingPointForm.get('taxCode').reset()
-    this.accountingPointForm.get('idCardNumber').reset()
-    this.accountingPointForm.get('idCardIssueDate').reset()
-    this.accountingPointForm.get('idCardExpirationDate').reset()
-    this.accountingPointForm.get('personName').reset()
-    this.accountingPointForm.get('personSurname').reset()
-    this.accountingPointForm.get('personPatronymic').reset()
+    this.accountingPointForm.controls.person.get('taxCode').enable()
+    this.accountingPointForm.controls.person.get('idCardIssueDate').enable()
+    this.accountingPointForm.controls.person.get('idCardExpirationDate').enable()
+    this.accountingPointForm.controls.person.get('personName').enable()
+    this.accountingPointForm.controls.person.get('personSurname').enable()
+    this.accountingPointForm.controls.person.get('personPatronymic').enable()
+
+    this.accountingPointForm.controls.searchPerson.reset()
+    this.accountingPointForm.controls.person.get('taxCode').reset()
+    this.accountingPointForm.controls.person.get('idCardNumber').reset()
+    this.accountingPointForm.controls.person.get('idCardIssueDate').reset()
+    this.accountingPointForm.controls.person.get('idCardExpirationDate').reset()
+    this.accountingPointForm.controls.person.get('personName').reset()
+    this.accountingPointForm.controls.person.get('personSurname').reset()
+    this.accountingPointForm.controls.person.get('personPatronymic').reset()
   }
 
   submitForm() {
     for (const i in this.accountingPointForm.controls) {
-      if(this.personInputsShown) {
-        this.accountingPointForm.get('searchPerson').clearValidators()
-      }
       this.accountingPointForm.controls[i].markAsDirty()
       this.accountingPointForm.controls[i].updateValueAndValidity()
     }
+    
+    if(this.isPersonInputsShown) {
+      this.accountingPointForm.get('searchPerson').setErrors(null)
 
-    console.log(this.accountingPoint)
+      for (const p in this.accountingPointForm.controls.person['controls']) {
+        this.accountingPointForm.controls.person.get(p).markAsDirty()
+        this.accountingPointForm.controls.person.get(p).updateValueAndValidity()
+      }
+    }
+
     if(this.accountingPointForm.valid) {
-      /* let controls = this.accountingPointForm.controls
-      
-      accountingPoint.branchOfficeId = controls.branchOfficeId.value
-      accountingPoint.name = controls.name.value
-      accountingPoint.distributionSystemOperatorId = controls.distributionSystemOperatorId.value
-      accountingPoint.tarrifId = controls.tarrifId.value
-      accountingPoint.city = controls.city.value
-      accountingPoint.street = controls.street.value
-      accountingPoint.building = controls.building.value
-      accountingPoint.appartament = controls.appartament.value
-      accountingPoint.person.firstName = controls. */
-
-      this.apiAccountingPoint.add(this.accountingPoint)
+      this.accountingPointService.add(this.accountingPointForm.getRawValue()).subscribe(res => {
+        console.log(res)
+      })
     }
   }
 
   resetForm() {
     this.accountingPointForm.reset();
-    this.personInputsShown = false
+    this.isPersonInputsShown = false
+
+    this.accountingPointForm.controls.city.disable()
+    this.accountingPointForm.controls.street.disable()
   }
 }

@@ -1,6 +1,6 @@
-import { Person } from './person';
+import { IPerson } from './person';
 
-export interface AccountingPoint {
+export interface IAccountingPoint {
     branchOfficeId: number
     name: string
     distributionSystemOperatorId: number
@@ -9,5 +9,5 @@ export interface AccountingPoint {
     street: string
     building: string
     appartament: string
-    person: Person
+    person: IPerson
 }

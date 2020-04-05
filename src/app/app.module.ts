@@ -18,6 +18,7 @@ import { TariffListComponent } from './tariffs/tariff-list/tariff-list.component
 import { TariffRateComponent } from './tariffs/tariff-rate/tariff-rate.component';
 import { AccountingPointsModule } from './accounting-points/accounting-points.module';
 import { DistributionSystemOperatorService } from './distribution-system-operator/distribution-system-operator.service';
+import { AddressService } from './address/address.service';
 
 registerLocaleData(uk);
 
@@ -44,6 +45,7 @@ registerLocaleData(uk);
     DistributionSystemOperatorService,
     BranchOfficeService,
     AccountingPointsService,
+    AddressService,
     { provide: NZ_I18N, useValue: uk_UA },
     { provide: LOCALE_ID, useValue: 'uk-UA' },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
