@@ -102,7 +102,7 @@
                 nzShowSearch
                 nzServerSearch
                 nzPlaceHolder="Пошук"
-                (nzOnSearch)="search($event)"
+                (nzOnSearch)="searchPerson($event)"
                 (ngModelChange)="setDataPerson($event)"
                 formControlName="searchPerson"
                 [nzCustomTemplate]="selectedPersonTemplate"

@@ -118,11 +118,11 @@ export class AccountingPointNewComponent {
     });
   }
 
-  search(searchString: string): void {
+  searchPerson(searchString: string): void {
     if(searchString.length > 6) {
       this.isLoadingSearch = true
-      this.accountingPointService.search(searchString).subscribe(person => {
-        this.findPersons = person
+      this.accountingPointService.search(searchString).subscribe((persons:Array<IPerson>) => {
+        this.findPersons = persons
         this.isLoadingSearch = false
       })
     }

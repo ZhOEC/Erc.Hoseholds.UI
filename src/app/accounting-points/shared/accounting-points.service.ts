@@ -9,17 +9,23 @@ import { IAccountingPoint } from './accounting-point';
 })
 export class AccountingPointsService {
   private apiUriPeople = `${environment.apiServer}people`;
-  private apiUriAccountingPoint = `${environment.apiServer}accountingpoints`;
+  private apiUri = `${environment.apiServer}accountingpoints`;
 
   constructor(private http: HttpClient) { }
 
-  search(searchString: string) {
+  searchPerson(searchString: string) {
     let queryParams = new HttpParams();
     queryParams = queryParams.append('searchString', searchString)
     return this.http.get<IPerson[]>(this.apiUriPeople, { params: queryParams })
   }
 
+  search(searchString: string) {
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append('q', searchString);
+    return this.http.get(this.apiUri+'/_search', { params: queryParams })
+  }
+
   add(accountingPoint: IAccountingPoint) {
-    return this.http.post<IAccountingPoint>(this.apiUriAccountingPoint, accountingPoint)
+    return this.http.post<IAccountingPoint>(this.apiUri, accountingPoint)
   }
 }
