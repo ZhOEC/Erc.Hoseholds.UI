@@ -13,10 +13,12 @@ import { registerLocaleData } from '@angular/common';
 import uk from '@angular/common/locales/uk';
 import { AuthInterceptor } from './core/auth.interceptor';
 import { BranchOfficeService } from './baranch-office/branch-office.service';
-import { AddRecordpointService } from './add-recordpoint/add-recordpoint.service';
+import { AccountingPointsService } from './accounting-points/shared/accounting-points.service';
 import { TariffListComponent } from './tariffs/tariff-list/tariff-list.component';
 import { TariffRateComponent } from './tariffs/tariff-rate/tariff-rate.component';
 import { AccountingPointsModule } from './accounting-points/accounting-points.module';
+import { DistributionSystemOperatorService } from './distribution-system-operator/distribution-system-operator.service';
+import { AddressService } from './address/address.service';
 
 registerLocaleData(uk);
 
@@ -40,8 +42,10 @@ registerLocaleData(uk);
     AccountingPointsModule
   ],
   providers: [
+    DistributionSystemOperatorService,
     BranchOfficeService,
-    AddRecordpointService,
+    AccountingPointsService,
+    AddressService,
     { provide: NZ_I18N, useValue: uk_UA },
     { provide: LOCALE_ID, useValue: 'uk-UA' },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

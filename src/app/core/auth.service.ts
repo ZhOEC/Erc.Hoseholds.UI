@@ -21,14 +21,14 @@ export class AuthService {
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private httpClient: HttpClient) {
     let code = this.activatedRoute.snapshot.queryParamMap.get('code');
     console.log('start', code);
-    
+
     this.accessTokens = JSON.parse(localStorage.getItem(this.tokenItemName))
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
       let code = this.activatedRoute.snapshot.queryParamMap.get('code');
       console.log('NavigationEnd', code);
-      
+
       if (!this.accessTokens || new Date(this.accessTokens.refresh_expires_at) < new Date()) {
         let code = this.activatedRoute.snapshot.queryParamMap.get('code');
         if (code) {
@@ -64,13 +64,14 @@ export class AuthService {
   }
 
   async getAccessTokenAsync() {
-    if (this.accessTokens && new Date(this.accessTokens.refresh_expires_at) < new Date())
-    {
+    if (this.accessTokens && new Date(this.accessTokens.refresh_expires_at) < new Date()) {
       localStorage.removeItem(this.tokenItemName);
       this.redirectToLoginPage();
     }
     else {
-      await this.retriveAccessTokens().toPromise();
+      if (new Date(this.accessTokens.expires_at) < new Date()) {
+        await this.retriveAccessTokens().toPromise();
+      }
     }
     return this.accessTokens.access_token;
   }
@@ -79,7 +80,8 @@ export class AuthService {
     if (this.isObtainingTokenInProgress || (!code && !this.accessTokens)) {
       return this.refreshTokenSubject.pipe(
         filter(result => result !== null),
-        take(1), mapTo(true));
+        take(1),
+        mapTo(true));
     }
     this.isObtainingTokenInProgress = true;
     this.refreshTokenSubject.next(null);

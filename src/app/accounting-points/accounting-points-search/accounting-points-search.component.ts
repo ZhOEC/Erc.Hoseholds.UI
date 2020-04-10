@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AccountingPointsService } from '../shared/accounting-points.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-accounting-points-search',
@@ -11,16 +12,21 @@ export class AccountingPointsSearchComponent {
   searchResults: Array<{ id: number; text: string }> = [];
   nzFilterOption = () => true;
 
-  constructor(private accountingPointsService: AccountingPointsService) { }
+  constructor(private accountingPointsService: AccountingPointsService, private router: Router) { }
 
   search(value: string): void {
-    if (value.length >= 8 ) {
+    if (value.length >= 8) {
       this.searchResults = [];
-      this.accountingPointsService.search(value).subscribe((data: Array<any>) => {
+      this.accountingPointsService.search(value).subscribe((data: any[]) => {
         data.forEach(element => {
-          this.searchResults.push({ id: element.id, text: `${element.name}, ${element.address}, ${element.owner}` })
+          this.searchResults.push({ id: element.id, text: `${element.name}, ${element.owner} ${element.streetAddress}, ${element.cityName}` })
         });
       });
     }
   }
+
+  select() {
+    this.router.navigate(['accounting-point', this.selectedValue]);
+  }
+
 }

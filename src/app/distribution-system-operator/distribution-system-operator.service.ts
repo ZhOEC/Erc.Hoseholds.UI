@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { DistributionSystemOperator } from './distribution-system-operator';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
   
 @Injectable()
-export class AddRecordpointService {  
+export class DistributionSystemOperatorService {  
 
     constructor(private http: HttpClient) {}
   

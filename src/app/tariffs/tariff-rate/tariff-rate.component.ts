@@ -77,7 +77,7 @@ export class TariffRateComponent implements OnInit {
     }
     else {
       this.tariffsService.updateTariffRate(this.tariff.id, this.tariffRateForm.value).subscribe(() => {
-        const i = this.tariff.rates.findIndex(t => t.id == this.tariffRate.id);
+        const i = this.tariff.rates.findIndex(t => t.id === this.tariffRate.id);
         this.tariff.rates[i] = this.tariffRateForm.value;
         this.isVisible = false;
       });

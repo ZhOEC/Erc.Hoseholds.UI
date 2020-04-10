@@ -8,9 +8,7 @@ import { BranchOffice } from './baranch-office/branch-office';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  
   currentUser: string;
-  branchOfficesList: BranchOffice[];
 
   visibilityDrawer = false;
   placementDrawer = 'left';
