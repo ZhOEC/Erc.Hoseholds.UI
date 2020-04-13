@@ -15,11 +15,11 @@ export class AccountingPointsSearchComponent {
   constructor(private accountingPointsService: AccountingPointsService, private router: Router) { }
 
   search(value: string): void {
-    if (value.length >= 8) {
+    if (value.length >= 8 || value.endsWith(' ')) {
       this.searchResults = [];
       this.accountingPointsService.search(value).subscribe((data: any[]) => {
         data.forEach(element => {
-          this.searchResults.push({ id: element.id, text: `${element.name}, ${element.owner} ${element.streetAddress}, ${element.cityName}` })
+          this.searchResults.push({ id: element.id, text: `${element.name}, ${element.owner}, ${element.streetAddress}, ${element.cityName}` })
         });
       });
     }
