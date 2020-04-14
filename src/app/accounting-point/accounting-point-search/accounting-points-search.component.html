@@ -1,0 +1,15 @@
+
+    <nz-select
+      nzShowSearch
+      nzServerSearch
+      nzPlaceHolder="Введіть текст для пошуку абонента"
+      [(ngModel)]="selectedValue"
+      [nzShowArrow]="false"
+      [nzFilterOption]="nzFilterOption"
+      (nzOnSearch)="search($event)"
+      (ngModelChange)="select()"
+    >
+      <nz-option *ngFor="let o of searchResults" [nzLabel]="o.text" [nzValue]="o.id"> </nz-option>
+    </nz-select>
+    <div>
+   </div>
