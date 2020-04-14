@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { TariffRate } from '../shared/tariff-rate';
-import { Tariff } from 'src/app/tariffs/shared/tariff';
+import { TariffRate } from '../../shared/models/tariff-rate';
+import { Tariff } from 'src/app/shared/models/tariff';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { TariffsService } from '../shared/tariffs.service';
+import { TariffsService } from '../../shared/services/tariffs.service';
 
 @Component({
   selector: 'app-tariff-rate',

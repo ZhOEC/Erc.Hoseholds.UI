@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from './core/auth.service';
-import { BranchOffice } from './baranch-office/branch-office';
+import { AuthService } from './core/auth/auth.service';
 
 @Component({
   selector: 'app-root',
