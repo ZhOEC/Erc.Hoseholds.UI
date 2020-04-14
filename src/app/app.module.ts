@@ -11,20 +11,20 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { registerLocaleData } from '@angular/common';
 import uk from '@angular/common/locales/uk';
-import { AuthInterceptor } from './core/auth.interceptor';
-import { BranchOfficeService } from './baranch-office/branch-office.service';
-import { AddRecordpointService } from './add-recordpoint/add-recordpoint.service';
-import { TariffListComponent } from './tariffs/tariff-list/tariff-list.component';
-import { TariffRateComponent } from './tariffs/tariff-rate/tariff-rate.component';
-import { AccountingPointsModule } from './accounting-points/accounting-points.module';
+import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+import { BranchOfficeService } from './shared/services/branch-office.service';
+import { AccountingPointsService } from './shared/services/accounting-points.service';
+import { AccountingPointModule } from './accounting-point/accounting-point.module';
+import { TariffModule } from './tariffs/tariff.module';
+import { DistributionSystemOperatorService } from './shared/services/distribution-system-operator.service';
+import { AddressService } from './shared/services/address.service';
+import { PersonService } from './shared/services/person.service';
 
 registerLocaleData(uk);
 
 @NgModule({
   declarations: [
-    AppComponent,
-    TariffListComponent,
-    TariffRateComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -37,11 +37,15 @@ registerLocaleData(uk);
     ReactiveFormsModule,
     FormsModule,
     AngularSvgIconModule,
-    AccountingPointsModule
+    AccountingPointModule,
+    TariffModule
   ],
   providers: [
+    DistributionSystemOperatorService,
     BranchOfficeService,
-    AddRecordpointService,
+    AccountingPointsService,
+    AddressService,
+    PersonService,
     { provide: NZ_I18N, useValue: uk_UA },
     { provide: LOCALE_ID, useValue: 'uk-UA' },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

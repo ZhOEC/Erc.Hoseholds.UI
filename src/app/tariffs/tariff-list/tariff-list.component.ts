@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { TariffsService } from '../shared/tariffs.service';
-import { Tariff } from '../shared/tariff';
+import { TariffsService } from '../../shared/services/tariffs.service';
+import { Tariff } from '../../shared/models/tariff';
 import { TariffRateComponent } from 'src/app/tariffs/tariff-rate/tariff-rate.component';
-import { TariffRate } from '../shared/tariff-rate';
+import { TariffRate } from '../../shared/models/tariff-rate';
 
 @Component({
   selector: 'app-tariffs',
@@ -11,7 +11,7 @@ import { TariffRate } from '../shared/tariff-rate';
 })
 export class TariffListComponent implements OnInit {
 
-  @ViewChild(TariffRateComponent)
+  @ViewChild(TariffRateComponent, {static: false})
   private tariffRateComponent: TariffRateComponent;
 
   tariffs: Tariff[];

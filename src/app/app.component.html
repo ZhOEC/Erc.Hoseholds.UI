@@ -12,13 +12,13 @@
         </a>
       </div>
       <ul nzTheme="dark" nz-menu nzMode="inline" >
-        <li nz-menu-item nzSelected routerLink="/welcome" (click)="visibilityDrawer = false">
+        <li nz-menu-item nzSelected routerLink="/" (click)="visibilityDrawer = false">
           <i nz-icon><svg-icon src="assets/users.svg" [svgStyle]="{ 'width.px':16 }"></svg-icon></i>
           <span>Споживачі</span>
         </li>
         <li nz-submenu nzTitle="Інше" nzIcon="appstore">
           <ul>
-            <li nz-menu-item nzMatchRouter routerLink="/add-recordpoint" (click)="visibilityDrawer = false">
+            <li nz-menu-item nzMatchRouter routerLink="/accounting-point-new" (click)="visibilityDrawer = false">
               <i nz-icon nzType="plus"></i>
               <span>Нова точку обліку</span>
             </li>
