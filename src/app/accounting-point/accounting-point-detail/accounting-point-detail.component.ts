@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountingPointsService } from '../shared/accounting-points.service';
+import { AccountingPointsService } from '../../shared/services/accounting-points.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
-import { AccountingPointDetail } from './accounting-point-detail';
+import { AccountingPointDetail } from '../../shared/models/accounting-point-detail.model';
 import { Observable } from 'rxjs';
 
 @Component({

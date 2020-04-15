@@ -1,0 +1,216 @@
+<form nz-form [formGroup]="accountingPointForm" (ngSubmit)="submitForm()">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="branchOfficeId">ЦОК</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Не обрано ЦОК">
+      <nz-select nzPlaceHolder="Виберіть ЦОК" formControlName="branchOfficeId" (ngModelChange)="getCities($event)">
+        <nz-option *ngFor="let branchOffice of branchOfficesList" [nzValue]="branchOffice.id"
+          [nzLabel]="branchOffice.name">
+        </nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="name">EIC</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="eicErrorTpl">
+      <input id="eic" type="text" nz-input formControlName="eic" />
+      <ng-template #eicErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Не введено EIC
+        </ng-container>
+        <ng-container *ngIf="control.hasError('maxLength') || control.hasError('minLength')">
+          Довжина EIC повинна бути - 16 символів
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="name">Назва (особовий рахунок)</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Не введено назву (особового рахунку) точки обліку">
+      <input id="name" type="text" nz-input formControlName="name" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzFor="dsoId" nzRequired>Оператор системи розподілу</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Не обрано оператора системи розподілу">
+      <nz-select nzPlaceHolder="Оберіть оператора системи розподілу" formControlName="dsoId">
+        <nz-option *ngFor="let distributionSystemOperator of distributionSystemOperatorsList"
+          [nzValue]="distributionSystemOperator.id" [nzLabel]="distributionSystemOperator.name">
+        </nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzFor="tariffId" nzRequired>Тариф</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Не обрано тариф">
+      <nz-select nzPlaceHolder="Оберіть тариф" formControlName="tariffId">
+        <nz-option *ngFor="let tariff of tariffsList" [nzValue]="tariff.id" [nzLabel]="tariff.name">
+        </nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="city">Місто</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Не введено назву міста">
+      <nz-select nzPlaceHolder="Оберіть місто" formControlName="city" (ngModelChange)="getStreets($event)">
+        <nz-option *ngFor="let city of citiesList" [nzValue]="city.id" [nzLabel]="city.name">
+        </nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <div formGroupName="address">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="5" nzRequired nzFor="streetId">Вулиця</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzErrorTip="Не введено назва вулиці">
+        <nz-select nzPlaceHolder="Оберіть вулицю" formControlName="streetId">
+          <nz-option *ngFor="let street of streetsList" [nzValue]="street.id" [nzLabel]="street.name">
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <div nz-row>
+      <div nz-col [nzSpan]="7">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="17" nzRequired nzFor="building">Будинок</nz-form-label>
+          <nz-form-control [nzSpan]="6" nzErrorTip="Не введено номер будинку">
+            <input id="building" type="text" nz-input formControlName="building" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="4">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="12" nzFor="apt">Квартира</nz-form-label>
+          <nz-form-control [nzSpan]="10">
+            <input id="apt" type="text" nz-input formControlName="apt" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="9" nzRequired nzFor="zip">Поштовий індекс</nz-form-label>
+          <nz-form-control [nzSpan]="4" nzErrorTip="Не введено індекс">
+            <input id="zip" type="text" nz-input formControlName="zip" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </div>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="contractStartDate">Дата заключення договору</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Не обрано дату заключення договру">
+      <nz-date-picker [nzFormat]="dateFormat" formControlName="contractStartDate"></nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-card nzTitle="Персона">
+    <div nz-row nzType="flex" nzJustify="center">
+      <div nz-col nzXs="17" nzSm="17" nzMd="14" nzLg="6" nzXl="5" nzXXl="4">
+        <button nz-button type="button" nzType="primary" (click)="personInputsTrigger()">Додати нового
+          споживача</button>
+      </div>
+      <div nz-col nzXs="17" nzSm="17" nzMd="14" nzLg="2" nzXl="2" nzXXl="2">
+        <span> - або - </span>
+      </div>
+      <div nz-col nzXs="17" nzSm="17" nzMd="14" nzLg="12" nzXl="11" nzXXl="11">
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Не обрано споживача">
+            <nz-select nzShowSearch nzServerSearch nzPlaceHolder="Пошук за паспортом або ІПН" (nzOnSearch)="searchPerson($event)"
+              (ngModelChange)="setDataPerson($event)" formControlName="searchPerson"
+              [nzCustomTemplate]="selectedPersonTemplate" [nzLoading]="isLoadingSearch">
+              <nz-option nzCustomContent *ngFor="let person of findPersons" [nzLabel]="person" [nzValue]="person">
+                <p><b>ПІБ:</b> {{person.lastName}} {{person.firstName}} {{person.patronymic}}</p>
+                <p><b>Номер паспорта:</b> {{person.idCardNumber}} <b>Іден. номер:</b> {{person.taxCode}}</p>
+              </nz-option>
+            </nz-select>
+            <ng-template #selectedPersonTemplate let-person>
+              <span>{{ person.nzLabel.lastName }} {{ person.nzLabel.firstName }} {{ person.nzLabel.patronymic }}
+                <b>{{ person.nzLabel.taxCode }} : {{ person.nzLabel.idCardNumber }}</b></span>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <nz-divider></nz-divider>
+
+    <div *ngIf="isPersonInputsShown" formGroupName="owner">
+      <div nz-col>
+        <nz-form-item>
+          <input type="hidden" nz-input formControlName="id" />
+        </nz-form-item>
+      </div>
+
+      <div nz-col>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="7" nzRequired nzFor="taxCode">ІНН</nz-form-label>
+          <nz-form-control [nzSpan]="10" nzErrorTip="Не введено ІНН">
+            <input type="text" nz-input formControlName="taxCode" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="7" nzRequired nzFor="idCardNumber">Номер паспорту</nz-form-label>
+          <nz-form-control [nzSpan]="10" nzErrorTip="Не введено номер паспорту">
+            <input id="idCardNumber" type="text" nz-input formControlName="idCardNumber" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col>
+        <div nz-col>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="7" nzRequired nzFor="idCardIssuanceDate">Дата видачі</nz-form-label>
+            <nz-form-control [nzSpan]="10" nzErrorTip="Не обрано дату видачі">
+              <nz-date-picker [nzFormat]="dateFormat" formControlName="idCardIssuanceDate"></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="7" nzRequired nzFor="idCardExpirationDate">Дата закінчення ID картки
+            </nz-form-label>
+            <nz-form-control [nzSpan]="10" nzErrorTip="Не обрано дату закінчення ID картки">
+              <nz-date-picker [nzFormat]="dateFormat" formControlName="idCardExpirationDate"></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-col>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="7" nzFor="firstName">Ім'я</nz-form-label>
+          <nz-form-control [nzSpan]="10" nzErrorTip="Не введено ім'я">
+            <input id="firstName" type="text" nz-input formControlName="firstName" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="7" nzFor="lastName">Прізвище</nz-form-label>
+          <nz-form-control [nzSpan]="10" nzErrorTip="Не введено прізвище">
+            <input id="lastName" type="text" nz-input formControlName="lastName" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="7" nzFor="patronymic">По батькові</nz-form-label>
+          <nz-form-control [nzSpan]="10" nzErrorTip="Не введено по батькові">
+            <input id="patronymic" type="text" nz-input formControlName="patronymic" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="7" nzFor="mobilePhones">Мобільні номери телефонів</nz-form-label>
+          <nz-form-control [nzSpan]="10" nzErrorTip="Не введено жодного номера телефону">
+            <nz-select formControlName="mobilePhones" nzMode="tags" [nzTokenSeparators]="[',']"></nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </nz-card>
+
+  <nz-form-item>
+    <nz-form-control [nzSpan]="12" [nzOffset]="5">
+      <button type="submit" nz-button nzType="primary">Зберегти</button>
+      <button type="button" nz-button (click)="resetForm()">Очистити</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>

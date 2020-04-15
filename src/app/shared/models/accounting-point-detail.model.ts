@@ -1,4 +1,4 @@
-import { Person } from '../shared/person';
+import { Person } from './person.model';
 
 export interface AccountingPointDetail {
     branchOfficeName: string

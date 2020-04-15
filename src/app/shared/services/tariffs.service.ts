@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Tariff } from './tariff';
-import { TariffRate } from './tariff-rate';
+import { Tariff } from '../models/tariff';
+import { TariffRate } from '../models/tariff-rate';
 
 @Injectable({
   providedIn: 'root'

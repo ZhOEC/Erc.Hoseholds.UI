@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt/src/jwthelper.service';
 import { map, filter, take, switchMap, mapTo } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
-import { AccessTokensPair } from './AccessTokensPair';
+import { AccessTokensPair } from './access-tokens-pair';
 
 @Injectable({
   providedIn: 'root'
@@ -19,15 +19,15 @@ export class AuthService {
   private refreshTokenSubject: BehaviorSubject<AccessTokensPair> = new BehaviorSubject<AccessTokensPair>(null);
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private httpClient: HttpClient) {
-    let code = this.activatedRoute.snapshot.queryParamMap.get('code');
-    console.log('start', code);
+    //let code = this.activatedRoute.snapshot.queryParamMap.get('code');
+    //console.log('start', code);
 
     this.accessTokens = JSON.parse(localStorage.getItem(this.tokenItemName))
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
-      let code = this.activatedRoute.snapshot.queryParamMap.get('code');
-      console.log('NavigationEnd', code);
+      //let code = this.activatedRoute.snapshot.queryParamMap.get('code');
+      //console.log('NavigationEnd', code);
 
       if (!this.accessTokens || new Date(this.accessTokens.refresh_expires_at) < new Date()) {
         let code = this.activatedRoute.snapshot.queryParamMap.get('code');

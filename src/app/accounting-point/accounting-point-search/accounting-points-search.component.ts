@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AccountingPointsService } from '../shared/accounting-points.service';
+import { AccountingPointsService } from '../../shared/services/accounting-points.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -26,7 +26,7 @@ export class AccountingPointsSearchComponent {
   }
 
   select() {
-    this.router.navigate(['accounting-point', this.selectedValue]);
+    this.router.navigate(['accounting-points', this.selectedValue]);
   }
 
 }
