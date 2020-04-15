@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { IAccountingPoint } from '../models/accounting-point.model';
+import { AccountingPoint } from '../models/accounting-point.model';
 import { AccountingPointDetail } from '../models/accounting-point-detail.model';
 
 @Injectable({
@@ -18,8 +18,8 @@ export class AccountingPointsService {
     return this.http.get(this.apiUri+'_search', { params: queryParams })
   }
 
-  add(accountingPoint: IAccountingPoint) {
-    return this.http.post<IAccountingPoint>(this.apiUri, accountingPoint)
+  add(accountingPoint: AccountingPoint) {
+    return this.http.post<AccountingPoint>(this.apiUri, accountingPoint)
   }
 
   getOne(id: number){

@@ -7,12 +7,13 @@ import { Tariff } from '../../shared/models/tariff';
 import { BranchOfficeService } from '../../shared/services/branch-office.service';
 import { BranchOffice } from '../../shared/models/branch-office.model';
 import { AccountingPointsService } from '../../shared/services/accounting-points.service'
-import { IPerson } from '../../shared/models/person.model';
+import { Person } from '../../shared/models/person.model';
 import { ICity } from '../../shared/models/city.model';
 import { IStreet } from '../../shared/models/street.model';
 import { AddressService } from '../../shared/services/address.service';
 import { PersonService } from 'src/app/shared/services/person.service';
-import { IAccountingPoint } from 'src/app/shared/models/accounting-point.model';
+import { AccountingPoint } from 'src/app/shared/models/accounting-point.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-accounting-point-new',
@@ -30,7 +31,7 @@ export class AccountingPointNewComponent {
   distributionSystemOperatorsList: DistributionSystemOperator[]
   tariffsList: Tariff[]
 
-  findPersons: IPerson[]
+  findPersons: Person[]
   isPersonInputsShown: boolean = false
   isLoadingSearch: boolean = false
   isLoadingCities: boolean = false
@@ -43,6 +44,7 @@ export class AccountingPointNewComponent {
     private addressService: AddressService,
     private tariffService: TariffsService,
     private formBuilder: FormBuilder,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -131,14 +133,14 @@ export class AccountingPointNewComponent {
   searchPerson(searchString: string): void {
     if(searchString.length > 6) {
       this.isLoadingSearch = true
-      this.personService.searchPerson(searchString).subscribe((persons:Array<IPerson>) => {
+      this.personService.searchPerson(searchString).subscribe((persons:Array<Person>) => {
         this.findPersons = persons
         this.isLoadingSearch = false
       })
     }
   }
 
-  setDataPerson(selectedPerson: IPerson) {
+  setDataPerson(selectedPerson: Person) {
     this.isPersonInputsShown = true
     if(selectedPerson != null) {
       this.accountingPointForm.controls.owner.patchValue({
@@ -201,7 +203,7 @@ export class AccountingPointNewComponent {
     if(this.accountingPointForm.valid) {
       console.log(this.accountingPointForm.getRawValue())
       this.accountingPointService.add(this.accountingPointForm.getRawValue()).subscribe(res => {
-        console.log(res)
+        this.router.navigate(['accounting-points', res.id])
       })
     }
   }

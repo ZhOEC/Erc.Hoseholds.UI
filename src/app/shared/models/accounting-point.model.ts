@@ -1,7 +1,8 @@
-import { IPerson } from './person.model';
+import { Person } from './person.model';
 import { IAddress } from './address.model';
 
-export interface IAccountingPoint {
+export interface AccountingPoint {
+    id: number
     branchOfficeId: number
     eic: string
     name: string
@@ -13,5 +14,5 @@ export interface IAccountingPoint {
     appartament: string
     contractStartDate: Date
     address: IAddress
-    owner: IPerson
+    owner: Person
 }
