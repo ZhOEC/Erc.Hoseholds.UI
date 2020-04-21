@@ -49,10 +49,10 @@
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
-    <nz-form-label [nzSpan]="5" nzRequired nzFor="city">Місто</nz-form-label>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="city">Населений пункт</nz-form-label>
     <nz-form-control [nzSpan]="12" nzErrorTip="Не введено назву міста">
-      <nz-select nzPlaceHolder="Оберіть місто" formControlName="city" (ngModelChange)="getStreets($event)">
-        <nz-option *ngFor="let city of citiesList" [nzValue]="city.id" [nzLabel]="city.name">
+      <nz-select nzPlaceHolder="Оберіть населений пункт" formControlName="city" (ngModelChange)="getStreets($event)">
+        <nz-option *ngFor="let city of citiesList" [nzValue]="city.id" [nzLabel]="city.isRegionCity ? city.name : city.name + ', ' + city.districtName">
         </nz-option>
       </nz-select>
     </nz-form-control>

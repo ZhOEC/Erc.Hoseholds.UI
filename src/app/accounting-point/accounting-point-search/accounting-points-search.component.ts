@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-accounting-points-search',
   templateUrl: './accounting-points-search.component.html',
-  styleUrls: ['./accounting-points-search.component.css']
+  styleUrls: ['./accounting-points-search.component.scss']
 })
 export class AccountingPointsSearchComponent {
   selectedValue = null;

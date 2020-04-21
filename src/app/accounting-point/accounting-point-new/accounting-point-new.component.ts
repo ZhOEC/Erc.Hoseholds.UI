@@ -8,7 +8,7 @@ import { BranchOfficeService } from '../../shared/services/branch-office.service
 import { BranchOffice } from '../../shared/models/branch-office.model';
 import { AccountingPointsService } from '../../shared/services/accounting-points.service'
 import { Person } from '../../shared/models/person.model';
-import { ICity } from '../../shared/models/city.model';
+import { City } from '../../shared/models/city.model';
 import { IStreet } from '../../shared/models/street.model';
 import { AddressService } from '../../shared/services/address.service';
 import { PersonService } from 'src/app/shared/services/person.service';
@@ -26,7 +26,7 @@ export class AccountingPointNewComponent {
   accountingPointForm: FormGroup
   
   branchOfficesList: BranchOffice[]
-  citiesList: ICity[]
+  citiesList: City[]
   streetsList: IStreet[]
   distributionSystemOperatorsList: DistributionSystemOperator[]
   tariffsList: Tariff[]
