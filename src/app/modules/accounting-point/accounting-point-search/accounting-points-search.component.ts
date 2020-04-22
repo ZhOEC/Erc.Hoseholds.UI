@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AccountingPointsService } from '../../shared/services/accounting-points.service';
+import { AccountingPointsService } from '../../../shared/services/accounting-points.service';
 import { Router } from '@angular/router';
 
 @Component({

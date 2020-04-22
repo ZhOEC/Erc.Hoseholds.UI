@@ -26,7 +26,17 @@
         </li>
         <li nz-submenu nzTitle="Налаштування" nzIcon="setting">
           <ul>
-            <li nz-menu-item><a [routerLink]="['/tariffs']" routerLinkActive="router-link-active"  routerLinkActive="router-link-active" (click)="visibilityDrawer = false">Тарифи</a></li>
+            <li nz-menu-item>
+              <a [routerLink]="['/tariffs']" routerLinkActive="router-link-active"  routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
+                Тарифи
+              </a>
+            </li>
+            <li nz-menu-item>
+              <a [routerLink]="['/payment-channel']" routerLinkActive="router-link-active"  routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
+                <i nz-icon nzType="fork" nzTheme="outline"></i>
+                Канали оплати
+              </a>
+            </li>
           </ul>
         </li>
       </ul>

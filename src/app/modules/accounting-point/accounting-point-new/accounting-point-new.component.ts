@@ -1,18 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DistributionSystemOperatorService } from '../../shared/services/distribution-system-operator.service';
-import { DistributionSystemOperator } from '../../shared/models/distribution-system-operator.model';
-import { TariffsService } from '../../shared/services/tariffs.service';
-import { Tariff } from '../../shared/models/tariff';
-import { BranchOfficeService } from '../../shared/services/branch-office.service';
-import { BranchOffice } from '../../shared/models/branch-office.model';
-import { AccountingPointsService } from '../../shared/services/accounting-points.service'
-import { IPerson } from '../../shared/models/person.model';
-import { ICity } from '../../shared/models/city.model';
-import { IStreet } from '../../shared/models/street.model';
-import { AddressService } from '../../shared/services/address.service';
+import { DistributionSystemOperatorService } from '../../../shared/services/distribution-system-operator.service';
+import { DistributionSystemOperator } from '../../../shared/models/distribution-system-operator.model';
+import { TariffsService } from '../../../shared/services/tariffs.service';
+import { Tariff } from '../../../shared/models/tariff';
+import { BranchOfficeService } from '../../../shared/services/branch-office.service';
+import { BranchOffice } from '../../../shared/models/branch-office.model';
+import { AccountingPointsService } from '../../../shared/services/accounting-points.service'
+import { Person } from '../../../shared/models/person.model';
+import { City } from '../../../shared/models/address/city.model';
+import { Street } from '../../../shared/models/address/street.model';
+import { AddressService } from '../../../shared/services/address.service';
 import { PersonService } from 'src/app/shared/services/person.service';
-import { IAccountingPoint } from 'src/app/shared/models/accounting-point.model';
+import { NotificationComponent } from 'src/app/shared/components/notification/notification.component';
 
 @Component({
   selector: 'app-accounting-point-new',
@@ -21,22 +21,27 @@ import { IAccountingPoint } from 'src/app/shared/models/accounting-point.model';
 })
 
 export class AccountingPointNewComponent {
-  dateFormat = 'dd.MM.yyyy'
-  accountingPointForm: FormGroup
+  @ViewChild(NotificationComponent)
+  private notification: NotificationComponent
   
+  dateFormat = 'dd.MM.yyyy'
+  datesMoreToday = (date: number): boolean => { return date > Date.now() }
+  datesLessToday = (date: number): boolean => { return date < Date.now() }
+  
+  accountingPointForm: FormGroup
   branchOfficesList: BranchOffice[]
-  citiesList: ICity[]
-  streetsList: IStreet[]
+  citiesList: City[]
+  streetsList: Street[]
   distributionSystemOperatorsList: DistributionSystemOperator[]
   tariffsList: Tariff[]
 
-  findPersons: IPerson[]
-  isPersonInputsShown: boolean = false
-  isLoadingSearch: boolean = false
-  isLoadingCities: boolean = false
-  isLoadingStreets: boolean = false
+  findPersons: Person[]
+  isPersonInputsShown = false
+  isLoadingSearch = false
+  isLoadingCities = false
+  isLoadingStreets = false
 
-  constructor(private accountingPointService: AccountingPointsService,
+  constructor(private accountingPointService: AccountingPointsService, 
     private personService: PersonService,
     private distributionSystemOperatorService: DistributionSystemOperatorService,
     private branchOfficeService: BranchOfficeService,
@@ -48,7 +53,7 @@ export class AccountingPointNewComponent {
   ngOnInit() {
     this.accountingPointForm = this.formBuilder.group({
       branchOfficeId: [null, [Validators.required]],
-      eic: [null, [Validators.required, Validators.minLength(16), Validators.maxLength(16), Validators.pattern("[0-9a-zA-Z-]*")]],
+      eic: [null, [Validators.required, Validators.minLength(16), Validators.maxLength(16), Validators.pattern('[0-9a-zA-Z-]*')]],
       name: [null, [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
       dsoId: [null, [Validators.required]],
       tariffId: [null, [Validators.required]],
@@ -83,7 +88,7 @@ export class AccountingPointNewComponent {
   getBranchOffices() {
     this.branchOfficeService.getBranchOffices().subscribe(data => {
       this.branchOfficesList = data.sort((a, b) => a.name.localeCompare(b.name));
-      if (this.branchOfficesList.length == 1) {
+      if (this.branchOfficesList.length === 1) {
         this.accountingPointForm.get('branchOfficeId').setValue(this.branchOfficesList[0].id);
       }
     });
@@ -131,14 +136,14 @@ export class AccountingPointNewComponent {
   searchPerson(searchString: string): void {
     if(searchString.length > 6) {
       this.isLoadingSearch = true
-      this.personService.searchPerson(searchString).subscribe((persons:Array<IPerson>) => {
+      this.personService.searchPerson(searchString).subscribe((persons: Array<Person>) => {
         this.findPersons = persons
         this.isLoadingSearch = false
       })
     }
   }
 
-  setDataPerson(selectedPerson: IPerson) {
+  setDataPerson(selectedPerson: Person) {
     this.isPersonInputsShown = true
     if(selectedPerson != null) {
       this.accountingPointForm.controls.owner.patchValue({
@@ -188,7 +193,7 @@ export class AccountingPointNewComponent {
       this.accountingPointForm.controls[i].markAsDirty()
       this.accountingPointForm.controls[i].updateValueAndValidity()
     }
-    
+
     if(this.isPersonInputsShown) {
       this.accountingPointForm.get('searchPerson').setErrors(null)
 
@@ -199,9 +204,8 @@ export class AccountingPointNewComponent {
     }
 
     if(this.accountingPointForm.valid) {
-      console.log(this.accountingPointForm.getRawValue())
       this.accountingPointService.add(this.accountingPointForm.getRawValue()).subscribe(res => {
-        console.log(res)
+        this.notification.show('success', 'Успіх', `Точку обліку ${res.name}, додано успішно`)
       })
     }
   }
@@ -211,6 +215,6 @@ export class AccountingPointNewComponent {
     this.isPersonInputsShown = false
 
     this.accountingPointForm.controls.city.disable()
-    this.accountingPointForm.controls.street.disable()
+    this.accountingPointForm.controls.address.get('streetId').disable()
   }
 }

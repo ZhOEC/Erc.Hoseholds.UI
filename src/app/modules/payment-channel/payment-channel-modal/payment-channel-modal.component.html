@@ -1,0 +1,52 @@
+<nz-modal [nzTitle]="modalTitle" [nzVisible]="isVisible" (nzOnCancel)="isVisible=false" (nzOnOk)="submitForm()" [nzOkText]="submitButtonText" [nzOkDisabled]="!paymentChannelForm.valid || !paymentChannelForm.touched">
+    <form nz-form [formGroup]="paymentChannelForm">
+        <nz-form-item>
+            <nz-form-label [nzSpan]="9" nzRequired nzFor="name">name</nz-form-label>
+            <nz-form-control [nzSpan]="12" nzErrorTip="Обов'язкове поле">
+              <input nz-input id="name" formControlName="name" placeholder="name" />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="9" nzRequired nzFor="recordpointFieldName">recordpointFieldName</nz-form-label>
+          <nz-form-control [nzSpan]="12" nzErrorTip="Обов'язкове поле">
+            <input nz-input formControlName="recordpointFieldName" placeholder="recordpointFieldName" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="9" nzRequired nzFor="sumFieldName">sumFieldName</nz-form-label>
+          <nz-form-control [nzSpan]="12" nzErrorTip="Обов'язкове поле">
+            <input nz-input formControlName="sumFieldName" placeholder="sumFieldName" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="9" nzRequired nzFor="dateFieldName">dateFieldName</nz-form-label>
+          <nz-form-control [nzSpan]="12" nzErrorTip="Обов'язкове поле">
+            <nz-date-picker [nzFormat]="dateFormat" formControlName="dateFieldName" [nzDisabledDate]="datesMoreToday"></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="9" nzRequired nzFor="textDateFormat">textDateFormat</nz-form-label>
+          <nz-form-control [nzSpan]="12" nzErrorTip="Обов'язкове поле">
+            <input nz-input formControlName="textDateFormat" placeholder="textDateFormat" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="9" nzRequired nzFor="personFieldName">personFieldName</nz-form-label>
+          <nz-form-control [nzSpan]="12" nzErrorTip="Обов'язкове поле">
+            <input nz-input formControlName="personFieldName" placeholder="personFieldName" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="9" nzRequired nzFor="totalRecord">totalRecord</nz-form-label>
+          <nz-form-control [nzSpan]="12" nzErrorTip="Обов'язкове поле">
+            <input nz-input formControlName="totalRecord" placeholder="totalRecord" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="9" nzRequired nzFor="type">type</nz-form-label>
+          <nz-form-control [nzSpan]="12" nzErrorTip="Обов'язкове поле">
+            <input nz-input type="number" formControlName="type" placeholder="type" />
+          </nz-form-control>
+        </nz-form-item>
+    </form>
+</nz-modal>

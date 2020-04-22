@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { TariffsService } from '../../shared/services/tariffs.service';
-import { Tariff } from '../../shared/models/tariff';
-import { TariffRateComponent } from 'src/app/tariffs/tariff-rate/tariff-rate.component';
-import { TariffRate } from '../../shared/models/tariff-rate';
+import { TariffsService } from '../../../shared/services/tariffs.service';
+import { Tariff } from '../../../shared/models/tariff';
+import { TariffRateComponent } from 'src/app/modules/tariffs/tariff-rate/tariff-rate.component';
+import { TariffRate } from '../../../shared/models/tariff-rate';
 
 @Component({
   selector: 'app-tariffs',
