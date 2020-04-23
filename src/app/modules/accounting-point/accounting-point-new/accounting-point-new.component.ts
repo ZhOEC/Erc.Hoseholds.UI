@@ -13,6 +13,7 @@ import { Street } from '../../../shared/models/address/street.model';
 import { AddressService } from '../../../shared/services/address.service';
 import { PersonService } from 'src/app/shared/services/person.service';
 import { NotificationComponent } from 'src/app/shared/components/notification/notification.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-accounting-point-new',
@@ -36,10 +37,10 @@ export class AccountingPointNewComponent {
   tariffsList: Tariff[]
 
   findPersons: Person[]
-  isPersonInputsShown = false
-  isLoadingSearch = false
-  isLoadingCities = false
-  isLoadingStreets = false
+  isPersonInputsShown: boolean = false
+  isLoadingSearch: boolean = false
+  isLoadingCities: boolean = false
+  isLoadingStreets: boolean = false
 
   constructor(private accountingPointService: AccountingPointsService, 
     private personService: PersonService,
@@ -48,6 +49,7 @@ export class AccountingPointNewComponent {
     private addressService: AddressService,
     private tariffService: TariffsService,
     private formBuilder: FormBuilder,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -205,7 +207,7 @@ export class AccountingPointNewComponent {
 
     if(this.accountingPointForm.valid) {
       this.accountingPointService.add(this.accountingPointForm.getRawValue()).subscribe(res => {
-        this.notification.show('success', 'Успіх', `Точку обліку ${res.name}, додано успішно`)
+        this.notification.show('success', '����', `����� ����� ${res.name}, ������ ������`)
       })
     }
   }

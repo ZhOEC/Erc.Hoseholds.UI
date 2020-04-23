@@ -1,4 +1,6 @@
 export interface City {
     id: number
-    name: string
+    name: string,
+    districtName: string, 
+    isRegionCity: boolean
 }

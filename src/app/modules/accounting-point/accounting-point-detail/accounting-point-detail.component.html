@@ -1,4 +1,11 @@
 <div *ngIf="accountingPoint$ | async as a">
+    <nz-page-header [nzGhost]="false" style="padding-left: 0px; padding-right: 0px;">
+        <nz-page-header-title>Картка побутового споживача</nz-page-header-title>
+        <nz-page-header-extra>
+            <button nz-button nzType="primary">Редагувати адресу</button>
+          <button nz-button nzType="primary">Новий договір</button>
+        </nz-page-header-extra>
+    </nz-page-header>
     <nz-collapse>
         <nz-collapse-panel nzHeader="Загальна інформація" nzActive="true" class="general-info">
             <nz-descriptions>
@@ -7,12 +14,14 @@
                 </nz-descriptions-item>
                 <nz-descriptions-item nzTitle="EIC">{{a.eic}}</nz-descriptions-item>
                 <nz-descriptions-item nzTitle="Особовий рахунок">{{a.name}}</nz-descriptions-item>
-                <nz-descriptions-item nzTitle="Адреса">{{a.addressStreetLocation + ', '+ a.addressCityName}}
+                <nz-descriptions-item nzTitle="Адреса">{{a.addressStreetLocation + ', '+ a.addressCityName + ', '+ a.addressZip}}
                 </nz-descriptions-item>
                 <nz-descriptions-item [nzTitle]="a.debt < 0 ? 'Залишок': 'Борг'"><span
                         [ngStyle]="{'color': (a.debt < 0 ? 'blue' : 'red')}">{{(a.debt < 0 ? 1-a.debt : a.debt) | currency:'UAH':'грн.'}}</span>
                 </nz-descriptions-item>
                 <nz-descriptions-item nzTitle="Діючий тариф">{{a.currentTariffName}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Договір про постачання від">
+                    {{a.currentContractStartDate | date:'mediumDate'}}</nz-descriptions-item>
             </nz-descriptions>
             <nz-descriptions nzTitle="Власник">
                 <nz-descriptions-item nzTitle="ПІБ">{{a.owner.fullName}}</nz-descriptions-item>
@@ -27,8 +36,6 @@
                 <nz-descriptions-item nzTitle="Ідентифікаційний код">{{a.owner.taxCode}}</nz-descriptions-item>
                 <nz-descriptions-item nzTitle="Мобільні телефони"><span *ngFor="let ph of a.owner.mobilePhones; last as isLast">{{ph + (isLast ? '' : ',')}}
                     </span></nz-descriptions-item>
-                <nz-descriptions-item nzTitle="Договір про постачання від">
-                    {{a.currentContractStartDate | date:'mediumDate'}}</nz-descriptions-item>
             </nz-descriptions>
         </nz-collapse-panel>
         <nz-collapse-panel nzHeader="Рахунки" class="invoices-info">
