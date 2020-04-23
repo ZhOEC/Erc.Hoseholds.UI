@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { PaymentChannelService } from 'src/app/shared/services/payment-chennel.service';
 import { PaymentChannel } from 'src/app/shared/models/payment-channel';
 import { PaymentChannelModalComponent } from './../payment-channel-modal/payment-channel-modal.component';
-import { NotificationComponent } from '../../../shared/components/notification/notification.component';
 
 @Component({
   selector: 'app-payment-channel-list',
@@ -12,7 +11,7 @@ import { NotificationComponent } from '../../../shared/components/notification/n
 
 export class PaymentChannelListComponent implements OnInit {
 
-  @ViewChild(PaymentChannelModalComponent)
+  @ViewChild(PaymentChannelModalComponent) 
   private paymentChannelModal: PaymentChannelModalComponent
 
   paymentChannels: PaymentChannel[]
@@ -29,8 +28,8 @@ export class PaymentChannelListComponent implements OnInit {
     });
   }
 
-  add() {
-    this.paymentChannelModal.openAddDialog(this.paymentChannels)
+  addNew(paymentChannels: PaymentChannel[]) {
+    this.paymentChannelModal.openAddDialog(paymentChannels)
   }
 
   edit(paymentChannels: PaymentChannel[], paymentChannel: PaymentChannel) {

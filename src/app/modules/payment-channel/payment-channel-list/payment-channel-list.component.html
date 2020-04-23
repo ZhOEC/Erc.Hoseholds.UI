@@ -1,5 +1,4 @@
-
-<button nz-button nzType="primary" (click)="add()" >Додати</button>
+<button nz-button nzType="primary" (click)="addNew(paymentChannelsTable.data)" >Додати</button>
 <nz-table #paymentChannelsTable [nzData]="paymentChannels" nzSize="small">
   <thead>
     <tr>
@@ -19,13 +18,13 @@
       <td>{{pc.name}}</td>
       <td>{{pc.recordpointFieldName}}</td>
       <td>{{pc.sumFieldName}}</td>
-      <td>{{pc.dateFieldName}}</td>
+      <td>{{pc.dateFieldName | date: 'dd.mm.yyyy'}}</td>
       <td>{{pc.textDateFormat}}</td>
       <td>{{pc.personFieldName}}</td>
       <td>{{pc.totalRecord}}</td>
       <td>{{pc.type}}</td>
       <td>
-        <a><i nz-icon nzType="edit" (click)="edit(paymentChannels, pc)" nzTheme="outline"></i></a>
+        <a><i nz-icon nzType="edit" (click)="edit(paymentChannelsTable.data, pc)" nzTheme="outline"></i></a>
         <nz-divider nzType="vertical"></nz-divider>
         <a nz-popconfirm nzPopconfirmTitle="Впевнені що хочете видалити?" (nzOnConfirm)="delete(pc.id)"><i nz-icon nzType="delete" nzTheme="outline"></i></a>
       </td>
