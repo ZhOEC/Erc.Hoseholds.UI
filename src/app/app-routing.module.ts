@@ -7,7 +7,7 @@ import { PaymentChannelListComponent } from './modules/payment-channel/payment-c
 
 const routes: Routes = [
   { path: 'accounting-point-new', component: AccountingPointNewComponent },
-  { path: 'accounting-point/:id', component: AccountingPointDetailComponent },
+  { path: 'accounting-points/:id', component: AccountingPointDetailComponent },
   { path: 'tariffs', component: TariffListComponent },
   { path: 'payment-channel', component: PaymentChannelListComponent }
 ];
