@@ -6,6 +6,6 @@ export interface PaymentChannel {
     dateFieldName: string
     textDateFormat: string
     personFieldName: string
-    totalRecord: string
+    totalRecord: number
     type: number
 }

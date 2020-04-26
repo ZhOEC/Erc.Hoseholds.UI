@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 
+@Injectable({
+  providedIn: 'root'
+})
 @Component({
   selector: 'app-notification',
   template: '',

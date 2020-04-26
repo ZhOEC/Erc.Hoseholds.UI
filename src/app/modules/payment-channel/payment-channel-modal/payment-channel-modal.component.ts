@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PaymentChannel } from '../../../shared/models/payment-channel';
 import { PaymentChannelService } from '../../../shared/services/payment-chennel.service';
+import { NotificationComponent } from 'src/app/shared/components/notification/notification.component';
 
 @Component({
   selector: 'app-payment-channel-modal',
@@ -17,23 +18,36 @@ export class PaymentChannelModalComponent implements OnInit {
   paymentChannels: PaymentChannel[]
   paymentChannel: PaymentChannel
 
+  totalRecordList = [
+    { id: 0, name: 'Відсутній' },
+    { id: 1, name: 'Перший' },
+    { id: 2, name: 'Останній' }
+  ]
+
+  typeList = [
+    { id: 0, name: 'Платіж абонента' },
+    { id: 1, name: 'Пільга або субсидія' },
+    { id: 2, name: 'Компенсація ОСР' }
+  ]
+
   dateFormat = 'dd.MM.yyyy'
   datesMoreToday = (date: number): boolean => { return date > Date.now() }
 
   constructor(private formBuilder: FormBuilder, 
-    private paymentChannelService: PaymentChannelService
+    private paymentChannelService: PaymentChannelService,
+    private notification: NotificationComponent
   ) {}
 
   ngOnInit() {
     this.paymentChannelForm = this.formBuilder.group({
       id: [0],
       name: [null, [Validators.required]],
-      recordpointFieldName: [null, [Validators.required]],
-      sumFieldName: [null, [Validators.required]],
-      dateFieldName: [null, [Validators.required]],
-      textDateFormat: [null, [Validators.required]],
-      personFieldName: [null, [Validators.required]],
-      totalRecord: [null, [Validators.required]],
+      recordpointFieldName: [null],
+      sumFieldName: [null],
+      dateFieldName: [null],
+      textDateFormat: [null],
+      personFieldName: [null],
+      totalRecord: [null],
       type: [null, [Validators.required]]
     })
 
@@ -71,12 +85,14 @@ export class PaymentChannelModalComponent implements OnInit {
       this.paymentChannelService.update(this.paymentChannelForm.value).subscribe(() => {
         const index = this.paymentChannels.findIndex(x => x.id == this.paymentChannelForm.value.id)
         this.paymentChannels[index] = this.paymentChannelForm.value
+        this.notification.show('success', 'Успіх', `Канал оплати ${this.paymentChannelForm.value.name} успішно оновлено!`);
         this.isVisible = false
       })
     } else {
       delete this.paymentChannelForm.value.id
       this.paymentChannelService.add(this.paymentChannelForm.value).subscribe(pc => {
         this.paymentChannels.push(pc)
+        this.notification.show('success', 'Успіх', `Канал оплати ${this.paymentChannelForm.value.name} успішно додано!`);
         this.isVisible = false
       })
     }

@@ -1,9 +1,9 @@
-<button nz-button nzType="primary" (click)="addNew(paymentChannelsTable.data)" >Додати</button>
+<button nz-button nzType="primary" (click)="addNew(paymentChannelsTable.data)">Додати</button>
 <nz-table #paymentChannelsTable [nzData]="paymentChannels" nzSize="small">
   <thead>
     <tr>
       <th>Назва</th>
-      <th>Колонка особового раухнку</th>
+      <th>Колонка особового рахунку</th>
       <th>Колонка суми</th>
       <th>Колонка дати</th>
       <th>Формат тексту дати</th>
@@ -18,7 +18,7 @@
       <td>{{pc.name}}</td>
       <td>{{pc.recordpointFieldName}}</td>
       <td>{{pc.sumFieldName}}</td>
-      <td>{{pc.dateFieldName | date: 'dd.mm.yyyy'}}</td>
+      <td>{{pc.dateFieldName | date: 'dd.MM.yyyy'}}</td>
       <td>{{pc.textDateFormat}}</td>
       <td>{{pc.personFieldName}}</td>
       <td>{{pc.totalRecord}}</td>

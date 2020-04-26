@@ -22,8 +22,6 @@ import { Router } from '@angular/router';
 })
 
 export class AccountingPointNewComponent {
-  @ViewChild(NotificationComponent)
-  private notification: NotificationComponent
   
   dateFormat = 'dd.MM.yyyy'
   datesMoreToday = (date: number): boolean => { return date > Date.now() }
@@ -49,7 +47,8 @@ export class AccountingPointNewComponent {
     private addressService: AddressService,
     private tariffService: TariffsService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private notification: NotificationComponent
   ) {}
 
   ngOnInit() {
@@ -207,7 +206,7 @@ export class AccountingPointNewComponent {
 
     if(this.accountingPointForm.valid) {
       this.accountingPointService.add(this.accountingPointForm.getRawValue()).subscribe(res => {
-        this.notification.show('success', '����', `����� ����� ${res.name}, ������ ������`)
+        this.notification.show('success', 'Успіх', `Точку обліку - ${res.name}, успішно додано`)
       })
     }
   }
