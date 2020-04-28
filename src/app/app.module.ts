@@ -23,7 +23,6 @@ import { DistributionSystemOperatorService } from './shared/services/distributio
 import { AddressService } from './shared/services/address.service';
 import { PersonService } from './shared/services/person.service';
 import { PaymentChannelService } from './shared/services/payment-chennel.service';
-import { SharedModule } from './shared/components/shared.module';
 
 registerLocaleData(uk);
 
@@ -44,8 +43,7 @@ registerLocaleData(uk);
     AngularSvgIconModule,
     AccountingPointModule,
     TariffModule,
-    PaymentChannelModule,
-    SharedModule
+    PaymentChannelModule
   ],
   providers: [
     DistributionSystemOperatorService,
