@@ -61,7 +61,7 @@ export class PaymentChannelModalComponent implements OnInit {
   openAddDialog(paymentChannels: PaymentChannel[]) {
     this.modalTitle = 'Додати канал оплати'
     this.submitButtonText = 'Додати'
-    this.paymentChannelForm.reset()
+    this.paymentChannelForm.reset({totalRecord: 0})
     this.paymentChannelForm.markAsUntouched();
 
     this.paymentChannels = paymentChannels
