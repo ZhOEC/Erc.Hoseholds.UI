@@ -12,15 +12,19 @@
         </a>
       </div>
       <ul nzTheme="dark" nz-menu nzMode="inline" >
-        <li nz-menu-item nzSelected routerLink="/" (click)="visibilityDrawer = false">
-          <i nz-icon><svg-icon src="assets/users.svg" [svgStyle]="{ 'width.px':16 }"></svg-icon></i>
-          <span>Споживачі</span>
+        <li nz-menu-item>
+          <a [routerLink]="['/']" routerLinkActive="router-link-active"  routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
+            <i nz-icon><svg-icon src="assets/users.svg" [svgStyle]="{ 'width.px':16 }"></svg-icon></i>
+            Споживачі
+          </a>
         </li>
         <li nz-submenu nzTitle="Інше" nzIcon="appstore">
-          <ul>
-            <li nz-menu-item nzMatchRouter routerLink="/accounting-point-new" (click)="visibilityDrawer = false">
-              <i nz-icon nzType="plus"></i>
-              <span>Нова точку обліку</span>
+          <ul>            
+            <li nz-menu-item>
+              <a [routerLink]="['/accounting-point-new']" routerLinkActive="router-link-active"  routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
+                <i nz-icon nzType="plus"></i>
+                Нова точку обліку
+              </a>
             </li>
           </ul>
         </li>
@@ -43,15 +47,25 @@
   </nz-drawer>
   <nz-layout>
     <nz-header>
-      <div class="app-header" nz-row >
-        <div class="header-trigger" nz-col nzSpan="1">
+      <div class="app-header" nz-row>
+        <div class="header-trigger" nz-col nzSpan="2">
             <i nz-icon nzType="menu" nzTheme="outline" (click)="visibilityDrawer = true" class="trigger"></i>
         </div>
-        <div nz-col nzSpan="21" >
+        <div nz-col nzSpan="17">
           <app-accounting-points-search></app-accounting-points-search>
         </div>
-     
-        <div nz-col nzSpan="1">
+        <div nz-col nzSpan="2">
+          <button nz-button nz-popover [nzPopoverContent]="periodsTemplate" nzPopoverPlacement="bottomRight">
+            Періоди
+          </button>
+          <ng-template #periodsTemplate>
+            <div>
+              <p>04.2020 - Андрушівський ЦОК</p>
+              <p>03.2020 - Житомирський ЦОК</p>
+            </div>
+          </ng-template>
+        </div>
+        <div nz-col nzSpan="2">
           <a title="{{currentUser}}">
               <nz-avatar
                 nzIcon="user"

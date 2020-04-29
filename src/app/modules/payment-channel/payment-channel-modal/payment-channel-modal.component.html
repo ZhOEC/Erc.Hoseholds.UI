@@ -3,7 +3,7 @@
         <nz-form-item>
             <nz-form-label [nzSpan]="9" nzRequired nzFor="name">Назва</nz-form-label>
             <nz-form-control [nzSpan]="12" nzErrorTip="Обов'язкове поле">
-              <input nz-input id="name" formControlName="name" placeholder="Назва" />
+              <textarea nz-input formControlName="name" placeholder="Назва" [nzAutosize]="{ minRows: 3, maxRows: 4 }"></textarea>
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
@@ -21,7 +21,7 @@
         <nz-form-item>
           <nz-form-label [nzSpan]="9" nzFor="dateFieldName">Дата</nz-form-label>
           <nz-form-control [nzSpan]="12">
-            <nz-date-picker [nzFormat]="dateFormat" formControlName="dateFieldName" [nzDisabledDate]="datesMoreToday"></nz-date-picker>
+            <input nz-input formControlName="dateFieldName" placeholder="Дата" />
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
