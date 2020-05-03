@@ -1,3 +1,4 @@
+import { UploadFile } from 'ng-zorro-antd/upload/interface'
 import { PaymentChannelService } from './../../../shared/services/payment-chennel.service';
 import { PaymentChannel } from './../../../shared/models/payment-channel';
 import { Component, OnInit } from '@angular/core'
@@ -11,9 +12,9 @@ import { BranchOffice } from 'src/app/shared/models/branch-office.model'
   styleUrls: ['./payment-batch-add.component.css']
 })
 export class PaymentBatchAddComponent implements OnInit {
-
   dateFormat = 'dd.MM.yyyy'
   datesMoreToday = (date: number): boolean => { return date > Date.now() }
+  //fileList: UploadFile[] = [];
 
   paymentBatchForm: FormGroup
   branchOfficesList: BranchOffice[]
@@ -28,7 +29,8 @@ export class PaymentBatchAddComponent implements OnInit {
     this.paymentBatchForm = this.formBuilder.group({
       branchOfficeId: [null, [Validators.required]],
       paymentChannelId: [null, [Validators.required]],
-      dateComing: [null, [Validators.required]]
+      dateComing: [null, [Validators.required]],
+      file: [null]
     })
 
     this.getBranchOffices()
@@ -50,7 +52,15 @@ export class PaymentBatchAddComponent implements OnInit {
     })
   }
 
+  beforeUpload = (file: UploadFile): boolean => {
+    //this.fileList[0] = file;
+    this.paymentBatchForm.get('file').setValue(file);
+    return false;
+  };
+
   resetForm() {}
 
-  submitForm() {}
+  submitForm() {
+    console.log(this.paymentBatchForm.value)
+  }
 }

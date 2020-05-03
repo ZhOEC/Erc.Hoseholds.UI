@@ -11,7 +11,7 @@
           <h1>ТОВ "ЖОЕК"</h1>
         </a>
       </div>
-      <ul nzTheme="dark" nz-menu nzMode="inline" >
+      <ul nzTheme="dark" nz-menu nzMode="inline">
         <li nz-menu-item>
           <a [routerLink]="['/']" routerLinkActive="router-link-active"  routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
             <i nz-icon><svg-icon src="assets/users.svg" [svgStyle]="{ 'width.px':16 }"></svg-icon></i>
@@ -32,6 +32,7 @@
           <ul>
             <li nz-menu-item>
               <a [routerLink]="['/tariffs']" routerLinkActive="router-link-active"  routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
+                <i nz-icon nzType="fund"></i>
                 Тарифи
               </a>
             </li>
@@ -39,6 +40,12 @@
               <a [routerLink]="['/payment-channel']" routerLinkActive="router-link-active"  routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
                 <i nz-icon nzType="fork" nzTheme="outline"></i>
                 Канали оплати
+              </a>
+            </li>
+            <li nz-menu-item>
+              <a [routerLink]="['/payment-batch-add']" routerLinkActive="router-link-active"  routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
+                <i nz-icon><svg-icon src="assets/stack.svg" [svgStyle]="{ 'width.px':16, 'fill':'rgba(255, 255, 255, 0.65)'}"></svg-icon></i>
+                Додати пачку платежів
               </a>
             </li>
           </ul>

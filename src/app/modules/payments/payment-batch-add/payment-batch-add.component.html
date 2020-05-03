@@ -13,7 +13,7 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="6" nzFor="paymentChannelId" nzRequired>Канал оплати</nz-form-label>
     <nz-form-control [nzSpan]="10" nzErrorTip="Не обрано канал оплати">
-      <nz-select nzPlaceHolder="Виберіть канал оплати" formControlName="paymentChannelId">
+      <nz-select nzPlaceHolder="Виберіть канал оплати" formControlName="paymentChannelId" nzShowSearch>
         <nz-option *ngFor="let paymentChannel of paymentChannelsList" [nzValue]="paymentChannel.id" [nzLabel]="paymentChannel.name">
         </nz-option>
       </nz-select>
@@ -21,21 +21,24 @@
   </nz-form-item>
   <nz-form-item>
     <nz-form-label [nzSpan]="6" nzRequired nzFor="dateComing">Дата надходження</nz-form-label>
-    <nz-form-control [nzSpan]="10" nzErrorTip="Не обрано дату налходження">
+    <nz-form-control [nzSpan]="10" nzErrorTip="Не обрано дату надходження">
       <nz-date-picker [nzFormat]="dateFormat" formControlName="dateComing" [nzDisabledDate]="datesMoreToday"></nz-date-picker>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
     <nz-form-control [nzSpan]="6"></nz-form-control>
-    <nz-form-control [nzSpan]="10" nzErrorTip="Не обрано дату налходження">
+    <nz-form-control [nzSpan]="10">
       <nz-upload
-          nzType="drag"
-          [nzMultiple]="false"
-        >
-          <p class="ant-upload-drag-icon">
-            <i nz-icon nzType="inbox"></i>
-          </p>
-          <p class="ant-upload-text">Натисніть або перетягніть файл сюди</p>
+        formControlName="file"
+        nzType="drag"
+        [nzMultiple]="false"
+        [nzBeforeUpload]="beforeUpload"
+      >
+        <p class="ant-upload-drag-icon">
+          <i nz-icon nzType="inbox"></i>
+        </p>
+        <!-- <p *ngIf="fileList.length === 0 else fileName" class="ant-upload-text">Натисніть або перетягніть файл сюди</p>
+        <ng-template #fileName let-user>{{ fileList[0].name }}</ng-template> -->
       </nz-upload>
     </nz-form-control>
   </nz-form-item>

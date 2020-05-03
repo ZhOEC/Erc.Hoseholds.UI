@@ -15,7 +15,7 @@ import uk from '@angular/common/locales/uk';
 import { AppRoutingModule } from './app-routing.module';
 import { AccountingPointModule } from './modules/accounting-point/accounting-point.module';
 import { TariffModule } from './modules/tariffs/tariff.module';
-import { PaymentChannelModule } from './modules/payment-channel/payment-channel.module';
+import { PaymentsModule } from './modules/payments/payments.module';
 
 import { BranchOfficeService } from './shared/services/branch-office.service';
 import { AccountingPointsService } from './shared/services/accounting-points.service';
@@ -43,7 +43,7 @@ registerLocaleData(uk);
     AngularSvgIconModule,
     AccountingPointModule,
     TariffModule,
-    PaymentChannelModule
+    PaymentsModule
   ],
   providers: [
     DistributionSystemOperatorService,
