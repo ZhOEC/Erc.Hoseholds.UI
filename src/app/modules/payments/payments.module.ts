@@ -15,12 +15,14 @@ import { NzUploadModule } from 'ng-zorro-antd/upload'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { PaymentChannelListComponent } from './payment-channel-list/payment-channel-list.component'
 import { PaymentChannelModalComponent } from './payment-channel-modal/payment-channel-modal.component'
-import { PaymentBatchAddComponent } from './payment-batch-add/payment-batch-add.component'
+import { PaymentBatchAddComponent } from './payment-batch-add-modal/payment-batch-add-modal.component'
+import { PaymentBatchListComponent } from './payment-batch-list/payment-batch-list.component'
 
 @NgModule({
   declarations: [
     PaymentChannelListComponent,
     PaymentChannelModalComponent,
+    PaymentBatchListComponent,
     PaymentBatchAddComponent
   ],
   imports: [
@@ -43,6 +45,7 @@ import { PaymentBatchAddComponent } from './payment-batch-add/payment-batch-add.
   exports: [
     PaymentChannelListComponent,
     PaymentChannelModalComponent,
+    PaymentBatchListComponent,
     PaymentBatchAddComponent
   ]
 })

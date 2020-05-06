@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { PaymentChannel } from '../../../shared/models/payment-channel';
-import { PaymentChannelService } from '../../../shared/services/payment-chennel.service';
+import { PaymentChannel } from '../../../shared/models/payments/payment-channel.model';
+import { PaymentChannelService } from '../../../shared/services/payment-channel.service';
 import { NotificationComponent } from 'src/app/shared/components/notification/notification.component';
 
 @Component({
@@ -29,9 +29,6 @@ export class PaymentChannelModalComponent implements OnInit {
     { id: 1, name: 'Пільга або субсидія' },
     { id: 2, name: 'Компенсація ОСР' }
   ]
-
-  dateFormat = 'dd.MM.yyyy'
-  datesMoreToday = (date: number): boolean => { return date > Date.now() }
 
   constructor(private formBuilder: FormBuilder, 
     private paymentChannelService: PaymentChannelService,

@@ -1,20 +1,23 @@
 import { UploadFile } from 'ng-zorro-antd/upload/interface'
-import { PaymentChannelService } from './../../../shared/services/payment-chennel.service';
-import { PaymentChannel } from './../../../shared/models/payment-channel';
+import { PaymentChannelService } from '../../../shared/services/payment-channel.service';
+import { PaymentChannel } from '../../../shared/models/payments/payment-channel.model';
 import { Component, OnInit } from '@angular/core'
-import { FormGroup, FormBuilder, Validators } from '@angular/forms'
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { BranchOfficeService } from 'src/app/shared/services/branch-office.service'
 import { BranchOffice } from 'src/app/shared/models/branch-office.model'
+import { PaymentBatchService } from 'src/app/shared/services/payment-batch.service';
 
 @Component({
-  selector: 'app-payment-batch-add',
-  templateUrl: './payment-batch-add.component.html',
-  styleUrls: ['./payment-batch-add.component.css']
+  selector: 'app-payment-batch-add-modal',
+  templateUrl: './payment-batch-add-modal.component.html',
+  styleUrls: ['./payment-batch-add-modal.component.css']
 })
+
 export class PaymentBatchAddComponent implements OnInit {
   dateFormat = 'dd.MM.yyyy'
   datesMoreToday = (date: number): boolean => { return date > Date.now() }
-  //fileList: UploadFile[] = [];
+  isVisible = false
+  isOkLoading = false
 
   paymentBatchForm: FormGroup
   branchOfficesList: BranchOffice[]
@@ -23,6 +26,7 @@ export class PaymentBatchAddComponent implements OnInit {
   constructor(
     private branchOfficeService: BranchOfficeService,
     private paymentChannelService: PaymentChannelService,
+    private paymentBatchService: PaymentBatchService,
     private formBuilder: FormBuilder) {}
 
   ngOnInit() {
@@ -30,11 +34,15 @@ export class PaymentBatchAddComponent implements OnInit {
       branchOfficeId: [null, [Validators.required]],
       paymentChannelId: [null, [Validators.required]],
       dateComing: [null, [Validators.required]],
-      file: [null]
+      uploadFile: new FormControl()
     })
 
     this.getBranchOffices()
-    this.getPaymentChannel()
+    this.getPaymentChannels()
+  }
+
+  openDialog() {
+    this.isVisible = true
   }
 
   getBranchOffices() {
@@ -46,21 +54,38 @@ export class PaymentBatchAddComponent implements OnInit {
     })
   }
 
-  getPaymentChannel() {
+  getPaymentChannels() {
     this.paymentChannelService.getAll().subscribe(data => {
       this.paymentChannelsList = data
     })
   }
 
   beforeUpload = (file: UploadFile): boolean => {
-    //this.fileList[0] = file;
-    this.paymentBatchForm.get('file').setValue(file);
+    this.paymentBatchForm.get('uploadFile').setValue(file)
     return false;
   };
 
-  resetForm() {}
+  resetForm() {
+    this.paymentBatchForm.reset()
+  }
 
   submitForm() {
-    console.log(this.paymentBatchForm.value)
+    this.isOkLoading = true
+
+    const formData = new FormData();
+    for (const key of Object.keys(this.paymentBatchForm.value)) {
+      let value = this.paymentBatchForm.get(key).value
+      if(value instanceof Date) value = (new Date(value)).toISOString()
+      formData.append(key, value)
+    }
+
+    this.paymentBatchService.add(formData).subscribe(res => {
+      this.isOkLoading = false
+      console.log(res)
+    },
+    error => {
+      console.log(error)
+      this.isOkLoading = false
+    })
   }
 }

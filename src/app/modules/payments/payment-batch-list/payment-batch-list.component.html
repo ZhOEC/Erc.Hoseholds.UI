@@ -1,0 +1,22 @@
+<button nz-button nzType="primary" (click)="addPaymentBatch()">Додати</button>
+<br/>
+<br/>
+<nz-table #paymentBatchesTable [nzData]="paymentBatchesList" nzSize="small">
+  <thead>
+    <tr>
+      <th>Канал оплати</th>
+      <th>Кількість</th>
+      <th>Сума</th>
+      <th>Статус</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let pb of paymentBatchesTable.data">
+      <td>{{ pb.paymentChannelName }}</td>
+      <td>{{ pb.totalCount }}</td>
+      <td>{{ pb.totalAmount }}</td>
+      <td>{{ pb.isClosed ? 'Закрита' : 'Відкрита'}}</td>
+    </tr>
+  </tbody>
+</nz-table>
+<app-payment-batch-add-modal></app-payment-batch-add-modal>

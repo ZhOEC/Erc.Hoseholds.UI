@@ -22,7 +22,8 @@ import { AccountingPointsService } from './shared/services/accounting-points.ser
 import { DistributionSystemOperatorService } from './shared/services/distribution-system-operator.service';
 import { AddressService } from './shared/services/address.service';
 import { PersonService } from './shared/services/person.service';
-import { PaymentChannelService } from './shared/services/payment-chennel.service';
+import { PaymentChannelService } from './shared/services/payment-channel.service';
+import { PaymentBatchService } from './shared/services/payment-batch.service';
 
 registerLocaleData(uk);
 
@@ -52,6 +53,7 @@ registerLocaleData(uk);
     AddressService,
     PersonService,
     PaymentChannelService,
+    PaymentBatchService,
     { provide: NZ_I18N, useValue: uk_UA },
     { provide: LOCALE_ID, useValue: 'uk-UA' },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

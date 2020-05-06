@@ -17,14 +17,14 @@
   </thead>
   <tbody>
     <tr *ngFor="let pc of paymentChannelsTable.data">
-      <td>{{pc.name}}</td>
-      <td>{{pc.recordpointFieldName}}</td>
-      <td>{{pc.sumFieldName}}</td>
-      <td>{{pc.dateFieldName | date: 'dd.MM.yyyy'}}</td>
-      <td>{{pc.textDateFormat}}</td>
-      <td>{{pc.personFieldName}}</td>
-      <td>{{pc.totalRecord}}</td>
-      <td>{{pc.type}}</td>
+      <td>{{ pc.name }}</td>
+      <td>{{ pc.recordpointFieldName }}</td>
+      <td>{{ pc.sumFieldName }}</td>
+      <td>{{ pc.dateFieldName }}</td>
+      <td>{{ pc.textDateFormat }}</td>
+      <td>{{ pc.personFieldName }}</td>
+      <td>{{ pc.totalRecord }}</td>
+      <td>{{ pc.type }}</td>
       <td>
         <a><i nz-icon nzType="edit" (click)="edit(paymentChannelsTable.data, pc)" nzTheme="outline"></i></a>
         <nz-divider nzType="vertical"></nz-divider>

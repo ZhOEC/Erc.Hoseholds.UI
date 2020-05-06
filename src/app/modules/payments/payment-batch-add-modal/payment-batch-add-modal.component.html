@@ -1,0 +1,47 @@
+<nz-modal nzTitle="Додавання пачки платежів" [nzVisible]="isVisible"
+  (nzOnCancel)="isVisible=false" (nzOnOk)="submitForm()" [nzOkText]="isOkLoading ? 'Відправка' : 'Відправити'" 
+  [nzOkDisabled]="!paymentBatchForm.valid || !paymentBatchForm.touched"
+  [nzOkLoading]="isOkLoading"
+  nzWidth=690>
+  <form nz-form [formGroup]="paymentBatchForm" (ngSubmit)="submitForm()">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" nzFor="branchOfficeId" nzRequired>ЦОК</nz-form-label>
+      <nz-form-control [nzSpan]="19" nzErrorTip="Не обрано ЦОК">
+        <nz-select nzPlaceHolder="Виберіть ЦОК" formControlName="branchOfficeId">
+          <nz-option *ngFor="let branchOffice of branchOfficesList" [nzValue]="branchOffice.id" [nzLabel]="branchOffice.name"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" nzFor="paymentChannelId" nzRequired>Канал оплати</nz-form-label>
+      <nz-form-control [nzSpan]="19" nzErrorTip="Не обрано канал оплати">
+        <nz-select nzPlaceHolder="Виберіть канал оплати" formControlName="paymentChannelId" nzShowSearch>
+          <nz-option *ngFor="let paymentChannel of paymentChannelsList" [nzValue]="paymentChannel.id" [nzLabel]="paymentChannel.name"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" nzFor="dateComing" nzRequired>Дата надходження</nz-form-label>
+      <nz-form-control [nzSpan]="19" nzErrorTip="Не обрано дату надходження пачки">
+        <nz-date-picker [nzFormat]="dateFormat" formControlName="dateComing" [nzDisabledDate]="datesMoreToday"></nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control [nzSpan]="6"></nz-form-control>
+      <nz-form-control [nzSpan]="19">
+        <nz-upload
+          nzType="drag"
+          [nzMultiple]="false"
+          [nzBeforeUpload]="beforeUpload"
+          nzAccept=".dbf,.xls,.xlsx"
+        >
+          <h4>Файл пачки</h4>
+          <p class="ant-upload-drag-icon">
+            <i nz-icon nzType="inbox"></i>
+          </p>
+          <p>{{ paymentBatchForm.get('uploadFile').value ? paymentBatchForm.get('uploadFile').value.name : 'Натисніть або перетягніть файл сюди' }}</p>
+        </nz-upload>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-modal>
