@@ -49,10 +49,10 @@
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
-    <nz-form-label [nzSpan]="5" nzRequired nzFor="city">Місто</nz-form-label>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="city">Населений пункт</nz-form-label>
     <nz-form-control [nzSpan]="12" nzErrorTip="Не введено назву міста">
-      <nz-select nzPlaceHolder="Оберіть місто" formControlName="city" (ngModelChange)="getStreets($event)">
-        <nz-option *ngFor="let city of citiesList" [nzValue]="city.id" [nzLabel]="city.name">
+      <nz-select nzPlaceHolder="Оберіть населений пункт" formControlName="city" (ngModelChange)="getStreets($event)">
+        <nz-option *ngFor="let city of citiesList" [nzValue]="city.id" [nzLabel]="city.isRegionCity ? city.name : city.name + ', ' + city.districtName">
         </nz-option>
       </nz-select>
     </nz-form-control>
@@ -130,7 +130,6 @@
         </nz-form-item>
       </div>
     </div>
-    <nz-divider></nz-divider>
 
     <div *ngIf="isPersonInputsShown" formGroupName="owner">
       <div nz-col>
@@ -159,23 +158,25 @@
 
       <div nz-col>
         <div nz-col>
-          <nz-form-item>
-            <nz-form-label [nzSpan]="7" nzRequired nzFor="idCardIssuanceDate">Дата видачі</nz-form-label>
-            <nz-form-control [nzSpan]="10" nzErrorTip="Не обрано дату видачі">
-              <nz-date-picker [nzFormat]="dateFormat" formControlName="idCardIssuanceDate"></nz-date-picker>
-            </nz-form-control>
-          </nz-form-item>
+          <div nz-col>
+            <nz-form-item>
+              <nz-form-label [nzSpan]="7" nzRequired nzFor="idCardIssuanceDate">Дата видачі</nz-form-label>
+              <nz-form-control [nzSpan]="10" nzErrorTip="Не обрано дату видачі">
+                <nz-date-picker [nzFormat]="dateFormat" formControlName="idCardIssuanceDate" [nzDisabledDate]="datesMoreToday"></nz-date-picker>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div nz-col>  
+            <nz-form-item>
+              <nz-form-label [nzSpan]="7" nzRequired nzFor="idCardExpirationDate">Дата закінчення ID картки</nz-form-label>
+              <nz-form-control [nzSpan]="10" nzErrorTip="Не обрано дату закінчення ID картки">
+                <nz-date-picker [nzFormat]="dateFormat" formControlName="idCardExpirationDate" [nzDisabledDate]="datesLessToday"></nz-date-picker>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
         </div>
 
-        <div nz-col>
-          <nz-form-item>
-            <nz-form-label [nzSpan]="7" nzRequired nzFor="idCardExpirationDate">Дата закінчення ID картки
-            </nz-form-label>
-            <nz-form-control [nzSpan]="10" nzErrorTip="Не обрано дату закінчення ID картки">
-              <nz-date-picker [nzFormat]="dateFormat" formControlName="idCardExpirationDate"></nz-date-picker>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
       </div>
 
       <div nz-col>
@@ -198,7 +199,7 @@
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label [nzSpan]="7" nzFor="mobilePhones">Мобільні номери телефонів</nz-form-label>
+          <nz-form-label [nzSpan]="7" nzFor="mobilePhones">Номери мобільних телефонів</nz-form-label>
           <nz-form-control [nzSpan]="10" nzErrorTip="Не введено жодного номера телефону">
             <nz-select formControlName="mobilePhones" nzMode="tags" [nzTokenSeparators]="[',']"></nz-select>
           </nz-form-control>

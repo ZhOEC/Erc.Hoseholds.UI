@@ -1,5 +1,5 @@
 import { Person } from './person.model';
-import { IAddress } from './address.model';
+import { Address } from './address/address.model';
 
 export interface AccountingPoint {
     id: number
@@ -13,6 +13,6 @@ export interface AccountingPoint {
     building: string
     appartament: string
     contractStartDate: Date
-    address: IAddress
+    address: Address
     owner: Person
 }
