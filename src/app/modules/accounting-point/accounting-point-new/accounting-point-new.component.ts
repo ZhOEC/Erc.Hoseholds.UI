@@ -69,7 +69,7 @@ export class AccountingPointNewComponent {
 
       searchPerson: [null, [Validators.required]],
       owner: this.formBuilder.group({
-        id: [{value: null}],
+        id: [0],
         taxCode: [{value: null, disabled: true}, [Validators.required]],
         idCardNumber: [{value: null}, [Validators.required]],
         idCardIssuanceDate: [{value: null}, [Validators.required]],
