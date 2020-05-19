@@ -1,6 +1,7 @@
 export interface PaymentBatchView {
     id: number,
-    paymentChannelName: string,
+    name: string,
+    date: Date,
     totalCount: number,
     totalMount: number,
     isClosed: boolean

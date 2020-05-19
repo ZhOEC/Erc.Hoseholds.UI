@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountingPointsService } from '../../../shared/services/accounting-points.service';
+import { AccountingPointService } from '../../../shared/services/accounting-point.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { AccountingPointDetail } from '../../../shared/models/accounting-point-detail.model';
@@ -14,7 +14,7 @@ export class AccountingPointDetailComponent implements OnInit {
 
   accountingPoint$: Observable<AccountingPointDetail>
 
-  constructor(private accointinPointService: AccountingPointsService, private route: ActivatedRoute) { }
+  constructor(private accointinPointService: AccountingPointService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     console.log('AccountingPointDetailComponent oninit');

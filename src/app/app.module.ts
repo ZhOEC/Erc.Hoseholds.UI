@@ -18,7 +18,7 @@ import { TariffModule } from './modules/tariffs/tariff.module';
 import { PaymentsModule } from './modules/payments/payments.module';
 
 import { BranchOfficeService } from './shared/services/branch-office.service';
-import { AccountingPointsService } from './shared/services/accounting-points.service';
+import { AccountingPointService } from './shared/services/accounting-point.service';
 import { DistributionSystemOperatorService } from './shared/services/distribution-system-operator.service';
 import { AddressService } from './shared/services/address.service';
 import { PersonService } from './shared/services/person.service';
@@ -49,7 +49,7 @@ registerLocaleData(uk);
   providers: [
     DistributionSystemOperatorService,
     BranchOfficeService,
-    AccountingPointsService,
+    AccountingPointService,
     AddressService,
     PersonService,
     PaymentChannelService,

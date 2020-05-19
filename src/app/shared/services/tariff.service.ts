@@ -8,7 +8,7 @@ import { TariffRate } from '../models/tariff-rate';
 @Injectable({
   providedIn: 'root'
 })
-export class TariffsService {
+export class TariffService {
 
   private apiUri = `${environment.apiServer}tariffs`;
 
