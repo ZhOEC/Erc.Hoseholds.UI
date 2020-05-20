@@ -11,7 +11,7 @@ import { PaymentBatchAddComponent } from '../payment-batch-add-modal/payment-bat
 export class PaymentBatchListComponent implements OnInit {
   dateFormat = 'dd.MM.yyyy'
   
-  @ViewChild(PaymentBatchAddComponent) 
+  @ViewChild(PaymentBatchAddComponent)
   private PaymentBatchAddComponent: PaymentBatchAddComponent
 
   totalCount: number

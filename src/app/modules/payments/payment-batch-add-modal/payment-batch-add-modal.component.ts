@@ -71,16 +71,7 @@ export class PaymentBatchAddComponent implements OnInit {
   };
 
   resetForm() {
-    //this.paymentBatchForm.reset()
-    const pbv: PaymentBatchView = {
-      id: 1000,
-      date: new Date(),
-      name: "Batch #1000",
-      totalCount: 1000,
-      totalMount: 1000,
-      isClosed: false
-    }
-    this.addPaymentsBatchToList.emit(pbv)
+    this.paymentBatchForm.reset()
   }
 
   submitForm() {

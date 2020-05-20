@@ -32,7 +32,7 @@
   <thead>
     <tr>
       <th>Id</th>
-      <th>Назва</th>
+      <th>Канал оплати</th>
       <th>Дата надходження</th>
       <th>Кількість</th>
       <th>Сума</th>
@@ -43,8 +43,8 @@
   <tbody>
     <tr *ngFor="let pb of paymentsBatchTable.data">
       <td>{{ pb.id }}</td>
-      <td>{{ pb.name }}</td>
-      <td>{{ pb.date | date: dateFormat }}</td>
+      <td>{{ pb.paymentChannelName }}</td>
+      <td>{{ pb.incomingDate | date: dateFormat }}</td>
       <td>{{ pb.totalCount }}</td>
       <td>{{ pb.totalAmount }}</td>
       <td>{{ pb.isClosed ? 'Закрита' : 'Відкрита'}}</td>
