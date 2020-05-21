@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { PaymentChannel } from '../../../shared/models/payments/payment-channel.model';
-import { PaymentChannelService } from '../../../shared/services/payment-channel.service';
-import { NotificationComponent } from 'src/app/shared/components/notification/notification.component';
+import { Component, OnInit } from '@angular/core'
+import { FormGroup, FormBuilder, Validators } from '@angular/forms'
+import { PaymentChannel } from '../../../shared/models/payments/payment-channel.model'
+import { PaymentChannelService } from '../../../shared/services/payment-channel.service'
+import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
 
 @Component({
   selector: 'app-payment-channel-modal',
@@ -13,6 +13,7 @@ export class PaymentChannelModalComponent implements OnInit {
   modalTitle: string
   submitButtonText: string
   isVisible = false
+  isOkLoading = false
 
   paymentChannelForm: FormGroup
   paymentChannels: PaymentChannel[]
@@ -78,11 +79,14 @@ export class PaymentChannelModalComponent implements OnInit {
   }
 
   submitForm() {
+    this.isOkLoading = true
+
     if(this.paymentChannelForm.value.id) {
       this.paymentChannelService.update(this.paymentChannelForm.value).subscribe(() => {
         const index = this.paymentChannels.findIndex(x => x.id == this.paymentChannelForm.value.id)
         this.paymentChannels[index] = this.paymentChannelForm.value
         this.notification.show('success', 'Успіх', `Канал оплати ${this.paymentChannelForm.value.name} успішно оновлено!`);
+        this.isOkLoading = false
         this.isVisible = false
       })
     } else {
@@ -90,6 +94,7 @@ export class PaymentChannelModalComponent implements OnInit {
       this.paymentChannelService.add(this.paymentChannelForm.value).subscribe(pc => {
         this.paymentChannels.push(pc)
         this.notification.show('success', 'Успіх', `Канал оплати ${this.paymentChannelForm.value.name} успішно додано!`);
+        this.isOkLoading = false
         this.isVisible = false
       })
     }

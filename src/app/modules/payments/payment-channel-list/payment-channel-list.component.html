@@ -1,7 +1,10 @@
 <button nz-button nzType="primary" (click)="addNew(paymentChannelsTable.data)">Додати</button>
 <br />
 <br />
-<nz-table #paymentChannelsTable [nzData]="paymentChannels" nzSize="small">
+<nz-table #paymentChannelsTable 
+  [nzData]="paymentChannels" 
+  nzSize="small"
+  nzBordered="true">
   <thead>
     <tr>
       <th>Назва</th>
@@ -12,7 +15,7 @@
       <th>Колонка інформації</th>
       <th>Рядок суми</th>
       <th>Tип платежу</th>
-      <th></th>
+      <th>Дії</th>
     </tr>
   </thead>
   <tbody>
@@ -24,7 +27,7 @@
       <td>{{ pc.textDateFormat }}</td>
       <td>{{ pc.personFieldName }}</td>
       <td>{{ pc.totalRecord }}</td>
-      <td>{{ pc.type }}</td>
+      <td>{{ pc.paymentsType }}</td>
       <td>
         <a><i nz-icon nzType="edit" (click)="edit(paymentChannelsTable.data, pc)" nzTheme="outline"></i></a>
         <nz-divider nzType="vertical"></nz-divider>

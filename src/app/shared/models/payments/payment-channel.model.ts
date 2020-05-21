@@ -7,5 +7,5 @@ export interface PaymentChannel {
     textDateFormat: string
     personFieldName: string
     totalRecord: number
-    type: number
+    paymentsType: number
 }

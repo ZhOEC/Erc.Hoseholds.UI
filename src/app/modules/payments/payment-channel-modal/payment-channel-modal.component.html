@@ -1,4 +1,9 @@
-<nz-modal [nzTitle]="modalTitle" [nzVisible]="isVisible" (nzOnCancel)="isVisible=false" (nzOnOk)="submitForm()" [nzOkText]="submitButtonText" [nzOkDisabled]="!paymentChannelForm.valid || !paymentChannelForm.touched">
+<nz-modal [nzTitle]="modalTitle" [nzVisible]="isVisible" 
+  (nzOnCancel)="isVisible=false" 
+  (nzOnOk)="submitForm()" 
+  [nzOkText]="submitButtonText" 
+  [nzOkDisabled]="!paymentChannelForm.valid || !paymentChannelForm.touched"
+  [nzOkLoading]="isOkLoading">
     <form nz-form [formGroup]="paymentChannelForm">
         <nz-form-item>
             <nz-form-label [nzSpan]="9" nzRequired nzFor="name">Назва</nz-form-label>

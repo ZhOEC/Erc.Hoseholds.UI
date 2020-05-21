@@ -30,7 +30,6 @@ export class AppComponent {
 
   getBranchOffices() {
     this.branchOfficeService.getBranchOffices().subscribe(data => {
-      console.log(data)
       this.branchOfficesList = data.sort((a, b) => a.name.localeCompare(b.name))
     })
   }

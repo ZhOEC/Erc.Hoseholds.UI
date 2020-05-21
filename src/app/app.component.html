@@ -54,14 +54,14 @@
   </nz-drawer>
   <nz-layout>
     <nz-header>
-      <div class="app-header" nz-row>
-        <div class="header-trigger" nz-col nzSpan="2">
-            <i nz-icon nzType="menu" nzTheme="outline" (click)="visibilityDrawer = true" class="trigger"></i>
-        </div>
-        <div nz-col nzSpan="17">
+      <nz-row class="app-header" nzJustify="space-between" nzAlign="middle">
+        <nz-col class="header-trigger" nzSpan="2">
+          <i nz-icon nzType="menu" nzTheme="outline" (click)="visibilityDrawer = true" class="trigger"></i>
+        </nz-col>
+        <nz-col nzSpan="17">
           <app-accounting-points-search></app-accounting-points-search>
-        </div>
-        <div nz-col nzSpan="2">
+        </nz-col>
+        <nz-col nzSpan="2">
           <button nz-button nz-popover [nzPopoverContent]="periodsTemplate" nzPopoverPlacement="bottomRight">
             Періоди
           </button>
@@ -72,8 +72,8 @@
               </p>
             </div>
           </ng-template>
-        </div>
-        <div nz-col nzSpan="2">
+        </nz-col>
+        <nz-col nzSpan="2">
           <a title="{{currentUser}}">
               <nz-avatar
                 nzIcon="user"
@@ -89,8 +89,8 @@
           <ng-template #userMenu>
             <a nz-button (click)="logout()" class="header-user-menu-item">Вихід</a>
           </ng-template>
-        </div>
-      </div>
+        </nz-col>
+      </nz-row>
     </nz-header>
     <nz-content>
       <div class="inner-content">
