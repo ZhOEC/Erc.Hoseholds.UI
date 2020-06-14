@@ -12,7 +12,7 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="5" nzRequired nzFor="name">EIC</nz-form-label>
     <nz-form-control [nzSpan]="12" [nzErrorTip]="eicErrorTpl">
-      <input id="eic" type="text" nz-input formControlName="eic" />
+      <input id="eic" type="text" nz-input formControlName="eic"/>
       <ng-template #eicErrorTpl let-control>
         <ng-container *ngIf="control.hasError('required')">
           Не введено EIC
@@ -89,7 +89,7 @@
         <nz-form-item>
           <nz-form-label [nzSpan]="9" nzRequired nzFor="zip">Поштовий індекс</nz-form-label>
           <nz-form-control [nzSpan]="4" nzErrorTip="Не введено індекс">
-            <input id="zip" type="text" nz-input formControlName="zip" />
+            <input id="zip" type="text" nz-input formControlName="zip"/>
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -102,100 +102,7 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-card nzTitle="Персона">
-    <div nz-row nzType="flex" nzJustify="center">
-      <div nz-col nzXs="17" nzSm="17" nzMd="14" nzLg="6" nzXl="5" nzXXl="4">
-        <button nz-button type="button" nzType="primary" (click)="personInputsTrigger()">Додати нового споживача</button>
-      </div>
-      <div nz-col nzXs="17" nzSm="17" nzMd="14" nzLg="2" nzXl="2" nzXXl="2">
-        <span> - або - </span>
-      </div>
-      <div nz-col nzXs="17" nzSm="17" nzMd="14" nzLg="12" nzXl="11" nzXXl="11">
-        <nz-form-item>
-          <nz-form-control nzErrorTip="Не обрано споживача">
-            <nz-select nzShowSearch nzServerSearch nzPlaceHolder="Пошук за паспортом або ІПН" (nzOnSearch)="searchPerson($event)"
-              (ngModelChange)="setDataPerson($event)" formControlName="searchPerson"
-              [nzCustomTemplate]="selectedPersonTemplate" [nzLoading]="isLoadingSearch">
-              <nz-option nzCustomContent *ngFor="let person of findPersons" [nzLabel]="person" [nzValue]="person">
-                <p><b>ПІБ:</b> {{person.lastName}} {{person.firstName}} {{person.patronymic}}</p>
-                <p><b>Номер паспорта:</b> {{person.idCardNumber}} <b>Іден. номер:</b> {{person.taxCode}}</p>
-              </nz-option>
-            </nz-select>
-            <ng-template #selectedPersonTemplate let-person>
-              <span>{{ person.nzLabel.lastName }} {{ person.nzLabel.firstName }} {{ person.nzLabel.patronymic }}
-                <b>{{ person.nzLabel.taxCode }} : {{ person.nzLabel.idCardNumber }}</b></span>
-            </ng-template>
-          </nz-form-control>
-        </nz-form-item>
-      </div>
-    </div>
-
-    <div *ngIf="isPersonInputsShown" formGroupName="owner">
-      <nz-form-item>
-        <input type="hidden" nz-input formControlName="id" />
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSpan]="7" nzRequired nzFor="taxCode">ІНН</nz-form-label>
-        <nz-form-control [nzSpan]="10" nzErrorTip="Не введено ІНН">
-          <input type="text" nz-input formControlName="taxCode"/>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSpan]="7" nzRequired nzFor="idCardNumber">Номер паспорту</nz-form-label>
-        <nz-form-control [nzSpan]="10" nzErrorTip="Не введено номер паспорту">
-          <input id="idCardNumber" type="text" nz-input formControlName="idCardNumber" />
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSpan]="7" nzRequired nzFor="idCardIssuer">Ким виданий</nz-form-label>
-        <nz-form-control [nzSpan]="10" nzErrorTip="Не введено ким виданий">
-          <input id="idCardIssuer" type="text" nz-input formControlName="idCardIssuer" />
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSpan]="7" nzRequired nzFor="idCardIssuanceDate">Дата видачі</nz-form-label>
-        <nz-form-control [nzSpan]="10" nzErrorTip="Не обрано дату видачі">
-          <nz-date-picker [nzFormat]="dateFormat" formControlName="idCardIssuanceDate" [nzDisabledDate]="datesMoreToday"></nz-date-picker>
-        </nz-form-control>
-      </nz-form-item>
-      
-      <nz-form-item>
-        <nz-form-label [nzSpan]="7" nzRequired nzFor="idCardExpirationDate">Дата закінчення ID картки</nz-form-label>
-        <nz-form-control [nzSpan]="10" nzErrorTip="Не обрано дату закінчення ID картки">
-          <nz-date-picker [nzFormat]="dateFormat" formControlName="idCardExpirationDate" [nzDisabledDate]="datesLessToday"></nz-date-picker>
-        </nz-form-control>
-      </nz-form-item>
-      
-      <nz-form-item>
-        <nz-form-label [nzSpan]="7" nzFor="firstName">Ім'я</nz-form-label>
-        <nz-form-control [nzSpan]="10" nzErrorTip="Не введено ім'я">
-          <input id="firstName" type="text" nz-input formControlName="firstName" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="7" nzFor="lastName">Прізвище</nz-form-label>
-        <nz-form-control [nzSpan]="10" nzErrorTip="Не введено прізвище">
-          <input id="lastName" type="text" nz-input formControlName="lastName" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="7" nzFor="patronymic">По батькові</nz-form-label>
-        <nz-form-control [nzSpan]="10" nzErrorTip="Не введено по батькові">
-          <input id="patronymic" type="text" nz-input formControlName="patronymic" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="7" nzFor="mobilePhones">Номери мобільних телефонів</nz-form-label>
-        <nz-form-control [nzSpan]="10" nzErrorTip="Не введено жодного номера телефону">
-          <nz-select formControlName="mobilePhones" nzMode="tags" [nzTokenSeparators]="[',']"></nz-select>
-        </nz-form-control>
-      </nz-form-item>
-    </div>
-  </nz-card>
+  <app-person-add></app-person-add>
 
   <nz-form-item>
     <nz-form-control [nzSpan]="12" [nzOffset]="5">

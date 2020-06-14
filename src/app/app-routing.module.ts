@@ -6,6 +6,7 @@ import { AccountingPointDetailComponent } from './modules/accounting-point/accou
 import { PaymentChannelListComponent } from './modules/payments/payment-channel-list/payment-channel-list.component'
 import { PaymentBatchListComponent } from './modules/payments/payment-batch-list/payment-batch-list.component'
 import { PaymentBatchDetailComponent } from './modules/payments/payment-batch-detail/payment-batch-detail.component'
+import { PersonAddComponent } from './modules/person/person-add/person-add.component'
 
 const routes: Routes = [
   { path: 'accounting-point-new', component: AccountingPointNewComponent },
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'tariffs', component: TariffListComponent },
   { path: 'payment-channel', component: PaymentChannelListComponent },
   { path: 'payment-batch-list', component: PaymentBatchListComponent },
-  { path: 'payment-batch-detail', component: PaymentBatchDetailComponent }
+  { path: 'payment-batch-detail/:id', component: PaymentBatchDetailComponent },
+  { path: 'person-add', component: PersonAddComponent }
 ];
 
 @NgModule({

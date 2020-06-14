@@ -38,7 +38,7 @@ export class PaymentChannelListComponent implements OnInit {
 
   delete(id: number) {
     this.paymentChannelService.delete(id).subscribe(() => {
-      this.paymentChannels = this.paymentChannels.filter(item => item.id !== id);
-    });
+      this.paymentChannels = this.paymentChannels.filter(item => item.id !== id)
+    })
   }
 }

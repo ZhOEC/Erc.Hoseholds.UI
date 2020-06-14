@@ -1,5 +1,5 @@
 import { UploadFile } from 'ng-zorro-antd/upload/interface'
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
+import { Component, OnInit, Output, EventEmitter } from '@angular/core'
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { BranchOfficeService } from 'src/app/shared/services/branch-office.service'
 import { BranchOffice } from 'src/app/shared/models/branch-office.model'
@@ -25,7 +25,7 @@ export class PaymentBatchAddComponent implements OnInit {
   branchOfficesList: BranchOffice[]
   paymentChannelsList: PaymentChannel[]
   
-  @Output() addPaymentsBatchToList = new EventEmitter<PaymentBatchView>();
+  @Output() addPaymentsBatchToList = new EventEmitter<PaymentBatchView>()
 
   constructor(
     private branchOfficeService: BranchOfficeService,
@@ -38,7 +38,7 @@ export class PaymentBatchAddComponent implements OnInit {
     this.paymentBatchForm = this.formBuilder.group({
       branchOfficeId: [null, [Validators.required]],
       paymentChannelId: [null, [Validators.required]],
-      dateComing: [null, [Validators.required]],
+      incomingDate: [null, [Validators.required]],
       uploadFile: new FormControl()
     })
 
@@ -77,22 +77,22 @@ export class PaymentBatchAddComponent implements OnInit {
   submitForm() {
     this.isOkLoading = true
 
-    const formData = new FormData();
+    const formData = new FormData()
     for (const key of Object.keys(this.paymentBatchForm.value)) {
       let value = this.paymentBatchForm.get(key).value
       if (value instanceof Date) value = (new Date(value)).toISOString()
       formData.append(key, value)
     }
 
-    this.paymentBatchService.add(formData).subscribe(paymentBatch => {
-      this.addPaymentsBatchToList.emit(paymentBatch)
+    this.paymentBatchService.add(formData).subscribe(paymentsBatch => {
+      this.addPaymentsBatchToList.emit(paymentsBatch)
       this.isOkLoading = false
 
       this.notification.show('success', 'Успіх', `Пачку платежів, успішно додано!`)
       this.paymentBatchForm.reset()
       this.isVisible = false
     },
-    () => {
+    _ => {
       this.notification.show('error', 'Фіаско', `Не вдалося додати пачку платежів!`)
       this.isOkLoading = false
     })

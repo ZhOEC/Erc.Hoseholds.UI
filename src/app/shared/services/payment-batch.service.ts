@@ -18,8 +18,16 @@ export class PaymentBatchService {
         return this.http.get(this.urn, { params: queryParams, observe: 'response' })
     }
 
+    getOne(id: number): Observable<PaymentBatchView> {
+        return this.http.get<PaymentBatchView>(this.urn + id)
+    }
+
     add(paymentBatch: FormData): Observable<PaymentBatchView> {
         return this.http.post<PaymentBatchView>(this.urn, paymentBatch)
+    }
+
+    update(paymentBatch: PaymentBatchView): Observable<PaymentBatchView> {
+        return this.http.put<PaymentBatchView>(this.urn + paymentBatch.id, paymentBatch)
     }
 
     delete(id: number): Observable<PaymentBatchView> {
