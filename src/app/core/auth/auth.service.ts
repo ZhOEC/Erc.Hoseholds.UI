@@ -69,7 +69,7 @@ export class AuthService {
       this.redirectToLoginPage();
     }
     else {
-      if (new Date(this.accessTokens.expires_at) < new Date()) {
+      if (!this.accessTokens || new Date(this.accessTokens.expires_at) < new Date()) {
         await this.retriveAccessTokens().toPromise();
       }
     }

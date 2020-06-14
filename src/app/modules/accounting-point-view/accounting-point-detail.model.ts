@@ -1,9 +1,10 @@
-import { Person } from './person.model';
+import { Person } from '../../shared/models/person.model';
 
 export interface AccountingPointDetail {
+    id: number
     branchOfficeName: string
     name: string
-    distributionSystemOperatorName: number
+    distributionSystemOperatorName: string
     tarriffName: string
     addressCityName: string
     adressStreetLocation: string

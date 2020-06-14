@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class AccountingPointsSearchComponent {
   selectedValue = null;
   searchResults: Array<{ id: number; text: string }> = [];
-  nzFilterOption = () => true;
+
 
   constructor(private accountingPointsService: AccountingPointService, private router: Router) { }
 
@@ -25,8 +25,8 @@ export class AccountingPointsSearchComponent {
     }
   }
 
-  select() {
-    this.router.navigate(['accounting-points', this.selectedValue]);
+  select(value: number) {
+    this.router.navigate(['accounting-points', value]);
   }
 
 }

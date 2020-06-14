@@ -24,6 +24,9 @@ import { AddressService } from './shared/services/address.service';
 import { PersonService } from './shared/services/person.service';
 import { PaymentChannelService } from './shared/services/payment-channel.service';
 import { PaymentBatchService } from './shared/services/payment-batch.service';
+import { AccountingPointViewModule } from './modules/accounting-point-view/accounting-point-view.module';
+import { ExemptionCategyListComponent } from './modules/common-references/exemption-categy-list/exemption-categy-list.component';
+import { CommonReferencesModule } from './modules/common-references/common-references.module';
 
 registerLocaleData(uk);
 
@@ -44,7 +47,9 @@ registerLocaleData(uk);
     AngularSvgIconModule,
     AccountingPointModule,
     TariffModule,
-    PaymentsModule
+    PaymentsModule,
+    AccountingPointViewModule,
+    CommonReferencesModule
   ],
   providers: [
     DistributionSystemOperatorService,

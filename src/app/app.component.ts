@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from './core/auth/auth.service';
 import { BranchOfficeService } from './shared/services/branch-office.service';
 import { BranchOffice } from './shared/models/branch-office.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -14,24 +15,17 @@ export class AppComponent {
   visibilityDrawer = false;
   placementDrawer = 'left';
 
-  branchOfficesList: BranchOffice[]
+  branchOfficesList$: Observable<BranchOffice[]>
 
   constructor(private authService: AuthService,
     private branchOfficeService: BranchOfficeService) { }
 
   ngOnInit() {
-    this.getBranchOffices()
+    this.branchOfficesList$ = this.branchOfficeService.getBranchOffices();;
     this.currentUser = this.authService.getUserName();
   }
 
   logout() {
     this.authService.logout();
-  }
-
-  getBranchOffices() {
-    this.branchOfficeService.getBranchOffices().subscribe(data => {
-      console.log(data)
-      this.branchOfficesList = data.sort((a, b) => a.name.localeCompare(b.name))
-    })
   }
 }

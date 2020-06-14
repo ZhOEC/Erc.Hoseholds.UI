@@ -1,9 +1,15 @@
 <div *ngIf="accountingPoint$ | async as a">
     <nz-page-header [nzGhost]="false" style="padding-left: 0px; padding-right: 0px;">
-        <nz-page-header-title>Картка побутового споживача</nz-page-header-title>
+        <nz-page-header-title>Побутовий споживач</nz-page-header-title>
         <nz-page-header-extra>
-            <button nz-button nzType="primary">Редагувати адресу</button>
-          <button nz-button nzType="primary">Новий договір</button>
+            <button nz-button nz-dropdown [nzDropdownMenu]="menu">Додатково<i nz-icon nzType="down"></i></button>
+            <nz-dropdown-menu #menu="nzDropdownMenu">
+                <ul nz-menu>
+                    <li nz-menu-item>Новий договір</li>
+                    <li nz-menu-item>Змінити тариф</li>
+                    <!-- <li nz-menu-item>3rd menu item length</li> -->
+                </ul>
+            </nz-dropdown-menu>
         </nz-page-header-extra>
     </nz-page-header>
     <nz-collapse>
@@ -14,7 +20,8 @@
                 </nz-descriptions-item>
                 <nz-descriptions-item nzTitle="EIC">{{a.eic}}</nz-descriptions-item>
                 <nz-descriptions-item nzTitle="Особовий рахунок">{{a.name}}</nz-descriptions-item>
-                <nz-descriptions-item nzTitle="Адреса">{{a.addressStreetLocation + ', '+ a.addressCityName + ', '+ a.addressZip}}
+                <nz-descriptions-item nzTitle="Адреса">
+                    {{a.addressStreetLocation + ', '+ a.addressCityName + ', '+ a.addressZip}}
                 </nz-descriptions-item>
                 <nz-descriptions-item [nzTitle]="a.debt < 0 ? 'Залишок': 'Борг'"><span
                         [ngStyle]="{'color': (a.debt < 0 ? 'blue' : 'red')}">{{(a.debt < 0 ? 1-a.debt : a.debt) | currency:'UAH':'грн.'}}</span>
@@ -25,21 +32,21 @@
             </nz-descriptions>
             <nz-descriptions nzTitle="Власник">
                 <nz-descriptions-item nzTitle="ПІБ">{{a.owner.fullName}}</nz-descriptions-item>
-                <nz-descriptions-item nzTitle="Паспорт">{{a.owner.idCardNumber}}</nz-descriptions-item>
-                <nz-descriptions-item *ngIf="a.owner.idCardExpDate; else issuanceDate" nzTitle="Дійсний до">
-                    {{a.owner.idCardExpDate | date:'mediumDate'}}
+                <nz-descriptions-item nzTitle="Паспорт">{{a.owner.idCardNumber}}<span style="color:rgba(0, 0, 0, 0.85)">
+                        виданий</span> {{a.owner.idCardIssuanceDate | date:'mediumDate'}}
+                    {{a.owner.idCardIssuer}}{{a.owner.idCardExpDate ? ' дійсний до '+(a.owner.idCardExpDate | date:'mediumDate'):''}}
                 </nz-descriptions-item>
-                <ng-template #issuanceDate>
-                    <nz-descriptions-item nzTitle="Виданий">{{a.owner.idCardIssuanceDate | date:'mediumDate'}}
-                    </nz-descriptions-item>
-                </ng-template>
+
                 <nz-descriptions-item nzTitle="Ідентифікаційний код">{{a.owner.taxCode}}</nz-descriptions-item>
-                <nz-descriptions-item nzTitle="Мобільні телефони"><span *ngFor="let ph of a.owner.mobilePhones; last as isLast">{{ph + (isLast ? '' : ',')}}
+                <nz-descriptions-item nzTitle="Мобільні телефони"><span
+                        *ngFor="let ph of a.owner.mobilePhones; last as isLast">{{ph + (isLast ? '' : ',')}}
                     </span></nz-descriptions-item>
             </nz-descriptions>
         </nz-collapse-panel>
         <nz-collapse-panel nzHeader="Рахунки" class="invoices-info">
-
+            <div>
+                <app-accounting-point-invoices [accountingPointId]="a.id"></app-accounting-point-invoices>
+            </div>
         </nz-collapse-panel>
         <nz-collapse-panel nzHeader="Платежі" class="payments-info">
 

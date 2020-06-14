@@ -1,0 +1,24 @@
+<nz-table #basicTable [nzData]="exemptionCategories" [nzShowPagination]="false" nzTitle="Пільгові категорії громадян">
+    <thead>
+      <tr>
+        <th>Назва</th>
+        <th>Знижка</th>
+        <th>Дата початку дії</th>
+        <th>Ліміт споживання</th>
+        <th>Дата закінчення</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{data.name}}</td>
+        <td>{{data.coeff+'%'}}</td>
+        <td>{{data.effectiveDate | date:'mediumDate'}}</td>
+        <td>{{data.hasLimit != null ? (data.hasLimit ? 'Так' : 'Ні') : 'За рішенням місцевої влади' }}</td>
+        <td>{{data.endDate}}</td>
+        <td>
+          <a title="Редагувати"> <i nz-icon nzType="edit" nzTheme="outline"></i></a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>

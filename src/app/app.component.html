@@ -1,90 +1,103 @@
 <nz-layout class="app-layout">
-  <nz-drawer
-    [nzVisible]="visibilityDrawer"
-    [nzPlacement]="placementDrawer"
-    [nzBodyStyle]="{ 'height': '100%', 'padding': '0px', background: '#001529'}"
-    (nzOnClose)="visibilityDrawer = false"
-  >
-      <div class="sidebar-logo">
-        <a href="https://www.ztoek.com.ua/" target="_blank">
-          <img src="../assets/logo.jpg" alt="logo">
-          <h1>ТОВ "ЖОЕК"</h1>
+  <nz-drawer [nzVisible]="visibilityDrawer" [nzPlacement]="placementDrawer"
+    [nzBodyStyle]="{ 'height': '100%', 'padding': '0px', background: '#001529'}" (nzOnClose)="visibilityDrawer = false">
+    <div class="sidebar-logo">
+      <a href="https://www.ztoek.com.ua/" target="_blank">
+        <img src="../assets/logo.jpg" alt="logo">
+        <h1>ТОВ "ЖОЕК"</h1>
+      </a>
+    </div>
+    <ul nzTheme="dark" nz-menu nzMode="inline">
+      <li nz-menu-item>
+        <a [routerLink]="['/']" routerLinkActive="router-link-active" routerLinkActive="router-link-active"
+          (click)="visibilityDrawer = false">
+          <i nz-icon>
+            <svg-icon src="assets/users.svg" [svgStyle]="{ 'width.px':16 }"></svg-icon>
+          </i>
+          Споживачі
         </a>
-      </div>
-      <ul nzTheme="dark" nz-menu nzMode="inline">
-        <li nz-menu-item>
-          <a [routerLink]="['/']" routerLinkActive="router-link-active"  routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
-            <i nz-icon><svg-icon src="assets/users.svg" [svgStyle]="{ 'width.px':16 }"></svg-icon></i>
-            Споживачі
-          </a>
-        </li>
-        <li nz-submenu nzTitle="Інше" nzIcon="appstore">
-          <ul>            
-            <li nz-menu-item>
-              <a [routerLink]="['/accounting-point-new']" routerLinkActive="router-link-active"  routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
-                <i nz-icon nzType="plus"></i>
-                Нова точку обліку
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li nz-submenu nzTitle="Налаштування" nzIcon="setting">
-          <ul>
-            <li nz-menu-item>
-              <a [routerLink]="['/tariffs']" routerLinkActive="router-link-active"  routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
-                <i nz-icon nzType="fund"></i>
-                Тарифи
-              </a>
-            </li>
-            <li nz-menu-item>
-              <a [routerLink]="['/payment-channel']" routerLinkActive="router-link-active"  routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
-                <i nz-icon nzType="fork" nzTheme="outline"></i>
-                Канали оплати
-              </a>
-            </li>
-            <li nz-menu-item>
-              <a [routerLink]="['/payment-batch-list']" routerLinkActive="router-link-active"  routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
-                <i nz-icon><svg-icon src="assets/stack.svg" [svgStyle]="{ 'width.px':16, 'fill':'rgba(255, 255, 255, 0.65)'}"></svg-icon></i>
-                Пачки платежів
-              </a>
-            </li>
-          </ul>
-        </li>
-      </ul>
+      </li>
+      <li nz-submenu nzTitle="Інше" nzIcon="appstore">
+        <ul>
+          <li nz-menu-item>
+            <a [routerLink]="['/accounting-point-new']" routerLinkActive="router-link-active"
+              routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
+              <i nz-icon nzType="plus"></i>
+              Нова точку обліку
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li nz-submenu nzTitle="Довідники" nzIcon="setting">
+        <ul>
+          <li nz-menu-item>
+            <a [routerLink]="['/tariffs']" routerLinkActive="router-link-active" routerLinkActive="router-link-active"
+              (click)="visibilityDrawer = false">
+              <i nz-icon nzType="fund"></i>
+              Тарифи
+            </a>
+          </li>
+          <li nz-menu-item>
+            <a [routerLink]="['/payment-channel']" routerLinkActive="router-link-active"
+              routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
+              <i nz-icon nzType="fork" nzTheme="outline"></i>
+              Канали оплати
+            </a>
+          </li>
+          <li nz-menu-item>
+            <a [routerLink]="['/exemption-categories']" routerLinkActive="router-link-active"
+              routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
+              <i nz-icon nzType="solution" nzTheme="outline"></i>
+              Пільгові категорії громадян
+            </a>
+          </li>
+          <li nz-menu-item>
+            <a [routerLink]="['/payment-batch-list']" routerLinkActive="router-link-active"
+              routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
+              <i nz-icon>
+                <svg-icon src="assets/stack.svg" [svgStyle]="{ 'width.px':16, 'fill':'rgba(255, 255, 255, 0.65)'}">
+                </svg-icon>
+              </i>
+              Пачки платежів
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
   </nz-drawer>
   <nz-layout>
     <nz-header>
       <div class="app-header" nz-row>
-        <div class="header-trigger" nz-col nzSpan="2">
-            <i nz-icon nzType="menu" nzTheme="outline" (click)="visibilityDrawer = true" class="trigger"></i>
+        <div class="header-trigger" nz-col nzSpan="1">
+          <i nz-icon nzType="menu" nzTheme="outline" (click)="visibilityDrawer = true" class="trigger"></i>
         </div>
         <div nz-col nzSpan="17">
           <app-accounting-points-search></app-accounting-points-search>
         </div>
-        <div nz-col nzSpan="2">
-          <button nz-button nz-popover [nzPopoverContent]="periodsTemplate" nzPopoverPlacement="bottomRight">
-            Періоди
-          </button>
-          <ng-template #periodsTemplate>
-            <div>
-              <p *ngFor="let bo of branchOfficesList">
-                {{ bo.name }} - {{ bo.currentPeriodName }} 
-              </p>
-            </div>
-          </ng-template>
+        <div nz-col nzSpan="4">
+          <div *ngIf="branchOfficesList$ | async as branchOfficesList">
+            <span *ngIf="branchOfficesList.length==1; else manyBranchOffices"
+              style="white-space: nowrap; color: darkblue;">{{ branchOfficesList[0].currentPeriodName }}</span>
+            <ng-template #manyBranchOffices>
+              <button nz-button nz-popover [nzPopoverContent]="periodsTemplate" nzPopoverPlacement="bottomRight">
+                ЦОКі...
+              </button>
+              <ng-template #periodsTemplate>
+                <div>
+                  <p *ngFor="let bo of branchOfficesList">
+                    {{ bo.name }} - {{ bo.currentPeriodName }}
+                  </p>
+                </div>
+              </ng-template>
+            </ng-template>
+          </div>
         </div>
-        <div nz-col nzSpan="2">
+        <div nz-col nzSpan="1">
           <a title="{{currentUser}}">
-              <nz-avatar
-                nzIcon="user"
-                [nzSize]="32"
-                nz-popover
-                nzPopoverTitle="Ви увійшли як: {{currentUser}}"
-                nzPopoverTrigger="click"
-                [nzPopoverContent]="userMenu"
-                nzPopoverPlacement="bottomRight"
-                style="background-color:#1d3d79;">
-              </nz-avatar>
+            <nz-avatar nzIcon="user" [nzSize]="32" nz-popover nzPopoverTitle="Ви увійшли як: {{currentUser}}"
+              nzPopoverTrigger="click" [nzPopoverContent]="userMenu" nzPopoverPlacement="bottomRight"
+              style="background-color:#1d3d79;">
+            </nz-avatar>
           </a>
           <ng-template #userMenu>
             <a nz-button (click)="logout()" class="header-user-menu-item">Вихід</a>

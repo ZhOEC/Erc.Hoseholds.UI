@@ -206,7 +206,8 @@ export class AccountingPointNewComponent {
 
     if(this.accountingPointForm.valid) {
       this.accountingPointService.add(this.accountingPointForm.getRawValue()).subscribe(res => {
-        this.notification.show('success', 'Успіх', `Точку обліку - ${res.name}, успішно додано`)
+        this.notification.show('success', 'Успіх', `Точку обліку, успішно створено`);
+        this.router.navigate(['accounting-points', res.id])
       })
     }
   }

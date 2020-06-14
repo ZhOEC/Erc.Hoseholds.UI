@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { AccountingPoint } from '../models/accounting-point.model';
-import { AccountingPointDetail } from '../models/accounting-point-detail.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,9 +20,4 @@ export class AccountingPointService {
   add(accountingPoint: AccountingPoint) {
     return this.http.post<AccountingPoint>(this.apiUri, accountingPoint)
   }
-
-  getOne(id: number){
-    return this.http.get<AccountingPointDetail>(this.apiUri+id);
-  }
-
 }

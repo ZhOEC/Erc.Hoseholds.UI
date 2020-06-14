@@ -4,3 +4,20 @@ body {
     margin: 0; 
 }
 .ant-table-title {font-weight: bold;}
+
+.invoices-info {
+    .ant-table-pagination-right
+    {
+        padding-right: 16px;
+    }
+    .ant-collapse-content > .ant-collapse-content-box {
+    padding: 0px; 
+ } 
+ /* .ant-table-thead > tr > th
+ {
+    padding: 8px 15px;
+ }
+ .ant-table-tbody > tr > td{
+     padding: 8px 15px;
+ } */
+}
