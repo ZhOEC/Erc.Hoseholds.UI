@@ -1,11 +1,13 @@
 import { UploadFile } from 'ng-zorro-antd/upload/interface'
-import { PaymentChannelService } from '../../../shared/services/payment-channel.service';
-import { PaymentChannel } from '../../../shared/models/payments/payment-channel.model';
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { BranchOfficeService } from 'src/app/shared/services/branch-office.service'
 import { BranchOffice } from 'src/app/shared/models/branch-office.model'
-import { PaymentBatchService } from 'src/app/shared/services/payment-batch.service';
+import { PaymentBatchService } from 'src/app/shared/services/payment-batch.service'
+import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
+import { PaymentChannelService } from '../../../shared/services/payment-channel.service'
+import { PaymentChannel } from '../../../shared/models/payments/payment-channel.model'
+import { PaymentBatchView } from 'src/app/shared/models/payments/payment-batch-view.model'
 
 @Component({
   selector: 'app-payment-batch-add-modal',
@@ -22,11 +24,14 @@ export class PaymentBatchAddComponent implements OnInit {
   paymentBatchForm: FormGroup
   branchOfficesList: BranchOffice[]
   paymentChannelsList: PaymentChannel[]
+  
+  @Output() addPaymentsBatchToList = new EventEmitter<PaymentBatchView>();
 
   constructor(
     private branchOfficeService: BranchOfficeService,
     private paymentChannelService: PaymentChannelService,
     private paymentBatchService: PaymentBatchService,
+    private notification: NotificationComponent,
     private formBuilder: FormBuilder) {}
 
   ngOnInit() {
@@ -75,16 +80,20 @@ export class PaymentBatchAddComponent implements OnInit {
     const formData = new FormData();
     for (const key of Object.keys(this.paymentBatchForm.value)) {
       let value = this.paymentBatchForm.get(key).value
-      if(value instanceof Date) value = (new Date(value)).toISOString()
+      if (value instanceof Date) value = (new Date(value)).toISOString()
       formData.append(key, value)
     }
 
-    this.paymentBatchService.add(formData).subscribe(res => {
+    this.paymentBatchService.add(formData).subscribe(paymentBatch => {
+      this.addPaymentsBatchToList.emit(paymentBatch)
       this.isOkLoading = false
-      console.log(res)
+
+      this.notification.show('success', 'Успіх', `Пачку платежів, успішно додано!`)
+      this.paymentBatchForm.reset()
+      this.isVisible = false
     },
-    error => {
-      console.log(error)
+    () => {
+      this.notification.show('error', 'Фіаско', `Не вдалося додати пачку платежів!`)
       this.isOkLoading = false
     })
   }

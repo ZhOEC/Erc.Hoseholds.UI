@@ -2,7 +2,7 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { TariffRate } from '../../../shared/models/tariff-rate';
 import { Tariff } from 'src/app/shared/models/tariff';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { TariffsService } from '../../../shared/services/tariffs.service';
+import { TariffService } from '../../../shared/services/tariff.service';
 
 @Component({
   selector: 'app-tariff-rate',
@@ -17,7 +17,7 @@ export class TariffRateComponent implements OnInit {
   isVisible: boolean = false;
   title: string;
 
-  constructor(private fb: FormBuilder, private tariffsService: TariffsService) { }
+  constructor(private fb: FormBuilder, private tariffsService: TariffService) { }
 
   ngOnInit() {
     this.tariffRateForm = this.fb.group({

@@ -7,7 +7,7 @@ import { AccountingPointDetail } from '../models/accounting-point-detail.model';
 @Injectable({
   providedIn: 'root'
 })
-export class AccountingPointsService {
+export class AccountingPointService {
   private apiUri = `${environment.apiServer}accountingpoints/`;
 
   constructor(private http: HttpClient) { }

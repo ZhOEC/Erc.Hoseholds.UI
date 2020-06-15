@@ -67,8 +67,9 @@
           </button>
           <ng-template #periodsTemplate>
             <div>
-              <p>04.2020 - Андрушівський ЦОК</p>
-              <p>03.2020 - Житомирський ЦОК</p>
+              <p *ngFor="let bo of branchOfficesList">
+                {{ bo.name }} - {{ bo.currentPeriodName }} 
+              </p>
             </div>
           </ng-template>
         </div>

@@ -1,5 +1,6 @@
 <nz-modal nzTitle="Додавання пачки платежів" [nzVisible]="isVisible"
-  (nzOnCancel)="isVisible=false" (nzOnOk)="submitForm()" [nzOkText]="isOkLoading ? 'Відправка' : 'Відправити'" 
+  (nzOnCancel)="isVisible=false" (nzOnOk)="submitForm()" [nzOkText]="isOkLoading ? 'Відправка' : 'Відправити'"
+  (nzOnCancel)="resetForm()"
   [nzOkDisabled]="!paymentBatchForm.valid || !paymentBatchForm.touched"
   [nzOkLoading]="isOkLoading"
   nzWidth=690>

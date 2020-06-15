@@ -2,11 +2,11 @@ import { Component, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DistributionSystemOperatorService } from '../../../shared/services/distribution-system-operator.service';
 import { DistributionSystemOperator } from '../../../shared/models/distribution-system-operator.model';
-import { TariffsService } from '../../../shared/services/tariffs.service';
+import { TariffService } from '../../../shared/services/tariff.service';
 import { Tariff } from '../../../shared/models/tariff';
 import { BranchOfficeService } from '../../../shared/services/branch-office.service';
 import { BranchOffice } from '../../../shared/models/branch-office.model';
-import { AccountingPointsService } from '../../../shared/services/accounting-points.service'
+import { AccountingPointService } from '../../../shared/services/accounting-point.service'
 import { Person } from '../../../shared/models/person.model';
 import { City } from '../../../shared/models/address/city.model';
 import { Street } from '../../../shared/models/address/street.model';
@@ -40,12 +40,12 @@ export class AccountingPointNewComponent {
   isLoadingCities: boolean = false
   isLoadingStreets: boolean = false
 
-  constructor(private accountingPointService: AccountingPointsService, 
+  constructor(private accountingPointService: AccountingPointService, 
     private personService: PersonService,
     private distributionSystemOperatorService: DistributionSystemOperatorService,
     private branchOfficeService: BranchOfficeService,
     private addressService: AddressService,
-    private tariffService: TariffsService,
+    private tariffService: TariffService,
     private formBuilder: FormBuilder,
     private router: Router,
     private notification: NotificationComponent

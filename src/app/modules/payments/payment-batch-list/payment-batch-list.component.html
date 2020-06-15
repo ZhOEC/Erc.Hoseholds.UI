@@ -1,22 +1,59 @@
-<button nz-button nzType="primary" (click)="addPaymentBatch()">Додати</button>
-<br/>
-<br/>
-<nz-table #paymentBatchesTable [nzData]="paymentBatchesList" nzSize="small">
+<ng-template #showClosedPaymentBatchTemplate>
+  <nz-row nzJustify="space-between" nzAlign="middle" nzGutter="12">
+    <nz-col>
+      <span>Список пачки платежів</span>
+    </nz-col>
+    <nz-col>
+      <nz-space [nzSize]="8">
+        <nz-space-item>
+          <label nz-checkbox [(ngModel)]="showClosedPaymentBatch" (ngModelChange)="onChangedShowClosedPaymentsBatch($event)">Показувати закриті</label>
+        </nz-space-item>
+        <nz-space-item>
+          <button nz-button nzType="primary" (click)="openDialogAddPaymentsBatch()">Додати</button>
+        </nz-space-item>
+      </nz-space>
+    </nz-col>
+  </nz-row>
+</ng-template>
+<nz-table #paymentsBatchTable 
+  [nzData]="paymentsBatchList"
+  (nzPageIndexChange)="onChangedTablePageIndex($event)"
+  (nzPageSizeChange)="onChangedTablePageSize($event)"
+  [nzFrontPagination]="false"
+  [nzTotal]="totalCount"
+  [nzPageSize]="pageSize"
+  [nzPageIndex]="pageNumber"
+  [nzShowSizeChanger]="true"
+  [nzLoading]="isLoading"
+  [nzTitle]="showClosedPaymentBatchTemplate"
+  [nzFooter]="totalCount ? 'Всього: ' + totalCount : null"
+  nzSize="small"
+  nzBordered="true">
   <thead>
     <tr>
+      <th>Id</th>
       <th>Канал оплати</th>
+      <th>Дата надходження</th>
       <th>Кількість</th>
       <th>Сума</th>
       <th>Статус</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let pb of paymentBatchesTable.data">
+    <tr *ngFor="let pb of paymentsBatchTable.data">
+      <td>{{ pb.id }}</td>
       <td>{{ pb.paymentChannelName }}</td>
+      <td>{{ pb.incomingDate | date: dateFormat }}</td>
       <td>{{ pb.totalCount }}</td>
       <td>{{ pb.totalAmount }}</td>
       <td>{{ pb.isClosed ? 'Закрита' : 'Відкрита'}}</td>
+      <td nzAlign="center">
+        <a><i nz-icon nzType="edit" (click)="edit(pb.id)" nzTheme="outline"></i></a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a nz-popconfirm nzPopconfirmTitle="Впевнені що хочете видалити?" (nzOnConfirm)="delete(pb.id)"><i nz-icon nzType="delete" nzTheme="outline"></i></a>
+      </td>
     </tr>
   </tbody>
 </nz-table>
-<app-payment-batch-add-modal></app-payment-batch-add-modal>
+<app-payment-batch-add-modal (addPaymentsBatchToList)="onAddPaymentsBatchToList($event)"></app-payment-batch-add-modal>
