@@ -1,5 +1,6 @@
-export interface Payment {
+export interface PaymentView {
     id: number
+    branchOfficeName: string
     accountingPointName: string
     payerInfo: string
     payDate: Date

@@ -6,36 +6,33 @@
   nzWidth=690>
   <form nz-form [formGroup]="paymentForm" (ngSubmit)="submitForm()">
     <nz-form-item>
-      <nz-form-label [nzSpan]="6" nzFor="accountingPointName" nzRequired>Точка обліку</nz-form-label>
+      <nz-form-label [nzSpan]="4" nzRequired>Точка обліку</nz-form-label>
       <nz-form-control [nzSpan]="19" nzErrorTip="Не введено точку обліку">
-        <input type="text" nz-input formControlName="accountingPointName" />
+        <nz-select
+          nzShowSearch
+          nzServerSearch
+          nzShowSearch
+          nzPlaceHolder="Точка обліку"
+          [ngModel]="selectedAccountingPoint"
+          [ngModelOptions]="{standalone: true}"
+          [nzShowArrow]="false"
+          (nzOnSearch)="searchAccountingPoint($event)"
+          (ngModelChange)="selectedFoundAccountingPoint($event)"
+        >
+          <nz-option *ngFor="let o of searchAccountingPointResults" [nzLabel]="o.text" [nzValue]="o"> </nz-option>
+        </nz-select>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSpan]="6" nzFor="payerInfo" nzRequired>payerInfo</nz-form-label>
-      <nz-form-control [nzSpan]="19" nzErrorTip="Не введено payerInfo">
-        <input type="text" nz-input formControlName="payerInfo" />
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-      <nz-form-label [nzSpan]="6" nzFor="payDate" nzRequired>Дата платежу</nz-form-label>
+      <nz-form-label [nzSpan]="4" nzFor="payDate" nzRequired>Дата платежу</nz-form-label>
       <nz-form-control [nzSpan]="19" nzErrorTip="Не обрано дату платежу">
-        <nz-date-picker [nzFormat]="dateFormat" formControlName="payDate" [nzDisabledDate]="datesMoreToday"></nz-date-picker>
+        <nz-date-picker [nzFormat]="'dd.MM.yyyy'" formControlName="payDate" [nzDisabledDate]="datesMoreToday"></nz-date-picker>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSpan]="6" nzFor="amount" nzRequired>Сумма</nz-form-label>
+      <nz-form-label [nzSpan]="4" nzFor="amount" nzRequired>Сумма</nz-form-label>
       <nz-form-control [nzSpan]="19" nzErrorTip="Не введено суму платежу">
         <input type="number" nz-input formControlName="amount" />
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-      <nz-form-label [nzSpan]="6" nzRequired nzFor="paymentTypeList">Тип платежу</nz-form-label>
-      <nz-form-control [nzSpan]="19" nzErrorTip="Не обрано тип платежу">
-        <nz-select nzPlaceHolder="Оберіть тип платежу" formControlName="type">
-          <nz-option *ngFor="let paymentType of paymentTypeList" [nzValue]="paymentType.id" [nzLabel]="paymentType.name">
-          </nz-option>
-        </nz-select>
       </nz-form-control>
     </nz-form-item>
   </form>

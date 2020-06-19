@@ -1,26 +1,27 @@
-import { PaymentModalComponent } from './../payment-modal/payment-modal.component';
 import { Component, OnInit, ViewChild } from '@angular/core'
-import { PaymentBatchView } from 'src/app/shared/models/payments/payment-batch-view.model'
-import { PaymentBatchService } from 'src/app/shared/services/payment-batch.service'
 import { ActivatedRoute, ParamMap } from '@angular/router'
 import { switchMap } from 'rxjs/operators'
+import { PaymentBatchView } from 'src/app/shared/models/payments/payment-batch-view.model'
+import { PaymentBatchService } from 'src/app/shared/services/payment-batch.service'
+import { PaymentModalComponent } from './../payment-modal/payment-modal.component'
 import { PaymentService } from 'src/app/shared/services/payment.service'
-import { Payment } from 'src/app/shared/models/payments/payment.model'
+import { PaymentView } from 'src/app/shared/models/payments/payment-view.model'
+import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
 
 @Component({
   selector: 'app-payment-batch-detail',
   templateUrl: './payment-batch-detail.component.html',
   styleUrls: ['./payment-batch-detail.component.css']
 })
+
 export class PaymentBatchDetailComponent implements OnInit {
   @ViewChild(PaymentModalComponent)
   private paymentModalComponent: PaymentModalComponent
 
   paymentsBatch: PaymentBatchView
-  paymentList: Payment[]
-
-  dateFormat = 'hh:mm:ss dd.MM.yyyy'
-  paymentsBatchId: string = null
+  paymentList: PaymentView[]
+  
+  paymentsBatchId: string
   totalCount = 0
   pageNumber = 1
   pageSize = 10
@@ -31,13 +32,15 @@ export class PaymentBatchDetailComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private paymentBatchService: PaymentBatchService,
-    private paymentService: PaymentService) {}
+    private paymentService: PaymentService,
+    private notification: NotificationComponent) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
         this.paymentsBatchId = params.get('id')
     )).subscribe(() => {
+      console.log("ngOnInit")
       this.getPaymentsBatchById(this.paymentsBatchId)
       this.getPaymentsPart(+this.paymentsBatchId, this.pageNumber, this.pageSize, this.showProcessedPayments)
     })
@@ -45,9 +48,10 @@ export class PaymentBatchDetailComponent implements OnInit {
 
   getPaymentsBatchById(paymentsBatchId: string) {
     this.paymentBatchService.getOne(+paymentsBatchId)
-      .subscribe(paymentsBatch =>
+      .subscribe(paymentsBatch => {
         this.paymentsBatch = paymentsBatch
-    )
+        console.log("getPaymentsBatchById")
+      })
   }
 
   getPaymentsPart(paymentsBatchId: number, pageNumber: number, pageSize: number, showProcessed: boolean) {
@@ -55,8 +59,9 @@ export class PaymentBatchDetailComponent implements OnInit {
     this.paymentService.getPart(paymentsBatchId, pageNumber, pageSize, showProcessed)
       .subscribe(response => {
         this.totalCount = Number(response.headers.get('X-Total-Count'))
-        this.paymentList = <Payment[]>response.body
+        this.paymentList = <PaymentView[]>response.body
         this.isLoading = false
+        console.log("getPaymentsPart")
       })
   }
 
@@ -66,6 +71,39 @@ export class PaymentBatchDetailComponent implements OnInit {
   }
 
   openPaymentDialog() {
-    this.paymentModalComponent.openDialog()
+    this.paymentModalComponent.openAddPaymentDialog()
+  }
+
+  onAddPaymentToList(payment: PaymentView) {
+    this.paymentList = [payment, ...this.paymentList]
+    this.totalCount++
+    this.updatePaymentsBatchDetailInfo(true, payment)
+  }
+
+  editPayment(id: number) {
+
+  }
+
+  deletePayment(payment: PaymentView) {
+    this.paymentService.delete(payment.id)
+      .subscribe(
+        _ => {
+          this.totalCount--
+          this.getPaymentsPart(+this.paymentsBatchId, this.pageNumber, this.pageSize, this.showProcessedPayments)
+          this.updatePaymentsBatchDetailInfo(false, payment)
+          this.notification.show('success', 'Успіх', `Платіж успішно видалено!`)
+        },
+        _ => {
+          this.notification.show('error', 'Фіаско', `Не вдалося видалити платіж`)
+      })
+  }
+
+  updatePaymentsBatchDetailInfo(isAdd: boolean, payment: PaymentView) {
+    if (isAdd)
+      this.paymentsBatch.totalAmount = this.paymentsBatch.totalAmount + payment.amount
+    else
+      this.paymentsBatch.totalAmount = this.paymentsBatch.totalAmount - payment.amount
+     
+    this.paymentsBatch.totalCount = this.totalCount
   }
 }

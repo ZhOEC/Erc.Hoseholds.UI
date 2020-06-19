@@ -17,8 +17,6 @@
 </ng-template>
 <nz-table #paymentsBatchTable 
   [nzData]="paymentsBatchList"
-  (nzPageIndexChange)="onChangedTablePageIndex($event)"
-  (nzPageSizeChange)="onChangedTablePageSize($event)"
   [nzFrontPagination]="false"
   [nzTotal]="totalCount"
   [nzPageSize]="pageSize"
@@ -28,9 +26,12 @@
   [nzTitle]="titleTemplate"
   [nzFooter]="totalCount ? 'Всього: ' + totalCount : null"
   nzSize="small"
-  nzBordered="true">
+  nzBordered="true"
+  (nzPageIndexChange)="pageIndexChange($event)"
+  (nzPageSizeChange)="pageSizeChange($event)">
   <thead>
     <tr>
+      <th>ЦОК</th>
       <th>Канал оплати</th>
       <th>Дата надходження</th>
       <th>Кількість</th>
@@ -42,6 +43,7 @@
   <tbody>
     <tr *ngFor="let pb of paymentsBatchTable.data">
       <ng-container *ngIf="!editCache[pb.id].edit; else editTemplate">
+        <td>{{ pb.branchOfficeName }}</td>
         <td>{{ pb.paymentChannelName }}</td>
         <td>{{ pb.incomingDate | date: dateFormat }}</td>
         <td>{{ pb.totalCount }}</td>
@@ -49,6 +51,7 @@
         <td>{{ pb.isClosed ? 'Закрита' : 'Відкрита'}}</td> <!-- <nz-badge [nzStatus]="'success'" [nzText]="'Finished'"></nz-badge> -->
       </ng-container>
       <ng-template #editTemplate>
+        <td>{{ pb.branchOfficeName }}</td>
         <td>
           <nz-select [(ngModel)]="editCache[pb.id].data.paymentChannelId" nzShowSearch>
             <nz-option *ngFor="let paymentChannel of paymentChannelsList" [nzValue]="paymentChannel.id" [nzLabel]="paymentChannel.name"></nz-option>

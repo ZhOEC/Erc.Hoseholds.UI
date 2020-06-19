@@ -21,13 +21,14 @@ export class PaymentBatchListComponent implements OnInit {
 
   totalCount: number
   pageNumber = 1
-  pageSize = 10
+  pageSize = 3 //10
   showClosedPaymentsBatch = false
   isLoading = false
 
-  editCache: { [key: string]: { edit: boolean; data: PaymentBatchView} } = {}
   paymentsBatchList: PaymentBatchView[]
+  displayPaymentsBatches: PaymentBatchView[] = []
   paymentChannelsList: PaymentChannel[]
+  editCache: { [key: string]: { edit: boolean; data: PaymentBatchView} } = {}
 
   constructor(private paymentBatchService: PaymentBatchService,
     private paymentChannelService: PaymentChannelService,
@@ -60,16 +61,6 @@ export class PaymentBatchListComponent implements OnInit {
     })
   }
 
-  onChangedTablePageIndex(pageIndex: number) {
-    this.pageNumber = pageIndex
-    this.getPaymentBatches(this.pageNumber, this.pageSize, this.showClosedPaymentsBatch)
-  }
-
-  onChangedTablePageSize(pageSize: number) {
-    this.pageSize = pageSize
-    this.getPaymentBatches(this.pageNumber, this.pageSize, this.showClosedPaymentsBatch)
-  }
-
   onChangedShowClosedPaymentsBatch(showClosed: boolean) {
     this.showClosedPaymentsBatch = showClosed
     this.getPaymentBatches(this.pageNumber, this.pageSize, this.showClosedPaymentsBatch)
@@ -80,7 +71,22 @@ export class PaymentBatchListComponent implements OnInit {
   }
 
   onAddPaymentsBatchToList(paymentsBatch: PaymentBatchView) {
-    this.paymentsBatchList = [...this.paymentsBatchList, paymentsBatch]
+    this.paymentsBatchList = [paymentsBatch, ...this.paymentsBatchList]
+    this.editCache[paymentsBatch.id] = {
+      edit: false,
+      data: { ...paymentsBatch }
+    }
+    this.totalCount++
+  }
+
+  pageIndexChange(pageIndex: number) {
+    this.pageNumber = pageIndex
+    this.getPaymentBatches(this.pageNumber, this.pageSize, this.showClosedPaymentsBatch)
+  }
+
+  pageSizeChange(pageSize: number) {
+    this.pageSize = pageSize
+    this.getPaymentBatches(this.pageNumber, this.pageSize, this.showClosedPaymentsBatch)
   }
 
   editBatch(id: number) {
@@ -119,6 +125,7 @@ export class PaymentBatchListComponent implements OnInit {
       .subscribe(
         _ => {
           this.getPaymentBatches(this.pageNumber, this.pageSize, this.showClosedPaymentsBatch)
+          this.totalCount--
           this.notification.show('success', 'Успіх', `Пачку успішно видалено!`)
         },
         _ => {
