@@ -4,11 +4,12 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { FormsModule, ReactiveFormsModule, } from '@angular/forms';
 import { AccountingPointNewComponent } from './accounting-point-new/accounting-point-new.component';
 import { AccountingPointsSearchComponent } from './accounting-point-search/accounting-points-search.component';
+import { CloseExemptionComponent } from './close-exemption/close-exemption.component';
 
 @NgModule({
   declarations: [
     AccountingPointNewComponent, 
-    AccountingPointsSearchComponent
+    AccountingPointsSearchComponent, CloseExemptionComponent
   ],
   imports: [
     CommonModule,

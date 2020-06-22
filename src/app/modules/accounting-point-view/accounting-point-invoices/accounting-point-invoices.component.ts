@@ -19,14 +19,15 @@ export class AccountingPointInvoicesComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.accountingPointId = changes['accountingPointId'].currentValue;
-    if (!changes['accountingPointId'].firstChange)
+    if (!changes['accountingPointId'].isFirstChange())
     {
-      this.GetInvoices();
+      this.LoadInvoices();
     }
   }
 
-  private GetInvoices() {
-    this.accountingPointDetailService.getInvoices(this.accountingPointId, this.pageIndex, this.pageSize).subscribe(data => {
+  LoadInvoices() {
+    this.accountingPointDetailService.getInvoices(this.accountingPointId, this.pageIndex, this.pageSize)
+    .subscribe(data => {
       this.invoices = data.items;
       this.loading = false;
       this.total = data.totalCount;
@@ -36,7 +37,6 @@ export class AccountingPointInvoicesComponent implements OnChanges {
   onQueryParamsChange(params: NzTableQueryParams): void {
     this.pageSize = params.pageSize;
     this.pageIndex = params.pageIndex;
-    this.GetInvoices();
+    this.LoadInvoices();
   }
-
 }

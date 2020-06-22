@@ -2,9 +2,9 @@
     <nz-select
       nzShowSearch
       nzServerSearch
+      [nzShowArrow]="false"
       nzPlaceHolder="Введіть текст для пошуку абонента"
-      [(ngModel)]="selectedValue"
-      [nzShowArrow]="true"
+     
       (nzOnSearch)="search($event)"
       (ngModelChange)="select($event)"
       (nzFocus)="selectedValue=0"

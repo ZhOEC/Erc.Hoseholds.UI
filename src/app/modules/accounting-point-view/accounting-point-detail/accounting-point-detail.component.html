@@ -7,7 +7,8 @@
                 <ul nz-menu>
                     <li nz-menu-item>Новий договір</li>
                     <li nz-menu-item>Змінити тариф</li>
-                    <!-- <li nz-menu-item>3rd menu item length</li> -->
+                    <li nz-menu-item *ngIf="a.exemption" (click)="showCloseExemptionDialog(a.name)">Закрити пільгу</li>
+                    <li nz-menu-item *ngIf="!a.exemption">Відкрити пільгу</li>
                 </ul>
             </nz-dropdown-menu>
         </nz-page-header-extra>
@@ -41,6 +42,11 @@
                 <nz-descriptions-item nzTitle="Мобільні телефони"><span
                         *ngFor="let ph of a.owner.mobilePhones; last as isLast">{{ph + (isLast ? '' : ',')}}
                     </span></nz-descriptions-item>
+            </nz-descriptions>
+            <nz-descriptions nzTitle="Діюча пільга" *ngIf="a.exemption">
+                <nz-descriptions-item nzTitle="Категорія">{{a.exemption.categoryName}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Пільговик">{{a.exemption.person.fullName}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Кількість осіб">{{a.exemption.personsNumber}}</nz-descriptions-item>
             </nz-descriptions>
         </nz-collapse-panel>
         <nz-collapse-panel nzHeader="Рахунки" class="invoices-info">
