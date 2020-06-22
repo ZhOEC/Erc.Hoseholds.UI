@@ -21,7 +21,7 @@ export class PaymentBatchListComponent implements OnInit {
 
   totalCount: number
   pageNumber = 1
-  pageSize = 3 //10
+  pageSize = 10
   showClosedPaymentsBatch = false
   isLoading = false
 

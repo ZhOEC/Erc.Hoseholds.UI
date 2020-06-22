@@ -12,6 +12,7 @@ import { PaymentView } from '../../../shared/models/payments/payment-view.model'
 })
 export class PaymentModalComponent implements OnInit {
   @Input() paymentsBatchId: number
+  @Input() paymentType: number
   @Output() addPaymentToList = new EventEmitter<PaymentView>()
 
   datesMoreToday = (date: number): boolean => { return date > Date.now() }
@@ -33,7 +34,8 @@ export class PaymentModalComponent implements OnInit {
       accountingPointId: [null],
       payDate: [null, [Validators.required]],
       amount: [null, [Validators.required]],
-      payerInfo: [null]
+      payerInfo: [null],
+      type: [null]
     })
   }
 
@@ -63,6 +65,7 @@ export class PaymentModalComponent implements OnInit {
     this.paymentForm.get('paymentsBatchId').setValue(this.paymentsBatchId)
     this.paymentForm.get('accountingPointId').setValue(accountingPoint.id)
     this.paymentForm.get('payerInfo').setValue(accountingPoint.payerInfo)
+    this.paymentForm.get('type').setValue(this.paymentType)
   }
 
   resetForm() {
@@ -77,6 +80,7 @@ export class PaymentModalComponent implements OnInit {
     this.paymentService.add(this.paymentForm.value)
       .subscribe(
         payment => {
+          console.log(payment)
           this.addPaymentToList.emit(payment)
           this.resetForm()
           this.isOkLoading = false

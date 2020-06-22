@@ -25,7 +25,7 @@ export class PaymentChannelModalComponent implements OnInit {
     { id: 2, name: 'Останній' }
   ]
 
-  typeList = [
+  paymentsTypeList = [
     { id: 0, name: 'Платіж абонента' },
     { id: 1, name: 'Пільга або субсидія' },
     { id: 2, name: 'Компенсація ОСР' }
@@ -46,7 +46,7 @@ export class PaymentChannelModalComponent implements OnInit {
       textDateFormat: [null],
       personFieldName: [null],
       totalRecord: [null],
-      type: [null, [Validators.required]]
+      paymentsType: [null, [Validators.required]]
     })
 
     this.paymentChannelForm.valueChanges.subscribe(() => {

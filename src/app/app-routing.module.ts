@@ -9,7 +9,7 @@ import { PaymentBatchDetailComponent } from './modules/payments/payment-batch-de
 import { PersonAddComponent } from './modules/person/person-add/person-add.component'
 
 const routes: Routes = [
-  { path: 'accounting-point-new', component: AccountingPointNewComponent },
+  { path: 'accounting-point-new', component: AccountingPointNewComponent, },
   { path: 'accounting-points/:id', component: AccountingPointDetailComponent },
   { path: 'tariffs', component: TariffListComponent },
   { path: 'payment-channel', component: PaymentChannelListComponent },

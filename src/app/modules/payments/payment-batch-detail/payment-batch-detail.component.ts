@@ -20,7 +20,7 @@ export class PaymentBatchDetailComponent implements OnInit {
 
   paymentsBatch: PaymentBatchView
   paymentList: PaymentView[]
-  
+
   paymentsBatchId: string
   totalCount = 0
   pageNumber = 1
@@ -80,8 +80,14 @@ export class PaymentBatchDetailComponent implements OnInit {
     this.updatePaymentsBatchDetailInfo(true, payment)
   }
 
-  editPayment(id: number) {
+  pageIndexChange(pageIndex: number) {
+    this.pageNumber = pageIndex
+    this.getPaymentsPart(+this.paymentsBatchId, this.pageNumber, this.pageSize, this.showProcessedPayments)
+  }
 
+  pageSizeChange(pageSize: number) {
+    this.pageSize = pageSize
+    this.getPaymentsPart(+this.paymentsBatchId, this.pageNumber, this.pageSize, this.showProcessedPayments)
   }
 
   deletePayment(payment: PaymentView) {
@@ -99,11 +105,7 @@ export class PaymentBatchDetailComponent implements OnInit {
   }
 
   updatePaymentsBatchDetailInfo(isAdd: boolean, payment: PaymentView) {
-    if (isAdd)
-      this.paymentsBatch.totalAmount = this.paymentsBatch.totalAmount + payment.amount
-    else
-      this.paymentsBatch.totalAmount = this.paymentsBatch.totalAmount - payment.amount
-     
+    this.paymentsBatch.totalAmount += (isAdd ? 1 : -1) * payment.amount
     this.paymentsBatch.totalCount = this.totalCount
   }
 }

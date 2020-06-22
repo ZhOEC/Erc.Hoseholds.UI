@@ -5,6 +5,7 @@ export interface PaymentBatchView {
     branchOfficeName: string,
     paymentChannelName: string,
     paymentChannelId: number,
+    paymentChannelPaymentsType: number,
     incomingDate: Date,
     totalCount: number,
     totalAmount: number,
