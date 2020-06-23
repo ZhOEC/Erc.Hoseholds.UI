@@ -24,6 +24,10 @@ export class PaymentService {
         return this.http.post<PaymentView>(this.urn, payment)
     }
 
+    update(payment: PaymentPost): Observable<PaymentView> {
+        return this.http.put<PaymentView>(this.urn + payment.id, payment)
+    }
+
     delete(id: number): Observable<PaymentView> {
         return this.http.delete<PaymentView>(this.urn + id)
     }

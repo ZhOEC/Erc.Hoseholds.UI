@@ -60,7 +60,7 @@ export class PaymentChannelModalComponent implements OnInit {
     this.modalTitle = 'Додати канал оплати'
     this.submitButtonText = 'Додати'
     this.paymentChannelForm.reset({totalRecord: 0})
-    this.paymentChannelForm.markAsUntouched();
+    this.paymentChannelForm.markAsUntouched()
 
     this.paymentChannels = paymentChannels
     this.isVisible = true
@@ -71,7 +71,7 @@ export class PaymentChannelModalComponent implements OnInit {
     this.submitButtonText = 'Зберегти'
     this.paymentChannelForm.reset()
     this.paymentChannelForm.patchValue(paymentChannel)
-    this.paymentChannelForm.markAsUntouched();
+    this.paymentChannelForm.markAsUntouched()
     
     this.paymentChannel = paymentChannel
     this.paymentChannels = paymentChannels

@@ -11,10 +11,10 @@ import { PaymentView } from '../../../shared/models/payments/payment-view.model'
   styleUrls: ['./payment-modal.component.css']
 })
 export class PaymentModalComponent implements OnInit {
-  @Input() paymentsBatchId: number
-  @Input() paymentType: number
   @Output() addPaymentToList = new EventEmitter<PaymentView>()
-
+  @Output() updatePaymentInList = new EventEmitter<PaymentView>()
+  
+  modalTitle: string
   datesMoreToday = (date: number): boolean => { return date > Date.now() }
 
   paymentForm: FormGroup
@@ -30,7 +30,8 @@ export class PaymentModalComponent implements OnInit {
 
   ngOnInit() {
     this.paymentForm = this.formBuilder.group({
-      paymentsBatchId: [null],
+      id: [null],
+      batchId: [null],
       accountingPointId: [null],
       payDate: [null, [Validators.required]],
       amount: [null, [Validators.required]],
@@ -40,6 +41,22 @@ export class PaymentModalComponent implements OnInit {
   }
 
   openAddPaymentDialog() {
+    this.modalTitle = `Додати платіж`
+    this.paymentForm.reset()
+    this.paymentForm.markAsUntouched()
+
+    this.isVisible = true
+  }
+
+  openEditPaymentDialog(payment: PaymentView) {
+    this.modalTitle = `Редагування платежу для - ${payment.accountingPointName}`
+    this.paymentForm.reset()
+    this.paymentForm.patchValue(payment)
+    this.paymentForm.markAsUntouched()
+
+    this.selectedAccountingPoint = { id: payment.accountingPointId, text: `${payment.accountingPointName}, ${payment.payerInfo}`, payerInfo: payment.payerInfo }
+    this.searchAccountingPointResults.push(this.selectedAccountingPoint)
+
     this.isVisible = true
   }
 
@@ -53,7 +70,7 @@ export class PaymentModalComponent implements OnInit {
               this.searchAccountingPointResults.push({ 
                 id: element.id, 
                 text: `${element.name}, ${element.owner}, ${element.streetAddress}, ${element.cityName}`,
-                payerInfo: `${element.owner}, ${element.streetAddress}`
+                payerInfo: `${element.owner}, ${element.streetAddress}, ${element.cityName}`
                })
             })
           }
@@ -61,11 +78,11 @@ export class PaymentModalComponent implements OnInit {
     }
   }
 
-  selectedFoundAccountingPoint(accountingPoint: { id: number; text: string; payerInfo: string }) {
-    this.paymentForm.get('paymentsBatchId').setValue(this.paymentsBatchId)
-    this.paymentForm.get('accountingPointId').setValue(accountingPoint.id)
-    this.paymentForm.get('payerInfo').setValue(accountingPoint.payerInfo)
-    this.paymentForm.get('type').setValue(this.paymentType)
+  selectedFoundAccountingPoint(selectedAccountingPoint: { id: number; text: string; payerInfo: string }) {
+    this.paymentForm.value.accountingPointId = selectedAccountingPoint.id
+    this.paymentForm.value.payerInfo = selectedAccountingPoint.payerInfo
+
+    this.paymentForm.markAllAsTouched()
   }
 
   resetForm() {
@@ -77,20 +94,36 @@ export class PaymentModalComponent implements OnInit {
   submitForm() {
     this.isOkLoading = true
     
-    this.paymentService.add(this.paymentForm.value)
-      .subscribe(
-        payment => {
-          console.log(payment)
-          this.addPaymentToList.emit(payment)
-          this.resetForm()
-          this.isOkLoading = false
-          this.isVisible = false
-          this.notification.show('success', 'Успіх', `Платіж успішно додано!`)
-        },
-        error => {
-          this.isOkLoading = false
-          this.notification.show('error', 'Фіаско', `Не додати платіж`)
-        }
-    )
+    if (this.paymentForm.value.id) {
+      this.paymentService.update(this.paymentForm.value)
+        .subscribe(
+          payment => {
+            this.updatePaymentInList.emit(payment)
+            this.resetForm()
+            this.isOkLoading = false
+            this.isVisible = false
+            this.notification.show('success', 'Успіх', `Платіж для ${payment.accountingPointName}, успішно оновлено!`)
+          },
+          error => {
+            this.isOkLoading = false
+            this.notification.show('error', 'Фіаско', `Не вдалося оновити платіж`)
+          }
+        )
+    } else {
+      this.paymentService.add(this.paymentForm.value)
+        .subscribe(
+          payment => {
+            this.addPaymentToList.emit(payment)
+            this.resetForm()
+            this.isOkLoading = false
+            this.isVisible = false
+            this.notification.show('success', 'Успіх', `Платіж успішно додано!`)
+          },
+          error => {
+            this.isOkLoading = false
+            this.notification.show('error', 'Фіаско', `Не вдалося додати платіж`)
+          }
+        )
+    }
   }
 }

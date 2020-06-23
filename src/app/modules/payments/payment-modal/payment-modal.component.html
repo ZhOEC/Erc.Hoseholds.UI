@@ -1,4 +1,4 @@
-<nz-modal nzTitle="Додавання платежу" [nzVisible]="isVisible"
+<nz-modal [nzTitle]="modalTitle" [nzVisible]="isVisible"
   (nzOnOk)="submitForm()" [nzOkText]="isOkLoading ? 'Відправка' : 'Відправити'"
   (nzOnCancel)="isVisible = false" (nzOnCancel)="resetForm()"
   [nzOkDisabled]="!paymentForm.valid || !paymentForm.touched"
@@ -11,10 +11,9 @@
         <nz-select
           nzShowSearch
           nzServerSearch
-          nzShowSearch
           nzPlaceHolder="Точка обліку"
           [ngModel]="selectedAccountingPoint"
-          [ngModelOptions]="{standalone: true}"
+          [ngModelOptions]="{ standalone: true }"
           [nzShowArrow]="false"
           (nzOnSearch)="searchAccountingPoint($event)"
           (ngModelChange)="selectedFoundAccountingPoint($event)"

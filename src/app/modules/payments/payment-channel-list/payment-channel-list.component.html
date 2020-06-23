@@ -1,8 +1,22 @@
-<button nz-button nzType="primary" (click)="addNew(paymentChannelsTable.data)">Додати</button>
-<br />
-<br />
+
+<ng-template #titleTemplate>
+  <nz-row nzJustify="space-between" nzAlign="middle" nzGutter="12">
+    <nz-col>
+      <span>Список каналів оплати</span>
+    </nz-col>
+    <nz-col>
+      <nz-space [nzSize]="8">
+        <nz-space-item>
+          <button nz-button nzType="primary" (click)="addNew(paymentChannelsTable.data)">Додати</button>
+        </nz-space-item>
+      </nz-space>
+    </nz-col>
+  </nz-row>
+</ng-template>
 <nz-table #paymentChannelsTable 
-  [nzData]="paymentChannels" 
+  [nzData]="paymentChannels"
+  [nzTitle]="titleTemplate"
+  [nzShowPagination]="false"
   nzSize="small"
   nzBordered="true">
   <thead>

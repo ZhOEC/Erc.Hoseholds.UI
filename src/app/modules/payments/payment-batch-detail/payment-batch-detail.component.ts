@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
-import { ActivatedRoute, ParamMap } from '@angular/router'
-import { switchMap } from 'rxjs/operators'
+import { ActivatedRoute } from '@angular/router'
 import { PaymentBatchView } from 'src/app/shared/models/payments/payment-batch-view.model'
 import { PaymentBatchService } from 'src/app/shared/services/payment-batch.service'
 import { PaymentModalComponent } from './../payment-modal/payment-modal.component'
@@ -20,6 +19,7 @@ export class PaymentBatchDetailComponent implements OnInit {
 
   paymentsBatch: PaymentBatchView
   paymentList: PaymentView[]
+  payment: PaymentView
 
   paymentsBatchId: string
   totalCount = 0
@@ -36,21 +36,18 @@ export class PaymentBatchDetailComponent implements OnInit {
     private notification: NotificationComponent) {}
 
   ngOnInit() {
-    this.route.paramMap.pipe(
-      switchMap((params: ParamMap) =>
-        this.paymentsBatchId = params.get('id')
-    )).subscribe(() => {
-      console.log("ngOnInit")
-      this.getPaymentsBatchById(this.paymentsBatchId)
+    this.route.params.subscribe(params => {
+      this.paymentsBatchId = params['id']
+      
+      this.getPaymentsBatchById(+this.paymentsBatchId)
       this.getPaymentsPart(+this.paymentsBatchId, this.pageNumber, this.pageSize, this.showProcessedPayments)
     })
   }
 
-  getPaymentsBatchById(paymentsBatchId: string) {
+  getPaymentsBatchById(paymentsBatchId: number) {
     this.paymentBatchService.getOne(+paymentsBatchId)
       .subscribe(paymentsBatch => {
         this.paymentsBatch = paymentsBatch
-        console.log("getPaymentsBatchById")
       })
   }
 
@@ -61,23 +58,29 @@ export class PaymentBatchDetailComponent implements OnInit {
         this.totalCount = Number(response.headers.get('X-Total-Count'))
         this.paymentList = <PaymentView[]>response.body
         this.isLoading = false
-        console.log("getPaymentsPart")
       })
   }
 
   onChangedShowProcessedPayments(showProcessed: boolean) {
     this.showProcessedPayments = showProcessed
-    this.getPaymentsPart(+this.paymentsBatchId, this.pageNumber, this.pageSize, this.showProcessedPayments)  
+    this.getPaymentsPart(+this.paymentsBatchId, this.pageNumber, this.pageSize, this.showProcessedPayments) 
   }
 
-  openPaymentDialog() {
-    this.paymentModalComponent.openAddPaymentDialog()
+  openPaymentDialog(payment: PaymentView) {
+    if (payment.id)
+      this.paymentModalComponent.openEditPaymentDialog(payment)
+    else this.paymentModalComponent.openAddPaymentDialog()
   }
 
   onAddPaymentToList(payment: PaymentView) {
     this.paymentList = [payment, ...this.paymentList]
     this.totalCount++
     this.updatePaymentsBatchDetailInfo(true, payment)
+  }
+
+  onUpdatePaymentInList(payment: PaymentView) {
+    const index = this.paymentList.findIndex(x => x.id == payment.id)
+    this.paymentList[index] = payment
   }
 
   pageIndexChange(pageIndex: number) {

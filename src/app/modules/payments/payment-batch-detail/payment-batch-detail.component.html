@@ -7,8 +7,6 @@
     <nz-descriptions-item nzTitle="Сума:">{{ pb.totalAmount }}</nz-descriptions-item>
     <nz-descriptions-item nzTitle="Статус:">{{ pb.isClosed ? 'Закрита' : 'Відкрита' }}</nz-descriptions-item>
   </nz-descriptions>
-
-  <app-payment-modal [paymentsBatchId]="pb.id" [paymentType]="pb.paymentChannelPaymentsType" (addPaymentToList)="onAddPaymentToList($event)"></app-payment-modal>
 </ng-container>
 
   <ng-template #titleTemplate>
@@ -22,7 +20,7 @@
             <label nz-checkbox [(ngModel)]="showProcessedPayments" (ngModelChange)="onChangedShowProcessedPayments($event)">Показувати оброблені</label>
           </nz-space-item>
           <nz-space-item>
-            <button nz-button nzType="primary" (click)="openPaymentDialog()">Додати</button>
+            <button nz-button nzType="primary" (click)="openPaymentDialog($event)">Додати</button>
           </nz-space-item>
         </nz-space>
       </nz-col>
@@ -64,8 +62,12 @@
         <td>{{ p.type }}</td>
         <td>{{ p.status }}</td>
         <td nzAlign="center">
+          <a *ngIf="p.status == 0"><i nz-icon nzType="edit" (click)="openPaymentDialog(p)" nzTheme="outline"></i></a>
+          <nz-divider nzType="vertical" *ngIf="p.status == 0"></nz-divider>
           <a nz-popconfirm nzPopconfirmTitle="Впевнені що хочете видалити платіж?" (nzOnConfirm)="deletePayment(p)" title="Видалити"><i nz-icon nzType="delete" nzTheme="outline"></i></a>
         </td>
       </tr>
     </tbody>
   </nz-table>
+
+<app-payment-modal (addPaymentToList)="onAddPaymentToList($event)" (updatePaymentInList)="onUpdatePaymentInList($event)"></app-payment-modal>
