@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AccountingPointsService } from '../../../shared/services/accounting-points.service';
+import { AccountingPointService } from '../../../shared/services/accounting-point.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,9 +10,9 @@ import { Router } from '@angular/router';
 export class AccountingPointsSearchComponent {
   selectedValue = null;
   searchResults: Array<{ id: number; text: string }> = [];
-  nzFilterOption = () => true;
 
-  constructor(private accountingPointsService: AccountingPointsService, private router: Router) { }
+
+  constructor(private accountingPointsService: AccountingPointService, private router: Router) { }
 
   search(value: string): void {
     if (value.length >= 8 || value.endsWith(' ')) {

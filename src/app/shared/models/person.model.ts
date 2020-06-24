@@ -6,6 +6,7 @@ export interface Person {
     taxCode: string
     idCardNumber: string
     idCardIssuanceDate: Date
+    idCardIssuer: string
     idCardExpDate: Date
     mobilePhones: string[]
 }

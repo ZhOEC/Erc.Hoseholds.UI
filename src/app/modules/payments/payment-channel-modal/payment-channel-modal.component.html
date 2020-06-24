@@ -1,0 +1,61 @@
+<nz-modal [nzTitle]="modalTitle" [nzVisible]="isVisible" 
+  (nzOnCancel)="isVisible=false" 
+  (nzOnOk)="submitForm()" 
+  [nzOkText]="submitButtonText" 
+  [nzOkDisabled]="!paymentChannelForm.valid || !paymentChannelForm.touched"
+  [nzOkLoading]="isOkLoading">
+    <form nz-form [formGroup]="paymentChannelForm">
+        <nz-form-item>
+            <nz-form-label [nzSpan]="9" nzRequired nzFor="name">Назва</nz-form-label>
+            <nz-form-control [nzSpan]="12" nzErrorTip="Обов'язкове поле">
+              <textarea nz-input formControlName="name" placeholder="Назва" [nzAutosize]="{ minRows: 3, maxRows: 4 }"></textarea>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="9" nzFor="recordpointFieldName">Особовий рахунок</nz-form-label>
+          <nz-form-control [nzSpan]="12">
+            <input nz-input formControlName="recordpointFieldName" placeholder="Особовий рахунок" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="9" nzFor="sumFieldName">Сума</nz-form-label>
+          <nz-form-control [nzSpan]="12">
+            <input nz-input formControlName="sumFieldName" placeholder="Сума" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="9" nzFor="dateFieldName">Дата</nz-form-label>
+          <nz-form-control [nzSpan]="12">
+            <input nz-input formControlName="dateFieldName" placeholder="Дата" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="9" nzFor="textDateFormat">Формат тексту дати</nz-form-label>
+          <nz-form-control [nzSpan]="12">
+            <input nz-input formControlName="textDateFormat" placeholder="Формат тексту дати" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="9" nzFor="personFieldName">Інформація</nz-form-label>
+          <nz-form-control [nzSpan]="12">
+            <input nz-input formControlName="personFieldName" placeholder="Інформація" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="9" nzFor="totalRecord">Рядок суми</nz-form-label>
+          <nz-form-control [nzSpan]="12">
+            <nz-select nzPlaceHolder="Рядок суми" formControlName="totalRecord">
+              <nz-option *ngFor="let totalRecord of totalRecordList" [nzValue]="totalRecord.id" [nzLabel]="totalRecord.name"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="9" nzRequired nzFor="paymentsType">Тип платежу</nz-form-label>
+          <nz-form-control [nzSpan]="12" nzErrorTip="Обов'язкове поле">
+            <nz-select nzPlaceHolder="Тип платежу" formControlName="paymentsType">
+              <nz-option *ngFor="let paymentsType of paymentsTypeList" [nzValue]="paymentsType.id" [nzLabel]="paymentsType.name"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+    </form>
+</nz-modal>

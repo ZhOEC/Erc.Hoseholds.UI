@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { TariffsService } from '../../../shared/services/tariffs.service';
+import { TariffService } from '../../../shared/services/tariff.service';
 import { Tariff } from '../../../shared/models/tariff';
 import { TariffRateComponent } from 'src/app/modules/tariffs/tariff-rate/tariff-rate.component';
 import { TariffRate } from '../../../shared/models/tariff-rate';
@@ -17,7 +17,7 @@ export class TariffListComponent implements OnInit {
   tariffs: Tariff[];
   editRowId: number = -1;
 
-  constructor(private tariffsSvc: TariffsService) {
+  constructor(private tariffsSvc: TariffService) {
 
   }
 
