@@ -25,10 +25,8 @@ export class AccountingPointsSearchComponent {
     }
   }
 
-  select(value: number) {
-    console.log('go to', value);
-    
-    this.router.navigate(['accounting-points', value]);
+  select() {
+    this.router.navigate(['accounting-points', this.selectedValue]);
   }
 
 }

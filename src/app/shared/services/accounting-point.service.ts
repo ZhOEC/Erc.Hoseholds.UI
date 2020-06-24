@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { AccountingPoint } from '../models/accounting-point.model';
+import { of, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

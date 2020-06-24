@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { InvoiceList } from './invoice-list';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { Invoice } from './invoice';
 import { AccountingPointDetail } from './accounting-point-detail.model';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,10 @@ export class AccountingPointDetailService {
   constructor(private http: HttpClient) { }
 
   getOne(id: number) {
-    return this.http.get<AccountingPointDetail>(this.accountingpointsUri + id);
+    return this.http.get<AccountingPointDetail>(this.accountingpointsUri + id)
+    .pipe(
+      catchError(this.handleError<AccountingPointDetail>('getOne'))
+    );
   }
 
   getInvoices(accountingPointId: number, pageNumber: number, pageSize: number) {
@@ -52,5 +56,15 @@ export class AccountingPointDetailService {
           totalCount: Number(response.headers.get('X-Total-Count'))
         } as InvoiceList
       }));
+  }
+
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+      
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
   }
 }

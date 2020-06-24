@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, catchError, tap } from 'rxjs/operators';
 import { AccountingPointDetail } from '../accounting-point-detail.model';
-import { Observable } from 'rxjs';
+import { Observable, of, empty } from 'rxjs';
 import { AccountingPointDetailService } from '../accounting-point-detail.service';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { CloseExemptionComponent } from '../../accounting-point/close-exemption/close-exemption.component';
@@ -15,21 +15,21 @@ import { AccountingPointInvoicesComponent } from '../accounting-point-invoices/a
 })
 export class AccountingPointDetailComponent implements OnInit {
   @ViewChild(AccountingPointInvoicesComponent, { static: false }) invoicesComponent: AccountingPointInvoicesComponent;
-  accountingPoint: AccountingPointDetail
+  accountingPointDetail: AccountingPointDetail = null;
   accountingPoint$: Observable<AccountingPointDetail>
+  accountingPointId: number
 
   constructor(private accountingPointDetailService: AccountingPointDetailService, private route: ActivatedRoute, private modalService: NzModalService) { }
 
   ngOnInit(): void {
-    this.accountingPoint$ = this.route.paramMap.pipe(
-      switchMap((params: ParamMap) =>
-        this.accountingPointDetailService.getOne(+params.get('id')))
-    );
+    this.route.paramMap.pipe(
+      switchMap((params: ParamMap) =>this.accountingPointDetailService.getOne(+params.get('id')))
+      ).subscribe(a => this.accountingPointDetail = a);
   }
 
-  private getAccountingPoint() {
+  private reloadAccountingPointDetail() {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.accountingPoint$ = this.accountingPointDetailService.getOne(id)
+    this.accountingPointDetailService.getOne(id).subscribe(a => this.accountingPointDetail = a);
   }
 
   showCloseExemptionDialog(name: string) {
@@ -37,14 +37,14 @@ export class AccountingPointDetailComponent implements OnInit {
       nzTitle: `Закриття пільги ${name}`,
       nzContent: CloseExemptionComponent,
       nzComponentParams: {
-        accountingPointId: this.accountingPoint.id
+        accountingPointId: this.accountingPointDetail.id
       }
     });
 
     closeExemptionDialog.afterClose
       .subscribe((result: boolean) => {
         if (result) {
-          this.getAccountingPoint();
+          this.reloadAccountingPointDetail();
           this.invoicesComponent.LoadInvoices();
         }
       });
