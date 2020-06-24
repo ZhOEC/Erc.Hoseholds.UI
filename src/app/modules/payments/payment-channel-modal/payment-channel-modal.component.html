@@ -1,4 +1,9 @@
-<nz-modal [nzTitle]="modalTitle" [nzVisible]="isVisible" (nzOnCancel)="isVisible=false" (nzOnOk)="submitForm()" [nzOkText]="submitButtonText" [nzOkDisabled]="!paymentChannelForm.valid || !paymentChannelForm.touched">
+<nz-modal [nzTitle]="modalTitle" [nzVisible]="isVisible" 
+  (nzOnCancel)="isVisible=false" 
+  (nzOnOk)="submitForm()" 
+  [nzOkText]="submitButtonText" 
+  [nzOkDisabled]="!paymentChannelForm.valid || !paymentChannelForm.touched"
+  [nzOkLoading]="isOkLoading">
     <form nz-form [formGroup]="paymentChannelForm">
         <nz-form-item>
             <nz-form-label [nzSpan]="9" nzRequired nzFor="name">Назва</nz-form-label>
@@ -45,10 +50,10 @@
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label [nzSpan]="9" nzRequired nzFor="type">Тип платежу</nz-form-label>
+          <nz-form-label [nzSpan]="9" nzRequired nzFor="paymentsType">Тип платежу</nz-form-label>
           <nz-form-control [nzSpan]="12" nzErrorTip="Обов'язкове поле">
-            <nz-select nzPlaceHolder="Тип платежу" formControlName="type">
-              <nz-option *ngFor="let type of typeList" [nzValue]="type.id" [nzLabel]="type.name"></nz-option>
+            <nz-select nzPlaceHolder="Тип платежу" formControlName="paymentsType">
+              <nz-option *ngFor="let paymentsType of paymentsTypeList" [nzValue]="paymentsType.id" [nzLabel]="paymentsType.name"></nz-option>
             </nz-select>
           </nz-form-control>
         </nz-form-item>

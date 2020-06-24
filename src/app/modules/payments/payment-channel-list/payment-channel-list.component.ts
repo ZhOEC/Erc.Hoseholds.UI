@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { PaymentChannelService } from 'src/app/shared/services/payment-channel.service';
-import { PaymentChannel } from 'src/app/shared/models/payments/payment-channel.model';
-import { PaymentChannelModalComponent } from '../payment-channel-modal/payment-channel-modal.component';
+import { Component, OnInit, ViewChild } from '@angular/core'
+import { PaymentChannelService } from 'src/app/shared/services/payment-channel.service'
+import { PaymentChannel } from 'src/app/shared/models/payments/payment-channel.model'
+import { PaymentChannelModalComponent } from '../payment-channel-modal/payment-channel-modal.component'
 
 @Component({
   selector: 'app-payment-channel-list',
@@ -38,7 +38,7 @@ export class PaymentChannelListComponent implements OnInit {
 
   delete(id: number) {
     this.paymentChannelService.delete(id).subscribe(() => {
-      this.paymentChannels = this.paymentChannels.filter(item => item.id !== id);
-    });
+      this.paymentChannels = this.paymentChannels.filter(item => item.id !== id)
+    })
   }
 }

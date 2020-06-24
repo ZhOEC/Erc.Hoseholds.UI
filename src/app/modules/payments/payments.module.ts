@@ -13,12 +13,15 @@ import { NzSpaceModule } from 'ng-zorro-antd/space'
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker'
 import { NzUploadModule } from 'ng-zorro-antd/upload'
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox'
+import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { PaymentChannelListComponent } from './payment-channel-list/payment-channel-list.component'
 import { PaymentChannelModalComponent } from './payment-channel-modal/payment-channel-modal.component'
 import { PaymentBatchAddComponent } from './payment-batch-add-modal/payment-batch-add-modal.component'
 import { PaymentBatchListComponent } from './payment-batch-list/payment-batch-list.component'
 import { PaymentBatchDetailComponent } from './payment-batch-detail/payment-batch-detail.component'
+import { PaymentModalComponent } from './payment-modal/payment-modal.component'
+import { RouterModule } from '@angular/router'
 
 @NgModule({
   declarations: [
@@ -26,10 +29,12 @@ import { PaymentBatchDetailComponent } from './payment-batch-detail/payment-batc
     PaymentChannelModalComponent,
     PaymentBatchListComponent,
     PaymentBatchAddComponent,
-    PaymentBatchDetailComponent
+    PaymentBatchDetailComponent,
+    PaymentModalComponent
   ],
   imports: [
     CommonModule,
+    RouterModule,
     FormsModule,
     ReactiveFormsModule,
     NzFormModule,
@@ -44,14 +49,16 @@ import { PaymentBatchDetailComponent } from './payment-batch-detail/payment-batc
     NzSpaceModule,
     NzDatePickerModule,
     NzUploadModule,
-    NzCheckboxModule
+    NzCheckboxModule,
+    NzDescriptionsModule
   ],
   exports: [
     PaymentChannelListComponent,
     PaymentChannelModalComponent,
     PaymentBatchListComponent,
     PaymentBatchAddComponent,
-    PaymentBatchDetailComponent
+    PaymentBatchDetailComponent,
+    PaymentModalComponent
   ]
 })
 export class PaymentsModule { }

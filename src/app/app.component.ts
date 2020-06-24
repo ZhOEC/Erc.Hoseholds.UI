@@ -28,4 +28,10 @@ export class AppComponent {
   logout() {
     this.authService.logout();
   }
+
+  /* getBranchOffices() {
+    this.branchOfficeService.getBranchOffices().subscribe(data => {
+      this.branchOfficesList = data.sort((a, b) => a.name.localeCompare(b.name))
+    })
+  } */
 }

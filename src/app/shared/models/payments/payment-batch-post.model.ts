@@ -1,6 +1,6 @@
 export interface PaymentBatchPost {
     branchOfficeId: number
     paymentChannelId: number
-    dateComing: Date
+    incomingDate: Date
     uploadFile: File
 }
