@@ -7,6 +7,7 @@ import { NzInputModule } from 'ng-zorro-antd/input'
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm'
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker'
 import { NzCardModule } from 'ng-zorro-antd/card'
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { PersonAddComponent } from './person-add/person-add.component'
 
@@ -24,7 +25,8 @@ import { PersonAddComponent } from './person-add/person-add.component'
     NzInputModule,
     NzPopconfirmModule,
     NzDatePickerModule,
-    NzCardModule
+    NzCardModule,
+    NzCheckboxModule
   ],
   exports: [
     PersonAddComponent

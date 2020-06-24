@@ -10,7 +10,6 @@ import { Person } from 'src/app/shared/models/person.model'
 })
 
 export class PersonAddComponent implements OnInit {
-  dateFormat = 'dd.MM.yyyy'
   datesMoreToday = (date: number): boolean => { return date > Date.now() }
   datesLessToday = (date: number): boolean => { return date < Date.now() }
   
@@ -26,8 +25,8 @@ export class PersonAddComponent implements OnInit {
 
   ngOnInit() {
     this.personForm = this.formBuilder.group({
+      id: [null],
       searchPerson: [null, [Validators.required]],
-      id: [0],
       taxCode: [{value: null, disabled: true}, [Validators.required]],
       idCardNumber: [null, [Validators.required]],
       idCardIssuer: [null, [Validators.required]],
@@ -36,7 +35,9 @@ export class PersonAddComponent implements OnInit {
       firstName: [{value: null, disabled: true}, [Validators.required]],
       lastName: [{value: null, disabled: true}, [Validators.required]],
       patronymic: [{value: null, disabled: true}, [Validators.required]],
-      mobilePhones: [ null, [Validators.required]]
+      mobilePhones: [null],
+      email: [null, [Validators.required, Validators.email]],
+      requiredPaperInvoice: [false]
     })
   }
 
@@ -74,6 +75,17 @@ export class PersonAddComponent implements OnInit {
     this.resetForm()
   }
 
+  requiredPaperInvoiceChange(required: boolean) {
+    if (required) {
+      this.personForm.get('email').clearValidators()
+      this.personForm.get('email').markAsPristine()
+    } else {
+      this.personForm.get('email').setValidators(Validators.required)
+      this.personForm.get('email').markAsDirty()
+    }
+    this.personForm.get('email').updateValueAndValidity()
+  }
+
   validateForm() {
     if(this.isPersonInputsShown) {
       this.personForm.get('searchPerson').setErrors(null)
@@ -91,7 +103,6 @@ export class PersonAddComponent implements OnInit {
 
   resetForm() {
     this.isPersonInputsShown = false
-
     this.personForm.reset({ id: 0 })
   }
 }

@@ -126,7 +126,6 @@ export class AccountingPointNewComponent {
   }
 
   submitForm() {
-    console.log(this.personAdd.personForm.value)
     this.validateForms() // Validate forms
 
     if (this.accountingPointForm.valid && this.personAdd.personForm.valid) {

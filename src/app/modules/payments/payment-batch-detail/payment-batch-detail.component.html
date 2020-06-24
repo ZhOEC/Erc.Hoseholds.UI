@@ -1,3 +1,7 @@
+<h4>
+  <a routerLink="/payment-batch-list" title="Список пачок платежів"><i nz-icon nzType="arrow-left" nzTheme="outline"></i> Повернутися до списку пачок платежів</a>
+</h4>
+
 <ng-container *ngIf="paymentsBatch as pb">
   <nz-descriptions nzBordered nzSize="small">
     <nz-descriptions-item nzTitle="Канал:">{{ pb.paymentChannelName }}</nz-descriptions-item>
