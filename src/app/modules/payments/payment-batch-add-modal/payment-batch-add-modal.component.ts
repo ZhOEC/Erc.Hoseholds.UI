@@ -16,7 +16,6 @@ import { PaymentBatchView } from 'src/app/shared/models/payments/payment-batch-v
 })
 
 export class PaymentBatchAddComponent implements OnInit {
-  dateFormat = 'dd.MM.yyyy'
   datesMoreToday = (date: number): boolean => { return date > Date.now() }
   isVisible = false
   isOkLoading = false

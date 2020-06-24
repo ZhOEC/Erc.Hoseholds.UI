@@ -7,6 +7,13 @@
     <nz-descriptions-item nzTitle="Сума:">{{ pb.totalAmount }}</nz-descriptions-item>
     <nz-descriptions-item nzTitle="Статус:">{{ pb.isClosed ? 'Закрита' : 'Відкрита' }}</nz-descriptions-item>
   </nz-descriptions>
+
+  <app-payment-modal 
+    [batchId]="paymentsBatch.id"
+    [paymentType]="paymentsBatch.paymentChannelPaymentsType"
+    (addPaymentToList)="onAddPaymentToList($event)" 
+    (updatePaymentInList)="onUpdatePaymentInList($event)">
+  </app-payment-modal>
 </ng-container>
 
   <ng-template #titleTemplate>
@@ -69,5 +76,3 @@
       </tr>
     </tbody>
   </nz-table>
-
-<app-payment-modal (addPaymentToList)="onAddPaymentToList($event)" (updatePaymentInList)="onUpdatePaymentInList($event)"></app-payment-modal>

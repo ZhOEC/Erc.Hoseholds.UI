@@ -24,7 +24,7 @@
     <nz-form-item>
       <nz-form-label [nzSpan]="6" nzFor="incomingDate" nzRequired>Дата надходження</nz-form-label>
       <nz-form-control [nzSpan]="19" nzErrorTip="Не обрано дату надходження пачки">
-        <nz-date-picker [nzFormat]="dateFormat" formControlName="incomingDate" [nzDisabledDate]="datesMoreToday"></nz-date-picker>
+        <nz-date-picker nzFormat="dd.MM.yyyy" formControlName="incomingDate" [nzDisabledDate]="datesMoreToday"></nz-date-picker>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>

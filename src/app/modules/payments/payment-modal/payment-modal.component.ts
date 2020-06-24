@@ -11,6 +11,9 @@ import { PaymentView } from '../../../shared/models/payments/payment-view.model'
   styleUrls: ['./payment-modal.component.css']
 })
 export class PaymentModalComponent implements OnInit {
+  @Input() batchId: number
+  @Input() paymentType: number
+
   @Output() addPaymentToList = new EventEmitter<PaymentView>()
   @Output() updatePaymentInList = new EventEmitter<PaymentView>()
   
@@ -43,20 +46,25 @@ export class PaymentModalComponent implements OnInit {
   openAddPaymentDialog() {
     this.modalTitle = `Додати платіж`
     this.paymentForm.reset()
+    this.paymentForm.get('batchId').setValue(this.batchId)
+    this.paymentForm.get('type').setValue(this.paymentType)
+
     this.paymentForm.markAsUntouched()
 
     this.isVisible = true
   }
 
   openEditPaymentDialog(payment: PaymentView) {
-    this.modalTitle = `Редагування платежу для - ${payment.accountingPointName}`
+    this.modalTitle = `Редагування платежу`
     this.paymentForm.reset()
     this.paymentForm.patchValue(payment)
     this.paymentForm.markAsUntouched()
 
-    this.selectedAccountingPoint = { id: payment.accountingPointId, text: `${payment.accountingPointName}, ${payment.payerInfo}`, payerInfo: payment.payerInfo }
-    this.searchAccountingPointResults.push(this.selectedAccountingPoint)
-
+    if (payment.accountingPointName) {
+      this.selectedAccountingPoint = { id: payment.accountingPointId, text: `${payment.accountingPointName} ${payment.payerInfo}`, payerInfo: payment.payerInfo }
+      this.searchAccountingPointResults.push(this.selectedAccountingPoint)
+    }
+    
     this.isVisible = true
   }
 
@@ -79,8 +87,8 @@ export class PaymentModalComponent implements OnInit {
   }
 
   selectedFoundAccountingPoint(selectedAccountingPoint: { id: number; text: string; payerInfo: string }) {
-    this.paymentForm.value.accountingPointId = selectedAccountingPoint.id
-    this.paymentForm.value.payerInfo = selectedAccountingPoint.payerInfo
+    this.paymentForm.get('accountingPointId').setValue(selectedAccountingPoint.id)
+    this.paymentForm.get('payerInfo').setValue(selectedAccountingPoint.payerInfo)
 
     this.paymentForm.markAllAsTouched()
   }
@@ -113,6 +121,7 @@ export class PaymentModalComponent implements OnInit {
       this.paymentService.add(this.paymentForm.value)
         .subscribe(
           payment => {
+            console.log(payment)
             this.addPaymentToList.emit(payment)
             this.resetForm()
             this.isOkLoading = false
