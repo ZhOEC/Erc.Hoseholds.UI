@@ -17,7 +17,8 @@ import { AccountingPointModule } from './modules/accounting-point/accounting-poi
 import { TariffModule } from './modules/tariffs/tariff.module'
 import { PaymentsModule } from './modules/payments/payments.module'
 import { PersonModule } from './modules/person/person.module'
-
+import { AccountingPointViewModule } from './modules/accounting-point-view/accounting-point-view.module';
+import { CommonReferencesModule } from './modules/common-references/common-references.module';
 import { BranchOfficeService } from './shared/services/branch-office.service'
 import { AccountingPointService } from './shared/services/accounting-point.service'
 import { DistributionSystemOperatorService } from './shared/services/distribution-system-operator.service'
@@ -47,6 +48,8 @@ registerLocaleData(uk);
     AccountingPointModule,
     TariffModule,
     PaymentsModule,
+    AccountingPointViewModule,
+    CommonReferencesModule,
     PersonModule
   ],
   providers: [

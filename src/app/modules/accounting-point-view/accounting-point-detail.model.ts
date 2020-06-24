@@ -1,9 +1,11 @@
-import { Person } from './person.model';
+import { Person } from '../../shared/models/person.model';
+import { Exemption } from './exemption';
 
 export interface AccountingPointDetail {
+    id: number
     branchOfficeName: string
     name: string
-    distributionSystemOperatorName: number
+    distributionSystemOperatorName: string
     tarriffName: string
     addressCityName: string
     adressStreetLocation: string
@@ -11,4 +13,5 @@ export interface AccountingPointDetail {
     eic: string
     currentContractStartDate: Date
     debt: number
+    exemption: Exemption
 }

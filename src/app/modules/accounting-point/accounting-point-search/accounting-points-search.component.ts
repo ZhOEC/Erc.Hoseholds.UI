@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class AccountingPointsSearchComponent {
   selectedValue = null;
   searchResults: Array<{ id: number; text: string }> = [];
-  nzFilterOption = () => true;
+
 
   constructor(private accountingPointsService: AccountingPointService, private router: Router) { }
 
