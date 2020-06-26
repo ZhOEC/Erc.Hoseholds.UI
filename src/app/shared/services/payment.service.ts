@@ -7,7 +7,7 @@ import { PaymentPost } from '../models/payments/payment-post.model'
 
 @Injectable()
 export class PaymentService {
-    private urn: string = environment.apiServer + 'payments/'
+    private urn = environment.apiServer + 'payments/'
     
     constructor(private http: HttpClient) {}
 

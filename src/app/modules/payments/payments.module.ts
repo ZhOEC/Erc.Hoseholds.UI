@@ -51,14 +51,6 @@ import { RouterModule } from '@angular/router'
     NzUploadModule,
     NzCheckboxModule,
     NzDescriptionsModule
-  ],
-  exports: [
-    PaymentChannelListComponent,
-    PaymentChannelModalComponent,
-    PaymentBatchListComponent,
-    PaymentBatchAddComponent,
-    PaymentBatchDetailComponent,
-    PaymentModalComponent
   ]
 })
 export class PaymentsModule { }

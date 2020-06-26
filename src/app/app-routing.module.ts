@@ -7,7 +7,7 @@ import { PaymentChannelListComponent } from './modules/payments/payment-channel-
 import { PaymentBatchListComponent } from './modules/payments/payment-batch-list/payment-batch-list.component'
 import { PaymentBatchDetailComponent } from './modules/payments/payment-batch-detail/payment-batch-detail.component'
 import { ExemptionCategyListComponent } from './modules/common-references/exemption-categy-list/exemption-categy-list.component'
-import { PersonAddComponent } from './modules/person/person-add/person-add.component'
+import { PersonComponent } from './modules/customers/person/person.component'
 
 
 const routes: Routes = [
@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'payment-channel', component: PaymentChannelListComponent },
   { path: 'payment-batch-list', component: PaymentBatchListComponent },
   { path: 'payment-batch-detail/:id', component: PaymentBatchDetailComponent },
-  { path: 'person-add', component: PersonAddComponent }
+  { path: 'person', component: PersonComponent }
 ];
 
 @NgModule({
