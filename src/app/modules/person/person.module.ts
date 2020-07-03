@@ -7,12 +7,13 @@ import { NzInputModule } from 'ng-zorro-antd/input'
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm'
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker'
 import { NzCardModule } from 'ng-zorro-antd/card'
+import { NzDividerModule } from 'ng-zorro-antd/divider'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { PersonComponent } from './person/person.component'
+import { PersonFormComponent } from './form/form.component'
 
 @NgModule({
   declarations: [
-    PersonComponent
+    PersonFormComponent
   ],
   imports: [
     CommonModule,
@@ -24,10 +25,11 @@ import { PersonComponent } from './person/person.component'
     NzInputModule,
     NzPopconfirmModule,
     NzDatePickerModule,
-    NzCardModule
+    NzCardModule,
+    NzDividerModule
   ],
   exports: [
-    PersonComponent
+    PersonFormComponent
   ]
 })
-export class CustomersModule {}
+export class PersonModule {}

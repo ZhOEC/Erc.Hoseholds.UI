@@ -1,4 +1,5 @@
-<form nz-form [formGroup]="accountingPointForm" (ngSubmit)="submitForm()">
+<form nz-form [formGroup]="accountingPointForm">
+  <h1>Точка обліку</h1>
   <nz-form-item>
     <nz-form-label [nzSpan]="5" nzRequired nzFor="branchOfficeId">ЦОК</nz-form-label>
     <nz-form-control [nzSpan]="12" nzErrorTip="Не обрано ЦОК">
@@ -135,48 +136,52 @@
     </nz-form-control>
   </nz-form-item>
 
-  <div nz-row nzType="flex" nzJustify="center">
-    <div nz-col nzXs="17" nzSm="17" nzMd="14" nzLg="6" nzXl="5" nzXXl="4">
-      <button nz-button type="button" nzType="primary" (click)="personComponentTrigger()">Додати нового споживача</button>
-    </div>
-    <div nz-col nzXs="17" nzSm="17" nzMd="14" nzLg="2" nzXl="2" nzXXl="2">
-      <span> - або - </span>
-    </div>
-    <div nz-col nzXs="17" nzSm="17" nzMd="14" nzLg="12" nzXl="11" nzXXl="11">
-      <nz-form-item>
-        <nz-form-control nzErrorTip="Не обрано споживача">
-          <nz-select 
-            nzShowSearch
-            nzServerSearch
-            formControlName="searchPerson"
-            nzPlaceHolder="Пошук за паспортом або ІПН"
-            (ngModelChange)="setPerson($event)"
-            (nzOnSearch)="searchPerson($event)"
-            [nzCustomTemplate]="personTemplate" 
-            [nzLoading]="isLoadingSearch"
-            [nzOptionHeightPx]="54"
-            nzOptionOverflowSize="3">
-              <nz-option nzCustomContent *ngFor="let person of foundPersons" [nzLabel]="person" [nzValue]="person">
-                <b>ПІБ:</b> {{person.lastName}} {{person.firstName}} {{person.patronymic}} <br/>
-                <b>Номер паспорта:</b> {{person.idCardNumber}} <b>Іден. номер:</b> {{person.taxCode}}
-              </nz-option>
-            </nz-select>
-            <ng-template #personTemplate let-person>
-              <span>
-                {{ person.nzLabel.lastName }} {{ person.nzLabel.firstName }} {{ person.nzLabel.patronymic }}
-                <b>{{ person.nzLabel.taxCode }} : {{ person.nzLabel.idCardNumber }}</b>
-              </span>
+  <h1>Власник</h1>
+  <div class="search-person">
+    <div nz-row>
+      <div nz-col nzFlex="1">
+        <h3>Пошук споживача</h3>
+            <nz-input-group [nzPrefix]="prefixIcon" [nzSuffix]="textAreaClearTpl">
+              <input 
+                nz-input
+                placeholder="Пошук споживача"
+                [(ngModel)]="selectedFoundPerson"
+                [ngModelOptions]="{ standalone: true }"
+                (ngModelChange)="onSearchPerson($event)"
+                [nzAutocomplete]="auto"
+                [disabled]="accountingPointForm.get('owner')?.value?.id"/>
+            </nz-input-group>
+            <ng-template #prefixIcon>
+              <i nz-icon nzType="search"></i>
             </ng-template>
-        </nz-form-control>
-      </nz-form-item>
+            <ng-template #textAreaClearTpl>
+              <i
+                nz-icon
+                class="ant-input-textarea-clear-icon"
+                nzTheme="fill"
+                nzType="close-circle"
+                *ngIf="selectedFoundPerson && accountingPointForm.get('owner')?.value?.id"
+                (click)="unpatchPersonData()"
+              ></i
+            ></ng-template>
+            <nz-autocomplete #auto>
+              <nz-auto-option class="global-search-item" *ngFor="let person of foundPersons" [nzValue]="person.idCardNumber" (click)="patchPersonData(person)">
+                {{ person.lastName }} {{ person.firstName }} {{ person.patronymic }}
+                <b>{{ person.taxCode }} : {{ person.idCardNumber }}</b>
+              </nz-auto-option>
+            </nz-autocomplete>
+      </div>
+      <!-- <div nz-col nzFlex="0 1 270px">
+        <button nz-button nzType="primary" nzSize="large" nzShape="round" (click)="showPersonForm()"><i nz-icon nzType="plus"></i>Додати нового споживача</button>
+      </div> -->
     </div>
   </div>
 
-  <app-person [visibility]="isVisiblePersonComponent"></app-person>
+  <app-person-form></app-person-form>
 
   <nz-form-item>
     <nz-form-control [nzSpan]="7" [nzOffset]="4">
-      <button nz-button nzType="primary" [nzLoading]="isLoadingSubmit">Зберегти</button>
+      <button nz-button nzType="primary" [nzLoading]="isLoadingSubmit" (click)="submitForm()">Зберегти</button>
       <button nz-button (click)="resetForm()">Очистити</button>
     </nz-form-control>
   </nz-form-item>

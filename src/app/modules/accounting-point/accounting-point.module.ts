@@ -6,12 +6,14 @@ import { NzInputModule } from 'ng-zorro-antd/input'
 import { NzFormModule } from 'ng-zorro-antd/form'
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox'
 import { NzButtonModule } from 'ng-zorro-antd/button'
+import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete'
+import { NzIconModule } from 'ng-zorro-antd/icon'
+import { NzCardModule } from 'ng-zorro-antd/card'
 import { FormsModule, ReactiveFormsModule, } from '@angular/forms'
 import { AccountingPointNewComponent } from './accounting-point-new/accounting-point-new.component'
 import { AccountingPointsSearchComponent } from './accounting-point-search/accounting-points-search.component'
 import { CloseExemptionComponent } from './close-exemption/close-exemption.component'
-import { CustomersModule } from '../customers/customers.module'
-
+import { PersonModule } from '../person/person.module'
 
 @NgModule({
   declarations: [
@@ -29,7 +31,10 @@ import { CustomersModule } from '../customers/customers.module'
     NzInputModule,
     NzDatePickerModule,
     NzCheckboxModule,
-    CustomersModule
+    NzAutocompleteModule,
+    NzIconModule,
+    NzCardModule,
+    PersonModule
   ],
   exports: [
     AccountingPointsSearchComponent

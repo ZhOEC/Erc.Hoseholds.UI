@@ -16,7 +16,7 @@ import { AppRoutingModule } from './app-routing.module'
 import { AccountingPointModule } from './modules/accounting-point/accounting-point.module'
 import { TariffModule } from './modules/tariffs/tariff.module'
 import { PaymentsModule } from './modules/payments/payments.module'
-import { CustomersModule } from './modules/customers/customers.module'
+import { PersonModule } from './modules/person/person.module'
 import { AccountingPointViewModule } from './modules/accounting-point-view/accounting-point-view.module';
 import { CommonReferencesModule } from './modules/common-references/common-references.module';
 import { BranchOfficeService } from './shared/services/branch-office.service'
@@ -52,7 +52,7 @@ registerLocaleData(uk);
     PaymentsModule,
     AccountingPointViewModule,
     CommonReferencesModule,
-    CustomersModule
+    PersonModule
   ],
   providers: [
     DistributionSystemOperatorService,

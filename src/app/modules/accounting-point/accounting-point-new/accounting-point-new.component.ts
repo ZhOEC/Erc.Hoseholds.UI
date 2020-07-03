@@ -8,16 +8,16 @@ import { Tariff } from '../../../shared/models/tariff'
 import { BranchOfficeService } from '../../../shared/services/branch-office.service'
 import { BranchOffice } from '../../../shared/models/branch-office.model'
 import { AccountingPointService } from '../../../shared/services/accounting-point.service'
-import { Person } from '../../../shared/models/person.model'
 import { City } from '../../../shared/models/address/city.model'
 import { Street } from '../../../shared/models/address/street.model'
 import { AddressService } from '../../../shared/services/address.service'
 import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
-import { PersonComponent } from '../../customers/person/person.component'
+import { PersonFormComponent } from '../../person/form/form.component'
 import { UsageCategoryService } from 'src/app/shared/services/usage-category.service'
 import { UsageCategory } from 'src/app/shared/models/usage-category'
 import { BuildingTypeService } from 'src/app/shared/services/building-type.service'
 import { BuildingType } from 'src/app/shared/models/building-type'
+import { Person } from 'src/app/shared/models/person.model'
 import { PersonService } from 'src/app/shared/services/person.service'
 
 @Component({
@@ -39,16 +39,17 @@ export class AccountingPointNewComponent {
   tariffsList: Tariff[]
   buildingTypes: BuildingType[]
   usageCategories: UsageCategory[]
-  foundPersons: Person[]
 
-  isVisiblePersonComponent = false
-  isLoadingSearch = false
   isLoadingCities = false
   isLoadingStreets = false
   isLoadingSubmit = false
+  isLoadingSearch = false
 
-  @ViewChild(PersonComponent) 
-  private personComponent: PersonComponent
+  selectedFoundPerson: Person
+  foundPersons: Person[]
+
+  @ViewChild(PersonFormComponent)
+  private personComponent: PersonFormComponent
 
   constructor(
     private router: Router,
@@ -66,7 +67,6 @@ export class AccountingPointNewComponent {
 
   ngOnInit() {
     this.accountingPointForm = this.formBuilder.group({
-      searchPerson: [null, [Validators.required]],
       branchOfficeId: [null, [Validators.required]],
       eic: [null, [Validators.required, Validators.minLength(16), Validators.maxLength(16), Validators.pattern('[0-9a-zA-Z-]*')]],
       name: [null, [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
@@ -94,13 +94,11 @@ export class AccountingPointNewComponent {
   }
 
   getBranchOffices() {
-    this.branchOfficeService.getBranchOffices().subscribe(
-      offices => {
+    this.branchOfficeService.getBranchOffices().subscribe(offices => {
         this.branchOfficesList = offices.sort((a, b) => a.name.localeCompare(b.name))
         if (this.branchOfficesList.length === 1) {
           this.accountingPointForm.get('branchOfficeId').setValue(this.branchOfficesList[0].id)
-        }
-      })
+        }})
   }
 
   getCities(branchOfficeId: number) {
@@ -128,8 +126,7 @@ export class AccountingPointNewComponent {
   }
 
   getDistributionSystemOperators() {
-    this.distributionSystemOperatorService.getDistributionSystemOperators().subscribe(
-      operators => {
+    this.distributionSystemOperatorService.getDistributionSystemOperators().subscribe(operators => {
         this.distributionSystemOperatorsList = operators.sort((a, b) => a.name.localeCompare(b.name))
         if (this.distributionSystemOperatorsList.length == 1) {
           this.accountingPointForm.get('dsoId').setValue(this.distributionSystemOperatorsList[0].id)
@@ -140,21 +137,9 @@ export class AccountingPointNewComponent {
   getTariffs() { this.tariffService.getTariffList().subscribe(tariffs => this.tariffsList = tariffs) }
   getUsageCategories() { this.usageCategoryService.getAll().subscribe(categories => this.usageCategories = categories) }
   getBuildingTypes() { this.buildingTypeService.getAll().subscribe(types => this.buildingTypes = types) }
-  
-  personComponentTrigger() {
-    this.isVisiblePersonComponent = true
 
-    this.personComponent.personForm.get('taxCode').enable()
-    this.personComponent.personForm.get('firstName').enable()
-    this.personComponent.personForm.get('lastName').enable()
-    this.personComponent.personForm.get('patronymic').enable()
-
-    this.personComponent.resetForm()
-    this.accountingPointForm.get('searchPerson').reset()
-  }
-
-  searchPerson(searchString: string) {
-    if(searchString.length > 6) {
+  onSearchPerson(searchString: string) {
+    if(searchString?.length > 6) {
       this.isLoadingSearch = true
       this.personService.searchPerson(searchString).subscribe(
         persons => {
@@ -164,40 +149,32 @@ export class AccountingPointNewComponent {
     }
   }
 
-  setPerson(person: Person) {
-    this.isVisiblePersonComponent = true
-    this.personComponent.personForm.patchValue(person)
+  patchPersonData(person: Person) {
+      this.personComponent.personForm.patchValue(person)
+      this.accountingPointForm.get('owner').setValue(person)
+  }
 
-    if(person != null) {
-      this.personComponent.personForm.get('taxCode').disable()
-      this.personComponent.personForm.get('firstName').disable()
-      this.personComponent.personForm.get('lastName').disable()
-      this.personComponent.personForm.get('patronymic').disable()
-    }
+  unpatchPersonData() {
+    this.personComponent.personForm.reset()
+    this.accountingPointForm.get('owner').reset()
   }
 
   resetForm() {
     this.accountingPointForm.reset()
-    this.personComponent.resetForm()
+    this.accountingPointForm.markAsPristine()
 
-    this.accountingPointForm.get('city').disable()
-    this.accountingPointForm.controls.address.get('streetId').disable()
+    this.personComponent.resetForm()
   }
 
   validateForms() {
-    // Validate AccountingPoint Form
+    // Validate AccountingPointForm
     for (const i in this.accountingPointForm.controls) {
       this.accountingPointForm.controls[i].markAsDirty()
       this.accountingPointForm.controls[i].updateValueAndValidity()
     }
 
-    if (this.isVisiblePersonComponent) {
-      // Validate PersonAdd Form
-      this.personComponent.validateForm()
-    } else {
-      this.accountingPointForm.get('searchPerson').markAsDirty()
-      this.accountingPointForm.get('searchPerson').updateValueAndValidity()
-    }
+    // Validate PersonForm
+    this.personComponent.validateForm()
   }
 
   submitForm() {
@@ -206,7 +183,7 @@ export class AccountingPointNewComponent {
     if (this.accountingPointForm.valid && this.personComponent.personForm.valid) {
       this.isLoadingSubmit = true
 
-      this.accountingPointForm.value.owner = this.personComponent.personForm.getRawValue()
+      this.accountingPointForm.get('owner').setValue(this.personComponent.personForm.getRawValue())
       this.accountingPointService.add(this.accountingPointForm.value)
         .subscribe(
           ap => {

@@ -12,6 +12,7 @@ export interface AccountingPointDetail {
     owner: Person
     eic: string
     currentContractStartDate: Date
+    currentContractSendPaperBill: boolean
     debt: number
     exemption: Exemption
 }

@@ -31,6 +31,8 @@
                 <nz-descriptions-item nzTitle="Діючий тариф">{{a.currentTariffName}}</nz-descriptions-item>
                 <nz-descriptions-item nzTitle="Договір про постачання від">
                     {{a.currentContractStartDate | date:'mediumDate'}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Відправляти паперевову квитанцію">
+                        {{a.currentContractSendPaperBill ? 'Так' : 'Ні'}}</nz-descriptions-item>
             </nz-descriptions>
             <nz-descriptions nzTitle="Власник">
                 <nz-descriptions-item nzTitle="ПІБ">{{a.owner.fullName}}</nz-descriptions-item>
@@ -43,6 +45,7 @@
                 <nz-descriptions-item nzTitle="Мобільні телефони"><span
                         *ngFor="let ph of a.owner.mobilePhones; last as isLast">{{ph + (isLast ? '' : ',')}}
                     </span></nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Email">{{a.owner.email}}</nz-descriptions-item>
             </nz-descriptions>
             <nz-descriptions nzTitle="Діюча пільга" *ngIf="a.exemption">
                 <nz-descriptions-item nzTitle="Категорія">{{a.exemption.categoryName}}</nz-descriptions-item>
