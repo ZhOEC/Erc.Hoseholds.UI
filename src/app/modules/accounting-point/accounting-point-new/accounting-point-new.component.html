@@ -145,7 +145,7 @@
               <input 
                 nz-input
                 placeholder="Пошук споживача"
-                [(ngModel)]="selectedFoundPerson"
+                [(ngModel)]="person"
                 [ngModelOptions]="{ standalone: true }"
                 (ngModelChange)="onSearchPerson($event)"
                 [nzAutocomplete]="auto"
@@ -160,24 +160,25 @@
                 class="ant-input-textarea-clear-icon"
                 nzTheme="fill"
                 nzType="close-circle"
-                *ngIf="selectedFoundPerson && accountingPointForm.get('owner')?.value?.id"
-                (click)="unpatchPersonData()"
+                *ngIf="accountingPointForm.get('owner').value?.id"
+                (click)="accountingPointForm.get('owner').patchValue(null)"
               ></i
             ></ng-template>
             <nz-autocomplete #auto>
-              <nz-auto-option class="global-search-item" *ngFor="let person of foundPersons" [nzValue]="person.idCardNumber" (click)="patchPersonData(person)">
-                {{ person.lastName }} {{ person.firstName }} {{ person.patronymic }}
-                <b>{{ person.taxCode }} : {{ person.idCardNumber }}</b>
+              <nz-auto-option 
+                class="global-search-item"
+                *ngFor="let person of foundPersons"
+                [nzLabel]="person.idCardNumber"
+                (click)="accountingPointForm.get('owner').setValue(person)">
+                  {{ person.lastName }} {{ person.firstName }} {{ person.patronymic }}
+                  <b>{{ person.taxCode }} : {{ person.idCardNumber }}</b>
               </nz-auto-option>
             </nz-autocomplete>
       </div>
-      <!-- <div nz-col nzFlex="0 1 270px">
-        <button nz-button nzType="primary" nzSize="large" nzShape="round" (click)="showPersonForm()"><i nz-icon nzType="plus"></i>Додати нового споживача</button>
-      </div> -->
     </div>
   </div>
 
-  <app-person-form></app-person-form>
+  <app-person-form [(person)]="accountingPointForm.value.owner"></app-person-form>
 
   <nz-form-item>
     <nz-form-control [nzSpan]="7" [nzOffset]="4">

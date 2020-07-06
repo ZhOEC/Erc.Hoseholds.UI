@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
+import { Person } from 'src/app/shared/models/person.model'
 
 @Component({
   selector: 'app-person-form',
@@ -8,14 +9,18 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 })
 
 export class PersonFormComponent implements OnInit {
+  @Input() set person(value: Person) {
+    value?.id ? this.personForm.patchValue(value) : this.personForm?.reset()
+  }
+
+  @Output() personChange = new EventEmitter<Person>()
+
   datesMoreToday = (date: number): boolean => { return date > Date.now() }
   datesLessToday = (date: number): boolean => { return date < Date.now() }
   
   personForm: FormGroup
   
-  constructor(
-    private formBuilder: FormBuilder
-    ) {}
+  constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit() {
     this.personForm = this.formBuilder.group({

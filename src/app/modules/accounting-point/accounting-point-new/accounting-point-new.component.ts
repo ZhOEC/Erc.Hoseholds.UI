@@ -45,7 +45,7 @@ export class AccountingPointNewComponent {
   isLoadingSubmit = false
   isLoadingSearch = false
 
-  selectedFoundPerson: Person
+  person: Person
   foundPersons: Person[]
 
   @ViewChild(PersonFormComponent)
@@ -147,16 +147,6 @@ export class AccountingPointNewComponent {
           this.isLoadingSearch = false
         })
     }
-  }
-
-  patchPersonData(person: Person) {
-      this.personComponent.personForm.patchValue(person)
-      this.accountingPointForm.get('owner').setValue(person)
-  }
-
-  unpatchPersonData() {
-    this.personComponent.personForm.reset()
-    this.accountingPointForm.get('owner').reset()
   }
 
   resetForm() {
