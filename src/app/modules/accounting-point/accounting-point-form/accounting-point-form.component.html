@@ -14,7 +14,7 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="5" nzRequired nzFor="name">EIC</nz-form-label>
     <nz-form-control [nzSpan]="12" [nzErrorTip]="eicErrorTpl">
-      <input id="eic" type="text" nz-input formControlName="eic"/>
+      <input id="eic" type="text" nz-input formControlName="eic" />
       <ng-template #eicErrorTpl let-control>
         <ng-container *ngIf="control.hasError('required')">
           Не введено EIC
@@ -34,9 +34,10 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSpan]="5" nzFor="dsoId" nzRequired>Оператор системи розподілу</nz-form-label>
+    <nz-form-label [nzSpan]="5" nzFor="distributionSystemOperatorId" nzRequired>Оператор системи розподілу
+    </nz-form-label>
     <nz-form-control [nzSpan]="12" nzErrorTip="Не обрано оператора системи розподілу">
-      <nz-select nzPlaceHolder="Оберіть оператора системи розподілу" formControlName="dsoId">
+      <nz-select nzPlaceHolder="Оберіть оператора системи розподілу" formControlName="distributionSystemOperatorId">
         <nz-option *ngFor="let distributionSystemOperator of distributionSystemOperatorsList"
           [nzValue]="distributionSystemOperator.id" [nzLabel]="distributionSystemOperator.name">
         </nz-option>
@@ -54,17 +55,19 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item>
-    <nz-form-label [nzSpan]="5" nzRequired nzFor="city">Населений пункт</nz-form-label>
-    <nz-form-control [nzSpan]="12" nzErrorTip="Не введено назву міста">
-      <nz-select nzPlaceHolder="Оберіть населений пункт" formControlName="city" (ngModelChange)="getStreets($event)">
-        <nz-option *ngFor="let city of citiesList" [nzValue]="city.id" [nzLabel]="city.isRegionCity ? city.name : city.name + ', ' + city.districtName">
-        </nz-option>
-      </nz-select>
-    </nz-form-control>
-  </nz-form-item>
-
   <div formGroupName="address">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="5" nzRequired nzFor="cityId">Населений пункт</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzErrorTip="Не введено назву міста">
+        <nz-select nzPlaceHolder="Оберіть населений пункт" formControlName="cityId"
+          (ngModelChange)="getStreets($event)">
+          <nz-option *ngFor="let city of citiesList" [nzValue]="city.id"
+            [nzLabel]="city.isRegionCity ? city.name : city.name + ', ' + city.districtName">
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
     <nz-form-item>
       <nz-form-label [nzSpan]="5" nzRequired nzFor="streetId">Вулиця</nz-form-label>
       <nz-form-control [nzSpan]="12" nzErrorTip="Не введено назва вулиці">
@@ -96,7 +99,7 @@
         <nz-form-item>
           <nz-form-label [nzSpan]="9" nzRequired nzFor="zip">Поштовий індекс</nz-form-label>
           <nz-form-control [nzSpan]="4" nzErrorTip="Не введено індекс">
-            <input id="zip" type="text" nz-input formControlName="zip"/>
+            <input id="zip" type="text" nz-input formControlName="zip" />
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -108,82 +111,47 @@
     <nz-form-control [nzSpan]="12" nzErrorTip="Не обрано тип будівлі">
       <nz-select nzPlaceHolder="Оберіть тип будівлі" formControlName="buildingTypeId">
         <nz-option *ngFor="let type of buildingTypes" [nzValue]="type.id" [nzLabel]="type.name">
-      </nz-option>
-    </nz-select>
+        </nz-option>
+      </nz-select>
     </nz-form-control>
   </nz-form-item>
-  
+
   <nz-form-item>
     <nz-form-label [nzSpan]="5" nzRequired nzFor="usageCategoryId">Категорія споживання</nz-form-label>
     <nz-form-control [nzSpan]="12" nzErrorTip="Не обрано категорія споживання">
       <nz-select nzPlaceHolder="Оберіть категорію споживання" formControlName="usageCategoryId">
         <nz-option *ngFor="let category of usageCategories" [nzValue]="category.id" [nzLabel]="category.name">
-      </nz-option>
-    </nz-select>
+        </nz-option>
+      </nz-select>
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item>
-    <nz-form-label [nzSpan]="5" nzRequired nzFor="contractStartDate">Дата заключення договору</nz-form-label>
-    <nz-form-control [nzSpan]="12" nzErrorTip="Не обрано дату заключення договру">
-      <nz-date-picker [nzFormat]="dateFormat" formControlName="contractStartDate" [nzDisabledDate]="datesMoreToday"></nz-date-picker>
-    </nz-form-control>
-  </nz-form-item>
+  <div *ngIf="!accountingPointForm.get('id').value">
+    <h1>Договір</h1>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="5" nzRequired nzFor="contractStartDate">Дата заключення договору</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzErrorTip="Не обрано дату заключення договру">
+        <nz-date-picker [nzFormat]="dateFormat" formControlName="contractStartDate" [nzDisabledDate]="datesMoreToday">
+        </nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
 
-  <nz-form-item>
-    <nz-form-control [nzSpan]="12" [nzOffset]="5">
-      <label nz-checkbox formControlName="sendPaperBill">Отримувати паперову квитанцію</label>
-    </nz-form-control>
-  </nz-form-item>
+    <nz-form-item>
+      <nz-form-control [nzSpan]="12" [nzOffset]="5">
+        <label nz-checkbox formControlName="sendPaperBill">Отримувати паперову квитанцію</label>
+      </nz-form-control>
+    </nz-form-item>
 
-  <h1>Власник</h1>
-  <div class="search-person">
-    <div nz-row>
-      <div nz-col nzFlex="1">
-        <h3>Пошук споживача</h3>
-            <nz-input-group [nzPrefix]="prefixIcon" [nzSuffix]="textAreaClearTpl">
-              <input 
-                nz-input
-                placeholder="Пошук споживача"
-                [(ngModel)]="person"
-                [ngModelOptions]="{ standalone: true }"
-                (ngModelChange)="onSearchPerson($event)"
-                [nzAutocomplete]="auto"
-                [disabled]="accountingPointForm.get('owner')?.value?.id"/>
-            </nz-input-group>
-            <ng-template #prefixIcon>
-              <i nz-icon nzType="search"></i>
-            </ng-template>
-            <ng-template #textAreaClearTpl>
-              <i
-                nz-icon
-                class="ant-input-textarea-clear-icon"
-                nzTheme="fill"
-                nzType="close-circle"
-                *ngIf="accountingPointForm.get('owner').value?.id"
-                (click)="accountingPointForm.get('owner').patchValue(null)"
-              ></i
-            ></ng-template>
-            <nz-autocomplete #auto>
-              <nz-auto-option 
-                class="global-search-item"
-                *ngFor="let person of foundPersons"
-                [nzLabel]="person.idCardNumber"
-                (click)="accountingPointForm.get('owner').setValue(person)">
-                  {{ person.lastName }} {{ person.firstName }} {{ person.patronymic }}
-                  <b>{{ person.taxCode }} : {{ person.idCardNumber }}</b>
-              </nz-auto-option>
-            </nz-autocomplete>
-      </div>
-    </div>
+    <h2>Власник</h2>
+    <!-- <app-person-search [(model)]="person"></app-person-search>
+    <app-person-form [(person)]="person"></app-person-form> -->
   </div>
-
-  <app-person-form [(person)]="accountingPointForm.value.owner"></app-person-form>
 
   <nz-form-item>
     <nz-form-control [nzSpan]="7" [nzOffset]="4">
       <button nz-button nzType="primary" [nzLoading]="isLoadingSubmit" (click)="submitForm()">Зберегти</button>
-      <button nz-button (click)="resetForm()">Очистити</button>
+      <button nz-button
+        (click)="accountingPointForm.get('id').value ? cancelEdit() : resetForm()">{{ accountingPointForm.get('id').value ? 'Відміна' : 'Очистити' }}</button>
     </nz-form-control>
   </nz-form-item>
 </form>

@@ -19,7 +19,7 @@ export class AccountingPointDetailComponent implements OnInit {
   accountingPoint$: Observable<AccountingPointDetail>
   accountingPointId: number
 
-  constructor(private accountingPointDetailService: AccountingPointDetailService, private route: ActivatedRoute, private modalService: NzModalService) { }
+  constructor(private accountingPointDetailService: AccountingPointDetailService, private route: ActivatedRoute, private modalService: NzModalService) {}
 
   ngOnInit(): void {
     this.route.paramMap.pipe(

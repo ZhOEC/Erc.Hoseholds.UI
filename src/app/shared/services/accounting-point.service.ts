@@ -22,6 +22,10 @@ export class AccountingPointService {
     return this.http.post<AccountingPoint>(this.apiUri, accountingPoint)
   }
 
+  update(accountingPoint: AccountingPoint): Observable<AccountingPoint> {
+    return this.http.put<AccountingPoint>(this.apiUri + accountingPoint.id, accountingPoint)
+}
+
   closeExemption(accountingPointId: number, date: Date, note: string) {
     return this.http.post(`${this.apiUri}${accountingPointId}/closing-current-exemption`, { date: date, note: note });
   }

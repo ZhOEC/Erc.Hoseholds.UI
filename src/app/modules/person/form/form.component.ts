@@ -9,21 +9,35 @@ import { Person } from 'src/app/shared/models/person.model'
 })
 
 export class PersonFormComponent implements OnInit {
-  @Input() set person(value: Person) {
-    value?.id ? this.personForm.patchValue(value) : this.personForm?.reset()
-  }
-
-  @Output() personChange = new EventEmitter<Person>()
+  private _person: Person
+  @Input()
+    set person(value: Person) {
+      value?.id ? this.form.patchValue(value) : this.form?.reset()
+    }
+    get person() {
+      return this._person
+    }
+  
+  @Input()
+    set submit(value: boolean) {
+      if(value && this.validateForm())
+        this.personChange.emit(this.person)
+    }
+    get submit() {
+      return false
+    }
+  
+  @Output() personChange = new EventEmitter()
 
   datesMoreToday = (date: number): boolean => { return date > Date.now() }
   datesLessToday = (date: number): boolean => { return date < Date.now() }
   
-  personForm: FormGroup
+  form: FormGroup
   
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit() {
-    this.personForm = this.formBuilder.group({
+    this.form = this.formBuilder.group({
       id: [null],
       taxCode: [null],
       idCardNumber: [null, [Validators.required]],
@@ -37,44 +51,51 @@ export class PersonFormComponent implements OnInit {
       email: [null]
     })
 
-    this.personForm.get('id').valueChanges.subscribe(
+    this.form.get('id').valueChanges.subscribe(
       id => {
         if(id) {
-          this.personForm.get('taxCode').disable()
-          this.personForm.get('firstName').disable()
-          this.personForm.get('lastName').disable()
-          this.personForm.get('patronymic').disable()
+          this.form.get('taxCode').disable()
+          this.form.get('firstName').disable()
+          this.form.get('lastName').disable()
+          this.form.get('patronymic').disable()
         } else {
-          this.personForm.get('taxCode').enable()
-          this.personForm.get('firstName').enable()
-          this.personForm.get('lastName').enable()
-          this.personForm.get('patronymic').enable()
+          this.form.get('taxCode').enable()
+          this.form.get('firstName').enable()
+          this.form.get('lastName').enable()
+          this.form.get('patronymic').enable()
         }
       }
     )
 
-    this.personForm.get('idCardNumber').valueChanges.subscribe(
+    this.form.get('idCardNumber').valueChanges.subscribe(
       number => {
         if(number?.length > 8) {
-            this.personForm.get('idCardExpDate').setValidators(Validators.required)
-            this.personForm.get('idCardExpDate').markAsDirty()
+            this.form.get('idCardExpDate').setValidators(Validators.required)
+            this.form.get('idCardExpDate').updateValueAndValidity()
           } else {
-            this.personForm.get('idCardExpDate').clearValidators()
-            this.personForm.get('idCardExpDate').updateValueAndValidity()
+            this.form.get('idCardExpDate').setValue(null)
+            this.form.get('idCardExpDate').clearValidators()
+            this.form.get('idCardExpDate').updateValueAndValidity()
         }
       }
     )
+
+    this.form.valueChanges.subscribe(values => {
+      this._person = values
+    })
   }
 
   validateForm() {
-    for (const p in this.personForm['controls']) {
-      this.personForm.controls[p].markAsDirty();
-      this.personForm.controls[p].updateValueAndValidity();
+    for (const p in this.form['controls']) {
+      this.form.controls[p].markAsDirty();
+      this.form.controls[p].updateValueAndValidity();
     }
+
+    return this.form.valid //&& !this.form.dirty
   }
 
   resetForm() {
-    this.personForm.reset()
-    this.personForm.clearValidators()
+    this.form.reset()
+    this.form.clearValidators()
   }
 }

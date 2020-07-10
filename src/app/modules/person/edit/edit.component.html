@@ -1,3 +1,10 @@
-<p>
-  edit works!
-</p>
+<h2>Редагування персональних даних - {{ person?.firstName }} {{ person?.lastName }} {{ person?.patronymic }}</h2>
+<br/>
+<app-person-form [person]="person" [submit]="isSubmit" (personChange)="submitForm($event)"></app-person-form>
+
+<div nz-row>
+    <div nz-col [nzSpan]="12" [nzOffset]="5">
+        <button nz-button nzType="primary" [nzLoading]="isSubmit" (click)="isSubmit = true">Зберегти</button>
+        <button nz-button (click)="cancel()">Відміна</button>
+    </div>
+</div>

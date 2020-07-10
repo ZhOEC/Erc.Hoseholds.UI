@@ -5,11 +5,12 @@
             <button nz-button nz-dropdown [nzDropdownMenu]="menu">Додатково<i nz-icon nzType="down"></i></button>
             <nz-dropdown-menu #menu="nzDropdownMenu">
                 <ul nz-menu>
-                    <li nz-menu-item>Новий договір</li>
+                    <li nz-menu-item><a routerLink="/accounting-points/{{a.id}}">Новий договір</a></li>
                     <li nz-menu-item>Змінити тариф</li>
                     <li nz-menu-item *ngIf="a.exemption" (click)="showCloseExemptionDialog(a.name)">Закрити пільгу</li>
                     <li nz-menu-item *ngIf="!a.exemption">Відкрити пільгу</li>
-                    <li nz-menu-item>Редагувати персональні дані</li>
+                    <li nz-menu-item><a routerLink="/person/edit/{{a.owner.id}}">Редагувати персональні дані</a></li>
+                    <li nz-menu-item><a routerLink="/accounting-point/edit/{{a.id}}">Редагувати точку обліку</a></li>
                 </ul>
             </nz-dropdown-menu>
         </nz-page-header-extra>

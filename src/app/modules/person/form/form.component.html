@@ -1,4 +1,4 @@
-<form nz-form [formGroup]="personForm">
+<form nz-form [formGroup]="form">
     <nz-form-item>
       <nz-form-label [nzSpan]="5" nzRequired nzFor="idCardNumber">Номер паспорта</nz-form-label>
       <nz-form-control [nzSpan]="12" nzErrorTip="Не введено ким виданий">
@@ -20,8 +20,8 @@
       </nz-form-control>
     </nz-form-item>
     
-    <nz-form-item *ngIf="personForm.get('idCardNumber').value?.length > 8">
-      <nz-form-label [nzSpan]="5" [nzRequired]="personForm.get('idCardNumber').value?.length > 8" nzFor="idCardExpDate">Дата закінчення ID картки</nz-form-label>
+    <nz-form-item *ngIf="form.get('idCardNumber').value?.length > 8">
+      <nz-form-label [nzSpan]="5" [nzRequired]="form.get('idCardNumber').value?.length > 8" nzFor="idCardExpDate">Дата закінчення ID картки</nz-form-label>
       <nz-form-control [nzSpan]="12" nzErrorTip="Не обрано дату закінчення ID картки">
         <nz-date-picker nzFormat="dd.MM.yyyy" formControlName="idCardExpDate" [nzDisabledDate]="datesLessToday"></nz-date-picker>
       </nz-form-control>

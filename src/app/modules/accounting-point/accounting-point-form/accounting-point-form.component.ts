@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
-import { Router } from '@angular/router'
+import { Router, ActivatedRoute, ParamMap } from '@angular/router'
+import { switchMap } from 'rxjs/operators'
 import { DistributionSystemOperatorService } from '../../../shared/services/distribution-system-operator.service'
 import { DistributionSystemOperator } from '../../../shared/models/distribution-system-operator.model'
 import { TariffService } from '../../../shared/services/tariff.service'
@@ -18,19 +19,19 @@ import { UsageCategory } from 'src/app/shared/models/usage-category'
 import { BuildingTypeService } from 'src/app/shared/services/building-type.service'
 import { BuildingType } from 'src/app/shared/models/building-type'
 import { Person } from 'src/app/shared/models/person.model'
-import { PersonService } from 'src/app/shared/services/person.service'
+import { AccountingPointDetailService } from '../../accounting-point-view/accounting-point-detail.service'
 
 @Component({
-  selector: 'app-accounting-point-new',
-  templateUrl: './accounting-point-new.component.html',
-  styleUrls: ['./accounting-point-new.component.scss']
+  selector: 'app-accounting-point-form',
+  templateUrl: './accounting-point-form.component.html',
+  styleUrls: ['./accounting-point-form.component.scss']
 })
 
-export class AccountingPointNewComponent {
+export class AccountingPointFormComponent {
   dateFormat = 'dd.MM.yyyy'
   datesMoreToday = (date: number): boolean => { return date > Date.now() }
   datesLessToday = (date: number): boolean => { return date < Date.now() }
-  
+
   accountingPointForm: FormGroup
   branchOfficesList: BranchOffice[]
   citiesList: City[]
@@ -40,41 +41,43 @@ export class AccountingPointNewComponent {
   buildingTypes: BuildingType[]
   usageCategories: UsageCategory[]
 
+  person: Person
+
   isLoadingCities = false
   isLoadingStreets = false
   isLoadingSubmit = false
   isLoadingSearch = false
 
-  person: Person
-  foundPersons: Person[]
-
   @ViewChild(PersonFormComponent)
-  private personComponent: PersonFormComponent
+  private personFormComponent: PersonFormComponent
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private accountingPointService: AccountingPointService,
+    private accountingPointDetailService: AccountingPointDetailService,
     private distributionSystemOperatorService: DistributionSystemOperatorService,
     private branchOfficeService: BranchOfficeService,
     private addressService: AddressService,
     private tariffService: TariffService,
     private buildingTypeService: BuildingTypeService,
     private usageCategoryService: UsageCategoryService,
-    private personService: PersonService,
     private notification: NotificationComponent
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.accountingPointForm = this.formBuilder.group({
+      id: [null],
       branchOfficeId: [null, [Validators.required]],
       eic: [null, [Validators.required, Validators.minLength(16), Validators.maxLength(16), Validators.pattern('[0-9a-zA-Z-]*')]],
       name: [null, [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
-      dsoId: [null, [Validators.required]],
+      distributionSystemOperatorId: [null, [Validators.required]],
       tariffId: [null, [Validators.required]],
-      city: [{value: null, disabled: true}, [Validators.required]],
       address: this.formBuilder.group({
-        streetId: [{value: null, disabled: true}, [Validators.required]],
+        id: [0],
+        cityId: [{ value: null, disabled: true }, [Validators.required]],
+        streetId: [{ value: null, disabled: true }, [Validators.required]],
         building: [null, [Validators.required]],
         apt: [null],
         zip: [null, [Validators.required]],
@@ -91,23 +94,35 @@ export class AccountingPointNewComponent {
     this.getTariffs()
     this.getBuildingTypes()
     this.getUsageCategories()
+
+    this.route.paramMap.pipe(
+      switchMap((params: ParamMap) => params.getAll('id'))
+    ).subscribe(id => {
+      if (id) {
+        this.accountingPointForm.get('tariffId').disable()
+
+        this.accountingPointDetailService.getOne(+id).subscribe(acd =>
+          this.accountingPointForm.patchValue(acd))
+      }
+    })
   }
 
   getBranchOffices() {
     this.branchOfficeService.getBranchOffices().subscribe(offices => {
-        this.branchOfficesList = offices.sort((a, b) => a.name.localeCompare(b.name))
-        if (this.branchOfficesList.length === 1) {
-          this.accountingPointForm.get('branchOfficeId').setValue(this.branchOfficesList[0].id)
-        }})
+      this.branchOfficesList = offices.sort((a, b) => a.name.localeCompare(b.name))
+      if (this.branchOfficesList.length === 1) {
+        this.accountingPointForm.get('branchOfficeId').setValue(this.branchOfficesList[0].id)
+      }
+    })
   }
 
   getCities(branchOfficeId: number) {
-    this.accountingPointForm.controls.city.reset()
-    if(branchOfficeId) {
+    this.accountingPointForm.controls.address.get('cityId').reset()
+    if (branchOfficeId) {
       this.isLoadingCities = true
       this.addressService.getCities(branchOfficeId).subscribe(cities => {
         this.citiesList = cities
-        this.accountingPointForm.controls.city.enable()
+        this.accountingPointForm.controls.address.get('cityId').enable()
         this.isLoadingCities = false
       })
     }
@@ -115,7 +130,7 @@ export class AccountingPointNewComponent {
 
   getStreets(cityId: number) {
     this.accountingPointForm.controls.address.get('streetId').reset()
-    if(cityId) {
+    if (cityId) {
       this.isLoadingStreets = true
       this.addressService.getStreets(cityId).subscribe(streets => {
         this.streetsList = streets
@@ -127,33 +142,26 @@ export class AccountingPointNewComponent {
 
   getDistributionSystemOperators() {
     this.distributionSystemOperatorService.getDistributionSystemOperators().subscribe(operators => {
-        this.distributionSystemOperatorsList = operators.sort((a, b) => a.name.localeCompare(b.name))
-        if (this.distributionSystemOperatorsList.length == 1) {
-          this.accountingPointForm.get('dsoId').setValue(this.distributionSystemOperatorsList[0].id)
-        }
-      })
+      this.distributionSystemOperatorsList = operators.sort((a, b) => a.name.localeCompare(b.name))
+      if (this.distributionSystemOperatorsList.length == 1) {
+        this.accountingPointForm.get('dsoId').setValue(this.distributionSystemOperatorsList[0].id)
+      }
+    })
   }
 
   getTariffs() { this.tariffService.getTariffList().subscribe(tariffs => this.tariffsList = tariffs) }
   getUsageCategories() { this.usageCategoryService.getAll().subscribe(categories => this.usageCategories = categories) }
   getBuildingTypes() { this.buildingTypeService.getAll().subscribe(types => this.buildingTypes = types) }
 
-  onSearchPerson(searchString: string) {
-    if(searchString?.length > 6) {
-      this.isLoadingSearch = true
-      this.personService.searchPerson(searchString).subscribe(
-        persons => {
-          this.foundPersons = persons
-          this.isLoadingSearch = false
-        })
-    }
+  cancelEdit() {
+    this.router.navigate(['accounting-points/', this.accountingPointForm.get('id').value])
   }
 
   resetForm() {
     this.accountingPointForm.reset()
     this.accountingPointForm.markAsPristine()
 
-    this.personComponent.resetForm()
+    this.personFormComponent.resetForm()
   }
 
   validateForms() {
@@ -164,28 +172,48 @@ export class AccountingPointNewComponent {
     }
 
     // Validate PersonForm
-    this.personComponent.validateForm()
+    this.personFormComponent.validateForm()
   }
 
   submitForm() {
-    this.validateForms() // Validate forms
+    if (this.accountingPointForm.get('id').value) {
+      // Validate AccountingPointForm
+      for (const i in this.accountingPointForm.controls) {
+        this.accountingPointForm.controls[i].markAsDirty()
+        this.accountingPointForm.controls[i].updateValueAndValidity()
+      }
 
-    if (this.accountingPointForm.valid && this.personComponent.personForm.valid) {
-      this.isLoadingSubmit = true
+      if (this.accountingPointForm.valid) {
+        this.isLoadingSubmit = true
+        this.accountingPointService.update(this.accountingPointForm.value)
+          .subscribe(
+            () => {
+              this.notification.show('success', 'Успіх', `Точка обліку - ${this.accountingPointForm.value.name}, успішно оновлена`)
+              this.isLoadingSubmit = false
+              this.router.navigate(['accounting-points/', this.accountingPointForm.get('id').value])
+            },
+            () => {
+              this.notification.show('error', 'Фіаско', `Не вдалося оновлено точку обліку`)
+              this.isLoadingSubmit = false
+            })
+      }
+    } else {
+      this.validateForms()
 
-      this.accountingPointForm.get('owner').setValue(this.personComponent.personForm.getRawValue())
-      this.accountingPointService.add(this.accountingPointForm.value)
-        .subscribe(
-          ap => {
-            this.notification.show('success', 'Успіх', `Точку обліку - ${this.accountingPointForm.value.name}, успішно додано`)
-            this.isLoadingSubmit = false
-            this.router.navigate(['accounting-points/', ap.id])
-          },
-          _ => {
-            this.notification.show('error', 'Фіаско', `Не вдалося додати точку обліку`)
-            this.isLoadingSubmit = false
-          }
-        )
+      if (this.accountingPointForm.valid && this.personFormComponent.form.valid) {
+        this.accountingPointForm.get('owner').setValue(this.person)
+        this.accountingPointService.add(this.accountingPointForm.value)
+          .subscribe(
+            ap => {
+              this.notification.show('success', 'Успіх', `Точку обліку - ${this.accountingPointForm.value.name}, успішно додано`)
+              this.isLoadingSubmit = false
+              this.router.navigate(['accounting-points/', ap.id])
+            },
+            () => {
+              this.notification.show('error', 'Фіаско', `Не вдалося додати точку обліку`)
+              this.isLoadingSubmit = false
+            })
+      }
     }
   }
 }

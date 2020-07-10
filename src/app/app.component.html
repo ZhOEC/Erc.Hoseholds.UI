@@ -20,7 +20,7 @@
       <li nz-submenu nzTitle="Інше" nzIcon="appstore">
         <ul>
           <li nz-menu-item>
-            <a [routerLink]="['/accounting-point-new']" routerLinkActive="router-link-active"
+            <a [routerLink]="['/accounting-point']" routerLinkActive="router-link-active"
               routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
               <i nz-icon nzType="plus"></i>
               Нова точку обліку
@@ -38,7 +38,7 @@
             </a>
           </li>
           <li nz-menu-item>
-            <a [routerLink]="['/payment-channel']" routerLinkActive="router-link-active"
+            <a [routerLink]="['/payment-channels']" routerLinkActive="router-link-active"
               routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
               <i nz-icon nzType="fork" nzTheme="outline"></i>
               Канали оплати
@@ -52,7 +52,7 @@
             </a>
           </li>
           <li nz-menu-item>
-            <a [routerLink]="['/payment-batch-list']" routerLinkActive="router-link-active"
+            <a [routerLink]="['/payment-batches']" routerLinkActive="router-link-active"
               routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
               <i nz-icon>
                 <svg-icon src="assets/stack.svg" [svgStyle]="{ 'width.px':16, 'fill':'rgba(255, 255, 255, 0.65)'}">
