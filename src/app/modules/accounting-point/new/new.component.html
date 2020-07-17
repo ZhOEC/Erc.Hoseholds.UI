@@ -1,3 +1,4 @@
+<h1>Точка обліку</h1>
 <app-accounting-point-form (formChanged)="onAccountingPointFormChanged($event)"></app-accounting-point-form>
 
 <form nz-form [formGroup]="form">
@@ -21,5 +22,9 @@
 <app-person-search [(person)]="person" (foundPersonChanged)="onFoundPersonChanged($event)"></app-person-search>
 <app-person-form (formChanged)="onPersonFormChanged($event)"></app-person-form>
 
-<button nz-button nzType="primary" [nzLoading]="isLoadingSubmit" (click)="submitForm()">Зберегти</button>
-<button nz-button (click)="resetForm()">Очистити</button>
+<div nz-row>
+  <div nz-col [nzSpan]="12" [nzOffset]="5">
+    <button nz-button nzType="primary" [nzLoading]="isLoadingSubmit" (click)="submitForm()">Зберегти</button>
+    <button nz-button (click)="resetForm()">Очистити</button>
+  </div>
+</div>

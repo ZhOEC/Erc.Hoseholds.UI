@@ -1,4 +1,9 @@
+<h1>Редагування точки обліку</h1>
 <app-accounting-point-form (formChanged)="onAccountingPointFormChanged($event)"></app-accounting-point-form>
 
-<button nz-button nzType="primary" [nzLoading]="isLoadingSubmit" (click)="submitForm()">Зберегти</button>
-<button nz-button (click)="cancelEdit()">Відміна</button>
+<div nz-row>
+    <div nz-col [nzSpan]="12" [nzOffset]="5">
+        <button nz-button nzType="primary" [nzLoading]="isLoadingSubmit" (click)="submitForm()">Зберегти</button>
+        <button nz-button (click)="cancelEdit()">Відміна</button>
+    </div>
+</div>

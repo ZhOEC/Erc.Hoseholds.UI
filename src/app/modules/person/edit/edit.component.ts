@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core'
 import { PersonService } from 'src/app/shared/services/person.service'
-import { ActivatedRoute, ParamMap, Router } from '@angular/router'
+import { ActivatedRoute, ParamMap } from '@angular/router'
+import { Location } from '@angular/common'
 import { switchMap } from 'rxjs/operators'
 import { Person } from 'src/app/shared/models/person.model'
 import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
@@ -17,7 +18,7 @@ export class PersonEditComponent implements OnInit, AfterViewInit {
   isSubmit = false
 
   constructor(
-    private router: Router,
+    private location: Location,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private personService: PersonService,
@@ -48,7 +49,7 @@ export class PersonEditComponent implements OnInit, AfterViewInit {
   }
 
   cancel() {
-    this.router.navigate(['accounting-points/', 10018022 /* this.person.id */])
+    this.location.back()
   }
 
   submitForm() {
