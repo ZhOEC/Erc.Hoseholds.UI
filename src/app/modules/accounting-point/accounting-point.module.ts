@@ -10,14 +10,18 @@ import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete'
 import { NzIconModule } from 'ng-zorro-antd/icon'
 import { NzCardModule } from 'ng-zorro-antd/card'
 import { FormsModule, ReactiveFormsModule, } from '@angular/forms'
-import { AccountingPointFormComponent } from './accounting-point-form/accounting-point-form.component'
+import { AccountingPointFormComponent } from './form/form.component'
+import { AccountingPointNewComponent } from './new/new.component'
 import { AccountingPointsSearchComponent } from './accounting-point-search/accounting-points-search.component'
 import { CloseExemptionComponent } from './close-exemption/close-exemption.component'
 import { PersonModule } from '../person/person.module'
+import { AccountingPointEditComponent } from './edit/edit.component'
 
 @NgModule({
   declarations: [
-    AccountingPointFormComponent, 
+    AccountingPointFormComponent,
+    AccountingPointNewComponent,
+    AccountingPointEditComponent,
     AccountingPointsSearchComponent,
     CloseExemptionComponent
   ],

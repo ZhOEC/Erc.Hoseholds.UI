@@ -1,19 +1,24 @@
 <div class="search-person">
   <h3>Пошук споживача</h3>
   <nz-input-group [nzPrefix]="prefixIcon" [nzSuffix]="textAreaClearTpl">
-    <input nz-input placeholder="Пошук споживача" [(ngModel)]="model" (ngModelChange)="onSearchPerson($event)"
-      [nzAutocomplete]="auto" [disabled]="model?.id" />
+    <input 
+      nz-input
+      placeholder="Пошук споживача" 
+      [(ngModel)]="person"
+      (ngModelChange)="onSearchPerson($event)"
+      [nzAutocomplete]="auto"
+      [disabled]="person?.id" />
   </nz-input-group>
   <ng-template #prefixIcon>
     <i nz-icon nzType="search"></i>
   </ng-template>
   <ng-template #textAreaClearTpl>
-    <i nz-icon class="ant-input-textarea-clear-icon" nzTheme="fill" nzType="close-circle" *ngIf="model?.id"
-      (click)="model = null"></i></ng-template>
+    <i nz-icon class="ant-input-textarea-clear-icon" nzTheme="fill" nzType="close-circle" *ngIf="person?.id"
+      (click)="person = null"></i>
+  </ng-template>
   <nz-autocomplete #auto>
-    <nz-auto-option class="global-search-item" *ngFor="let p of foundPersons" [nzValue]="p" [nzLabel]="p.idCardNumber">
-      {{ p.lastName }} {{ p.firstName }} {{ p.patronymic }}
-      <b>{{ p.taxCode }} : {{ p.idCardNumber }}</b>
+    <nz-auto-option class="global-search-item" *ngFor="let person of foundPersons" [nzValue]="person" [nzLabel]="person.idCardNumber">
+      {{ person.lastName }} {{ person.firstName }} {{ person.patronymic }} <b>{{ person.taxCode }} : {{ person.idCardNumber }}</b>
     </nz-auto-option>
   </nz-autocomplete>
 </div>

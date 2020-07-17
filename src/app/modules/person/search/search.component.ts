@@ -10,19 +10,19 @@ import { PersonService } from 'src/app/shared/services/person.service'
 export class PersonSearchComponent implements OnInit {
   private _person: Person
   @Input()
-    set model(value: Person) {
+    set person(value: Person) {
       this._person = value
-      this.modelChange.emit(value)
+      this.foundPersonChanged.emit(value)
     }
-    get model() {
+    get person() {
       return this._person
     }
-  @Output() modelChange = new EventEmitter()
+  @Output() foundPersonChanged = new EventEmitter()
 
   isLoadingSearch = false
   foundPersons: Person[]
 
-  constructor(private personService: PersonService) { }
+  constructor(private personService: PersonService) {}
 
   ngOnInit() {}
 
@@ -31,6 +31,7 @@ export class PersonSearchComponent implements OnInit {
       this.isLoadingSearch = true
       this.personService.searchPerson(searchString).subscribe(
         p => {
+          console.log(p)
           this.foundPersons = p
           this.isLoadingSearch = false
         })

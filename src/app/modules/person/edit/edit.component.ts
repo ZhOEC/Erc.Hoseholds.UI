@@ -4,6 +4,7 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router'
 import { switchMap } from 'rxjs/operators'
 import { Person } from 'src/app/shared/models/person.model'
 import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
+import { FormBuilder, FormGroup } from '@angular/forms'
 
 @Component({
   selector: 'app-edit',
@@ -11,16 +12,21 @@ import { NotificationComponent } from 'src/app/shared/components/notification/no
   styleUrls: ['./edit.component.css']
 })
 export class PersonEditComponent implements OnInit, AfterViewInit {
+  form: FormGroup
   person: Person
   isSubmit = false
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
     private personService: PersonService,
     private notification: NotificationComponent) { }
 
   ngOnInit() {
+    this.form = this.formBuilder.group({
+      person: this.formBuilder.array([])
+    })
   }
 
   ngAfterViewInit() {
@@ -28,15 +34,27 @@ export class PersonEditComponent implements OnInit, AfterViewInit {
       switchMap((params: ParamMap) => this.personService.getOne(+params.get('id')))
     ).subscribe(data => {
       this.person = data
+      this.form.get('person')?.patchValue(this.person)
     })
+  }
+
+  validateForm() {
+    for (const p in this.form.controls) {
+      this.form.controls[p].markAsDirty()
+      this.form.controls[p].updateValueAndValidity()
+    }
+
+    return this.form.valid
   }
 
   cancel() {
     this.router.navigate(['accounting-points/', 10018022 /* this.person.id */])
   }
 
-  submitForm(person: Person) {
-      this.personService.update(person).subscribe(
+  submitForm() {
+    if (this.validateForm()) {
+      this.isSubmit = true
+      this.personService.update(this.form.value).subscribe(
         () => {
           this.isSubmit = false
           this.notification.show('success', 'Успіх', `Дані власника, успішно оновлено!`)
@@ -46,5 +64,13 @@ export class PersonEditComponent implements OnInit, AfterViewInit {
           this.notification.show('error', 'Фіаско', `Не вдалося оновити дані власника!`)
         }
       )
+    }
+  }
+
+  onPersonFormChanged(fg: FormGroup) {
+    this.form.controls.person = fg
+    for (const c in fg.controls) {
+      this.form.registerControl(c, fg.controls[c])
+    }
   }
 }

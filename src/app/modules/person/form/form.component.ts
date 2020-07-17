@@ -8,32 +8,18 @@ import { Person } from 'src/app/shared/models/person.model'
   styleUrls: ['./form.component.css']
 })
 
-export class PersonFormComponent implements OnInit {
-  private _person: Person
+export class PersonFormComponent implements OnInit {  
+  private _form: FormGroup
   @Input()
-    set person(value: Person) {
-      value?.id ? this.form.patchValue(value) : this.form?.reset()
+    set form(fg: FormGroup) {
+      this._form = fg
     }
-    get person() {
-      return this._person
-    }
-  
-  @Input()
-    set submit(value: boolean) {
-      if(value && this.validateForm())
-        this.personChange.emit(this.person)
-    }
-    get submit() {
-      return false
-    }
-  
-  @Output() personChange = new EventEmitter()
+    get form() { return this._form }
+  @Output() formChanged = new EventEmitter()
 
   datesMoreToday = (date: number): boolean => { return date > Date.now() }
   datesLessToday = (date: number): boolean => { return date < Date.now() }
-  
-  form: FormGroup
-  
+    
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit() {
@@ -80,18 +66,51 @@ export class PersonFormComponent implements OnInit {
       }
     )
 
-    this.form.valueChanges.subscribe(values => {
-      this._person = values
+    this.form.valueChanges.subscribe(() => {
+      this._form = this.form
+      this.formChanged.emit(this.form)
     })
+
+    this.formChanged.emit(this.form)
   }
 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   validateForm() {
     for (const p in this.form['controls']) {
       this.form.controls[p].markAsDirty();
       this.form.controls[p].updateValueAndValidity();
     }
 
-    return this.form.valid //&& !this.form.dirty
+    return this.form.valid //&& !this.form.touched  //&& !this.form.dirty
   }
 
   resetForm() {

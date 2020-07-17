@@ -14,17 +14,13 @@ import { NzIconModule } from 'ng-zorro-antd/icon'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { PersonFormComponent } from './form/form.component'
 import { PersonEditComponent } from './edit/edit.component'
-
 import { PersonSearchComponent } from './search/search.component'
-import { CComponent } from './c/c.component'
 
 @NgModule({
   declarations: [
     PersonFormComponent,
     PersonEditComponent,
-
     PersonSearchComponent,
-    CComponent
   ],
   imports: [
     CommonModule,

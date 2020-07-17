@@ -1,0 +1,4 @@
+<app-accounting-point-form (formChanged)="onAccountingPointFormChanged($event)"></app-accounting-point-form>
+
+<button nz-button nzType="primary" [nzLoading]="isLoadingSubmit" (click)="submitForm()">Зберегти</button>
+<button nz-button (click)="cancelEdit()">Відміна</button>

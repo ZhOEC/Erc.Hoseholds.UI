@@ -125,33 +125,4 @@
       </nz-select>
     </nz-form-control>
   </nz-form-item>
-
-  <div *ngIf="!accountingPointForm.get('id').value">
-    <h1>Договір</h1>
-    <nz-form-item>
-      <nz-form-label [nzSpan]="5" nzRequired nzFor="contractStartDate">Дата заключення договору</nz-form-label>
-      <nz-form-control [nzSpan]="12" nzErrorTip="Не обрано дату заключення договру">
-        <nz-date-picker [nzFormat]="dateFormat" formControlName="contractStartDate" [nzDisabledDate]="datesMoreToday">
-        </nz-date-picker>
-      </nz-form-control>
-    </nz-form-item>
-
-    <nz-form-item>
-      <nz-form-control [nzSpan]="12" [nzOffset]="5">
-        <label nz-checkbox formControlName="sendPaperBill">Отримувати паперову квитанцію</label>
-      </nz-form-control>
-    </nz-form-item>
-
-    <h2>Власник</h2>
-    <!-- <app-person-search [(model)]="person"></app-person-search>
-    <app-person-form [(person)]="person"></app-person-form> -->
-  </div>
-
-  <nz-form-item>
-    <nz-form-control [nzSpan]="7" [nzOffset]="4">
-      <button nz-button nzType="primary" [nzLoading]="isLoadingSubmit" (click)="submitForm()">Зберегти</button>
-      <button nz-button
-        (click)="accountingPointForm.get('id').value ? cancelEdit() : resetForm()">{{ accountingPointForm.get('id').value ? 'Відміна' : 'Очистити' }}</button>
-    </nz-form-control>
-  </nz-form-item>
 </form>
