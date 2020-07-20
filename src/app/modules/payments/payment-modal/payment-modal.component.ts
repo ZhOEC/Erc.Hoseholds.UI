@@ -11,11 +11,7 @@ import { PaymentView } from '../../../shared/models/payments/payment-view.model'
   styleUrls: ['./payment-modal.component.css']
 })
 export class PaymentModalComponent implements OnInit {
-  @Input() batchId: number
-  @Input() paymentType: number
-
-  @Output() addPaymentToList = new EventEmitter<PaymentView>()
-  @Output() updatePaymentInList = new EventEmitter<PaymentView>()
+  @Output() updateData = new EventEmitter()
   
   modalTitle: string
   datesMoreToday = (date: number): boolean => { return date > Date.now() }
@@ -43,28 +39,24 @@ export class PaymentModalComponent implements OnInit {
     })
   }
 
-  openAddPaymentDialog() {
-    this.modalTitle = `Додати платіж`
+  openDialog(payment: PaymentView) {
     this.paymentForm.reset()
-    this.paymentForm.get('batchId').setValue(this.batchId)
-    this.paymentForm.get('type').setValue(this.paymentType)
 
-    this.paymentForm.markAsUntouched()
+    if (payment) {
+      this.modalTitle = `Редагування платежу`
+      this.paymentForm.patchValue(payment)
 
-    this.isVisible = true
-  }
-
-  openEditPaymentDialog(payment: PaymentView) {
-    this.modalTitle = `Редагування платежу`
-    this.paymentForm.reset()
-    this.paymentForm.patchValue(payment)
-    this.paymentForm.markAsUntouched()
-
-    if (payment.accountingPointName) {
-      this.selectedAccountingPoint = { id: payment.accountingPointId, text: `${payment.accountingPointName} ${payment.payerInfo}`, payerInfo: payment.payerInfo }
-      this.searchAccountingPointResults.push(this.selectedAccountingPoint)
+      if (payment.accountingPointName) {
+        this.selectedAccountingPoint = { id: payment.accountingPointId, text: `${payment.accountingPointName} ${payment.payerInfo}`, payerInfo: payment.payerInfo }
+        this.searchAccountingPointResults.push(this.selectedAccountingPoint)
+      }
+    } else {
+      this.modalTitle = `Додати платіж`
+      this.paymentForm.get('batchId').setValue(payment.batchId)
+      this.paymentForm.get('type').setValue(payment.type)
     }
-    
+
+    this.paymentForm.markAsUntouched()
     this.isVisible = true
   }
 
@@ -105,14 +97,14 @@ export class PaymentModalComponent implements OnInit {
     if (this.paymentForm.value.id) {
       this.paymentService.update(this.paymentForm.value)
         .subscribe(
-          payment => {
-            this.updatePaymentInList.emit(payment)
+          _ => {
+            this.updateData.emit()
             this.resetForm()
             this.isOkLoading = false
             this.isVisible = false
-            this.notification.show('success', 'Успіх', `Платіж для ${payment.accountingPointName}, успішно оновлено!`)
+            this.notification.show('success', 'Успіх', `Платіж успішно оновлено!`)
           },
-          error => {
+          _ => {
             this.isOkLoading = false
             this.notification.show('error', 'Фіаско', `Не вдалося оновити платіж`)
           }
@@ -120,15 +112,14 @@ export class PaymentModalComponent implements OnInit {
     } else {
       this.paymentService.add(this.paymentForm.value)
         .subscribe(
-          payment => {
-            console.log(payment)
-            this.addPaymentToList.emit(payment)
+          _ => {
+            this.updateData.emit()
             this.resetForm()
             this.isOkLoading = false
             this.isVisible = false
             this.notification.show('success', 'Успіх', `Платіж успішно додано!`)
           },
-          error => {
+          _ => {
             this.isOkLoading = false
             this.notification.show('error', 'Фіаско', `Не вдалося додати платіж`)
           }

@@ -19,9 +19,7 @@ export class PaymentBatchDetailComponent implements OnInit {
 
   paymentsBatch: PaymentBatchView
   paymentList: PaymentView[]
-  payment: PaymentView
 
-  paymentsBatchId: string
   totalCount = 0
   pageNumber = 1
   pageSize = 10
@@ -37,15 +35,13 @@ export class PaymentBatchDetailComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.paymentsBatchId = params['id']
-      
-      this.getPaymentsBatchById(+this.paymentsBatchId)
-      this.getPaymentsPart(+this.paymentsBatchId, this.pageNumber, this.pageSize, this.showProcessedPayments)
+      this.getPaymentsBatchById(+params['id'])
+      this.getPaymentsPart(+params['id'], this.pageNumber, this.pageSize, this.showProcessedPayments)
     })
   }
 
-  getPaymentsBatchById(paymentsBatchId: number) {
-    this.paymentBatchService.getOne(+paymentsBatchId)
+  getPaymentsBatchById(batchId: number) {
+    this.paymentBatchService.getOne(+batchId)
       .subscribe(paymentsBatch => {
         this.paymentsBatch = paymentsBatch
       })
@@ -63,43 +59,44 @@ export class PaymentBatchDetailComponent implements OnInit {
 
   onChangedShowProcessedPayments(showProcessed: boolean) {
     this.showProcessedPayments = showProcessed
-    this.getPaymentsPart(+this.paymentsBatchId, this.pageNumber, this.pageSize, this.showProcessedPayments) 
+    this.getPaymentsPart(+this.paymentsBatch.id, this.pageNumber, this.pageSize, this.showProcessedPayments) 
   }
 
   openPaymentDialog(payment: PaymentView) {
-    if (payment.id)
-      this.paymentModalComponent.openEditPaymentDialog(payment)
-    else this.paymentModalComponent.openAddPaymentDialog()
-  }
-
-  onAddPaymentToList(payment: PaymentView) {
-    this.paymentList = [payment, ...this.paymentList]
-    this.totalCount++
-    this.updatePaymentsBatchDetailInfo(true, payment)
-  }
-
-  onUpdatePaymentInList(payment: PaymentView) {
-    const index = this.paymentList.findIndex(x => x.id == payment.id)
-    this.paymentList[index] = payment
+    if (payment)
+      this.paymentModalComponent.openDialog(payment)
+    else {
+      let consPayment: PaymentView = { 
+        id: null,
+        batchId: this.paymentsBatch.id,
+        branchOfficeName: null,
+        accountingPointId: null,
+        accountingPointName: null,
+        payerInfo: null,
+        payDate: null,
+        amount: null,
+        status: null,
+        type: this.paymentsBatch.paymentChannelPaymentsType, 
+      }
+      this.paymentModalComponent.openDialog(consPayment)
+    }
   }
 
   pageIndexChange(pageIndex: number) {
     this.pageNumber = pageIndex
-    this.getPaymentsPart(+this.paymentsBatchId, this.pageNumber, this.pageSize, this.showProcessedPayments)
+    this.getPaymentsPart(+this.paymentsBatch.id, this.pageNumber, this.pageSize, this.showProcessedPayments)
   }
 
   pageSizeChange(pageSize: number) {
     this.pageSize = pageSize
-    this.getPaymentsPart(+this.paymentsBatchId, this.pageNumber, this.pageSize, this.showProcessedPayments)
+    this.getPaymentsPart(+this.paymentsBatch.id, this.pageNumber, this.pageSize, this.showProcessedPayments)
   }
 
   deletePayment(payment: PaymentView) {
     this.paymentService.delete(payment.id)
       .subscribe(
         _ => {
-          this.totalCount--
-          this.getPaymentsPart(+this.paymentsBatchId, this.pageNumber, this.pageSize, this.showProcessedPayments)
-          this.updatePaymentsBatchDetailInfo(false, payment)
+          this.updatePageData()
           this.notification.show('success', 'Успіх', `Платіж успішно видалено!`)
         },
         _ => {
@@ -107,8 +104,8 @@ export class PaymentBatchDetailComponent implements OnInit {
       })
   }
 
-  updatePaymentsBatchDetailInfo(isAdd: boolean, payment: PaymentView) {
-    this.paymentsBatch.totalAmount += (isAdd ? 1 : -1) * payment.amount
-    this.paymentsBatch.totalCount = this.totalCount
+  updatePageData() {
+    this.getPaymentsBatchById(+this.paymentsBatch.id)
+    this.getPaymentsPart(+this.paymentsBatch.id, this.pageNumber, this.pageSize, this.showProcessedPayments)
   }
 }

@@ -33,7 +33,7 @@ export class PaymentChannelListComponent implements OnInit {
   }
 
   edit(paymentChannels: PaymentChannel[], paymentChannel: PaymentChannel) {
-    this.paymentChannelModal.openEditDialog(paymentChannels, paymentChannel)
+    this.paymentChannelModal.openEditDialog(paymentChannel, paymentChannels)
   }
 
   delete(id: number) {

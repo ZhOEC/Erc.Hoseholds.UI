@@ -66,7 +66,7 @@ export class PaymentChannelModalComponent implements OnInit {
     this.isVisible = true
   }
 
-  openEditDialog(paymentChannels: PaymentChannel[], paymentChannel: PaymentChannel) {
+  openEditDialog(paymentChannel: PaymentChannel, paymentChannels: PaymentChannel[]) {
     this.modalTitle = `Редагування каналу оплати - ${paymentChannel.name}`
     this.submitButtonText = 'Зберегти'
     this.paymentChannelForm.reset()
