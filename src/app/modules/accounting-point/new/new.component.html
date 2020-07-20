@@ -1,0 +1,25 @@
+<app-accounting-point-form (formChanged)="onAccountingPointFormChanged($event)"></app-accounting-point-form>
+
+<form nz-form [formGroup]="form">
+  <h1>Договір</h1>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="contractStartDate">Дата заключення договору</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Не обрано дату заключення договру">
+      <nz-date-picker nzFormat="dd.MM.yyyy" formControlName="contractStartDate" [nzDisabledDate]="datesMoreToday">
+      </nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control [nzSpan]="12" [nzOffset]="5">
+      <label nz-checkbox formControlName="sendPaperBill">Отримувати паперову квитанцію</label>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<h2>Власник</h2>
+<app-person-search [(person)]="person" (foundPersonChanged)="onFoundPersonChanged($event)"></app-person-search>
+<app-person-form (formChanged)="onPersonFormChanged($event)"></app-person-form>
+
+<button nz-button nzType="primary" [nzLoading]="isLoadingSubmit" (click)="submitForm()">Зберегти</button>
+<button nz-button (click)="resetForm()">Очистити</button>

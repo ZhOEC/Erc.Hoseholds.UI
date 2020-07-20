@@ -59,7 +59,7 @@ export class PaymentBatchDetailComponent implements OnInit {
 
   onChangedShowProcessedPayments(showProcessed: boolean) {
     this.showProcessedPayments = showProcessed
-    this.getPaymentsPart(+this.paymentsBatch.id, this.pageNumber, this.pageSize, this.showProcessedPayments) 
+    this.getPaymentsPart(+this.paymentsBatch.id, this.pageNumber, this.pageSize, this.showProcessedPayments)
   }
 
   openPaymentDialog(payment: PaymentView) {

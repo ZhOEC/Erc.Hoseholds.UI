@@ -31,8 +31,24 @@
     <nz-form-item>
       <nz-form-label [nzSpan]="4" nzFor="amount" nzRequired>Сумма</nz-form-label>
       <nz-form-control [nzSpan]="19" nzErrorTip="Не введено суму платежу">
-        <input type="number" nz-input formControlName="amount" />
+        <nz-input-number nz-input formControlName="amount" [nzMin]="1" [nzStep]="1"></nz-input-number>
       </nz-form-control>
     </nz-form-item>
   </form>
 </nz-modal>
+
+
+              <!--
+                
+          [nzCustomTemplate]="optionTemplate" 
+                <nz-option nzCustomContent *ngFor="let person of foundPersons" [nzLabel]="person" [nzValue]="person">
+                <b>ПІБ:</b> {{person.lastName}} {{person.firstName}} {{person.patronymic}} <br/>
+                <b>Номер паспорта:</b> {{person.idCardNumber}} <b>Іден. номер:</b> {{person.taxCode}}
+              </nz-option>
+            </nz-select>
+            <ng-template #personTemplate let-person>
+              <span>
+                {{ person.nzLabel.lastName }} {{ person.nzLabel.firstName }} {{ person.nzLabel.patronymic }}
+                <b>{{ person.nzLabel.taxCode }} : {{ person.nzLabel.idCardNumber }}</b>
+              </span>
+            </ng-template> -->

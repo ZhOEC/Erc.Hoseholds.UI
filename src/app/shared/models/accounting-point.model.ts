@@ -6,12 +6,11 @@ export interface AccountingPoint {
     branchOfficeId: number
     eic: string
     name: string
-    dsoId: number
+    distributionSystemOperatorId: number
     tarrifId: number
-    city: string
-    street: string
-    building: string
-    appartament: string
+    buildingTypeId: number
+    usageCategoryId: number
+    sendPaperBill: boolean
     contractStartDate: Date
     address: Address
     owner: Person
