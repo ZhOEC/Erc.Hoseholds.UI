@@ -10,8 +10,8 @@ import { NotificationComponent } from 'src/app/shared/components/notification/no
 
 @Component({
   selector: 'app-contract-new',
-  templateUrl: './new.component.html',
-  styleUrls: ['./new.component.css']
+  templateUrl: './contract-new.component.html',
+  styleUrls: ['./contract-new.component.css']
 })
 export class ContractNewComponent implements OnInit {
   person: Person

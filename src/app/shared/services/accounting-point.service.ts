@@ -1,15 +1,16 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
-import { AccountingPoint } from '../models/accounting-point.model';
-import { of, Observable } from 'rxjs';
-import { NewContract } from '../models/new-contract.model';
+import { Injectable } from '@angular/core'
+import { HttpClient, HttpParams } from '@angular/common/http'
+import { environment } from 'src/environments/environment'
+import { AccountingPoint } from '../models/accounting-point.model'
+import { Observable } from 'rxjs'
+import { NewContract } from '../models/new-contract.model'
+import { Exemption } from '../models/exemption'
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountingPointService {
-  private apiUri = `${environment.apiServer}accountingpoints/`;
+  private apiUri = `${environment.apiServer}accountingpoints/`
 
   constructor(private http: HttpClient) { }
 
@@ -31,8 +32,12 @@ export class AccountingPointService {
     return this.http.post(`${this.apiUri}${accountingPointId}/open-new-contract`, { id: accountingPointId, contractStartDate: newContract.contractStartDate, 
       sendPaperBill: newContract.sendPaperBill, owner: newContract.owner })
   }
+  
+  openExemption(accountingPointId: number, exemption: Exemption) {
+    return this.http.post(`${this.apiUri}${accountingPointId}/open-exemption`, exemption)
+  }
 
   closeExemption(accountingPointId: number, date: Date, note: string) {
-    return this.http.post(`${this.apiUri}${accountingPointId}/closing-current-exemption`, { date: date, note: note });
+    return this.http.post(`${this.apiUri}${accountingPointId}/closing-current-exemption`, { date: date, note: note })
   }
 }

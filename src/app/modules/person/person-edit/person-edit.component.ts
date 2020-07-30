@@ -8,9 +8,9 @@ import { NotificationComponent } from 'src/app/shared/components/notification/no
 import { FormBuilder, FormGroup } from '@angular/forms'
 
 @Component({
-  selector: 'app-edit',
-  templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.css']
+  selector: 'app-person-edit',
+  templateUrl: './person-edit.component.html',
+  styleUrls: ['./person-edit.component.css']
 })
 export class PersonEditComponent implements OnInit, AfterViewInit {
   form: FormGroup
@@ -69,9 +69,8 @@ export class PersonEditComponent implements OnInit, AfterViewInit {
   }
 
   onPersonFormChanged(fg: FormGroup) {
-    this.form.controls.person = fg
     for (const c in fg.controls) {
-      this.form.registerControl(c, fg.controls[c])
+      this.form.addControl(c, fg.controls[c])
     }
   }
 }

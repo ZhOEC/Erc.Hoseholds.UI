@@ -7,9 +7,9 @@ import { AccountingPointService } from 'src/app/shared/services/accounting-point
 import { AccountingPointDetailService } from '../../accounting-point-view/accounting-point-detail.service'
 
 @Component({
-  selector: 'app-edit',
-  templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.css']
+  selector: 'app-accounting-point-edit',
+  templateUrl: './accounting-point-edit.component.html',
+  styleUrls: ['./accounting-point-edit.component.css']
 })
 export class AccountingPointEditComponent implements OnInit {
   form: FormGroup
@@ -30,10 +30,9 @@ export class AccountingPointEditComponent implements OnInit {
       switchMap((params: ParamMap) => params.getAll('id'))
     ).subscribe(id => {
       if (id) {
-        this.form.get('tariffId')?.disable()
         this.accountingPointDetailService.getOne(+id).subscribe(acd => {
-          console.log(acd)
           this.form.patchValue(acd)
+          this.form.get('tariffId').disable()
         })
       }
     })

@@ -12,9 +12,9 @@ import { NzGridModule } from 'ng-zorro-antd/grid'
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete'
 import { NzIconModule } from 'ng-zorro-antd/icon'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { PersonFormComponent } from './form/form.component'
-import { PersonEditComponent } from './edit/edit.component'
-import { PersonSearchComponent } from './search/search.component'
+import { PersonFormComponent } from './person-form/person-form.component'
+import { PersonEditComponent } from './person-edit/person-edit.component'
+import { PersonSearchComponent } from './person-search/person-search.component'
 
 @NgModule({
   declarations: [
