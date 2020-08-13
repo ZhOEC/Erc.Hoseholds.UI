@@ -9,13 +9,15 @@ import { NzButtonModule } from 'ng-zorro-antd/button'
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete'
 import { NzIconModule } from 'ng-zorro-antd/icon'
 import { NzCardModule } from 'ng-zorro-antd/card'
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number'
 import { FormsModule, ReactiveFormsModule, } from '@angular/forms'
-import { AccountingPointFormComponent } from './form/form.component'
-import { AccountingPointNewComponent } from './new/new.component'
+import { AccountingPointFormComponent } from './accounting-point-form/accounting-point-form.component'
+import { AccountingPointNewComponent } from './accounting-point-new/accounting-point-new.component'
 import { AccountingPointsSearchComponent } from './accounting-point-search/accounting-points-search.component'
 import { CloseExemptionComponent } from './close-exemption/close-exemption.component'
 import { PersonModule } from '../person/person.module'
-import { AccountingPointEditComponent } from './edit/edit.component'
+import { AccountingPointEditComponent } from './accounting-point-edit/accounting-point-edit.component'
+import { OpenExemptionComponent } from './open-exemption/open-exemption.component'
 
 @NgModule({
   declarations: [
@@ -23,6 +25,7 @@ import { AccountingPointEditComponent } from './edit/edit.component'
     AccountingPointNewComponent,
     AccountingPointEditComponent,
     AccountingPointsSearchComponent,
+    OpenExemptionComponent,
     CloseExemptionComponent
   ],
   imports: [
@@ -38,6 +41,7 @@ import { AccountingPointEditComponent } from './edit/edit.component'
     NzAutocompleteModule,
     NzIconModule,
     NzCardModule,
+    NzInputNumberModule,
     PersonModule
   ],
   exports: [

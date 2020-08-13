@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http'
 import { environment } from 'src/environments/environment'
 import { Person } from '../models/person.model'
 import { Observable } from 'rxjs'
+import { map } from 'rxjs/operators'
   
 @Injectable()
 export class PersonService {
@@ -16,8 +17,13 @@ export class PersonService {
         return this.http.get<Person[]>(`${environment.apiServer}people`, { params: queryParams })
     }
 
-    getOne(id: number) {
+    getOne(id: number): Observable<Person> {
         return this.http.get<Person>(this.urn + id)
+            .pipe(map((data) => {
+                data.idCardExpDate = new Date(data.idCardExpDate)
+                data.idCardIssuanceDate = new Date(data.idCardIssuanceDate)
+                return data
+            }))
     }
 
     update(person: Person): Observable<Person> {

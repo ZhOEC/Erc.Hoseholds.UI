@@ -16,8 +16,8 @@ import { UsageCategory } from 'src/app/shared/models/usage-category'
 
 @Component({
   selector: 'app-accounting-point-form',
-  templateUrl: './form.component.html',
-  styleUrls: ['./form.component.css']
+  templateUrl: './accounting-point-form.component.html',
+  styleUrls: ['./accounting-point-form.component.css']
 })
 export class AccountingPointFormComponent implements OnInit {
   private _accountingPointForm: FormGroup
@@ -76,13 +76,8 @@ export class AccountingPointFormComponent implements OnInit {
     this.getTariffs()
     this.getBuildingTypes()
     this.getUsageCategories()
-
-    this.accountingPointForm.valueChanges.subscribe(
-      () => {
-        this._accountingPointForm = this.accountingPointForm
-        this.formChanged.emit(this.accountingPointForm)
-      })
-      this.formChanged.emit(this.accountingPointForm)
+    
+    this.formChanged.emit(this.accountingPointForm)
   }
 
   getBranchOffices() {

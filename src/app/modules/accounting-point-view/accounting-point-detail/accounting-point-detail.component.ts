@@ -1,12 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { switchMap, catchError, tap } from 'rxjs/operators';
-import { AccountingPointDetail } from '../accounting-point-detail.model';
-import { Observable, of, empty } from 'rxjs';
-import { AccountingPointDetailService } from '../accounting-point-detail.service';
-import { NzModalService } from 'ng-zorro-antd/modal';
-import { CloseExemptionComponent } from '../../accounting-point/close-exemption/close-exemption.component';
-import { AccountingPointInvoicesComponent } from '../accounting-point-invoices/accounting-point-invoices.component';
+import { Component, OnInit, ViewChild } from '@angular/core'
+import { ActivatedRoute, ParamMap } from '@angular/router'
+import { switchMap } from 'rxjs/operators'
+import { AccountingPointDetail } from '../accounting-point-detail.model'
+import { Observable } from 'rxjs'
+import { AccountingPointDetailService } from '../accounting-point-detail.service'
+import { NzModalService } from 'ng-zorro-antd/modal'
+import { CloseExemptionComponent } from '../../accounting-point/close-exemption/close-exemption.component'
+import { AccountingPointInvoicesComponent } from '../accounting-point-invoices/accounting-point-invoices.component'
 
 @Component({
   selector: 'app-accounting-point-detail',

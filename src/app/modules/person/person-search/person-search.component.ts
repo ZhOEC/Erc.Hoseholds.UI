@@ -4,8 +4,8 @@ import { PersonService } from 'src/app/shared/services/person.service'
 
 @Component({
   selector: 'app-person-search',
-  templateUrl: './search.component.html',
-  styleUrls: ['./search.component.css']
+  templateUrl: './person-search.component.html',
+  styleUrls: ['./person-search.component.css']
 })
 export class PersonSearchComponent implements OnInit {
   private _person: Person
@@ -26,12 +26,15 @@ export class PersonSearchComponent implements OnInit {
 
   ngOnInit() {}
 
+  clearPerson() {
+    this.person = null
+  }
+
   onSearchPerson(searchString: string) {
     if (searchString?.length > 2) {
       this.isLoadingSearch = true
       this.personService.searchPerson(searchString).subscribe(
         p => {
-          console.log(p)
           this.foundPersons = p
           this.isLoadingSearch = false
         })

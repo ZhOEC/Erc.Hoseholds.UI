@@ -6,9 +6,9 @@ import { AccountingPointService } from 'src/app/shared/services/accounting-point
 import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
 
 @Component({
-  selector: 'app-new',
-  templateUrl: './new.component.html',
-  styleUrls: ['./new.component.css']
+  selector: 'app-accounting-point-new',
+  templateUrl: './accounting-point-new.component.html',
+  styleUrls: ['./accounting-point-new.component.css']
 })
 export class AccountingPointNewComponent implements OnInit {
   form: FormGroup
@@ -18,7 +18,6 @@ export class AccountingPointNewComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private accountingPointService: AccountingPointService,
     private notification: NotificationComponent) {}

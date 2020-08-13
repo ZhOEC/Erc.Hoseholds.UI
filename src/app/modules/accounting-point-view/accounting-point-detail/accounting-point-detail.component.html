@@ -7,8 +7,8 @@
                 <ul nz-menu>
                     <li nz-menu-item><a routerLink="/accounting-point/{{a.id}}/open-new-contract">Новий договір</a></li>
                     <li nz-menu-item>Змінити тариф</li>
+                    <li nz-menu-item *ngIf="!a.exemption"><a routerLink="/accounting-point/{{a.id}}/open-exemption">Відкрити пільгу</a></li>
                     <li nz-menu-item *ngIf="a.exemption" (click)="showCloseExemptionDialog(a.name)">Закрити пільгу</li>
-                    <li nz-menu-item *ngIf="!a.exemption">Відкрити пільгу</li>
                     <li nz-menu-item><a routerLink="/person/{{a.owner.id}}/edit">Редагувати персональні дані</a></li>
                     <li nz-menu-item><a routerLink="/accounting-point/{{a.id}}/edit">Редагувати точку обліку</a></li>
                 </ul>

@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment'
 import { Observable } from 'rxjs'
 import { PaymentView } from '../models/payments/payment-view.model'
 import { PaymentPost } from '../models/payments/payment-post.model'
+import { map } from 'rxjs/internal/operators/map'
 
 @Injectable()
 export class PaymentService {
@@ -17,7 +18,13 @@ export class PaymentService {
             .append('pageNumber', pageNumber.toString())
             .append('pageSize', pageSize.toString())
             .append('showProcessed', showProcessed.toString())
-        return this.http.get(this.urn, { params: queryParams, observe: 'response' })
+        return this.http.get<PaymentView[]>(this.urn, { params: queryParams, observe: 'response' })
+            .pipe(map((data) => {
+                data.body.forEach(element => {
+                    element.payDate = new Date(element.payDate)
+                })
+                return data
+            }))
     }
 
     add(payment: PaymentPost): Observable<PaymentView> {

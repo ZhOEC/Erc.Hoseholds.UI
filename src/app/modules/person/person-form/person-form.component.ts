@@ -1,11 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
-import { Person } from 'src/app/shared/models/person.model'
 
 @Component({
   selector: 'app-person-form',
-  templateUrl: './form.component.html',
-  styleUrls: ['./form.component.css']
+  templateUrl: './person-form.component.html',
+  styleUrls: ['./person-form.component.css']
 })
 
 export class PersonFormComponent implements OnInit {  
@@ -24,7 +23,7 @@ export class PersonFormComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      id: [null],
+      id: [0],
       taxCode: [null],
       idCardNumber: [null, [Validators.required]],
       idCardIssuer: [null, [Validators.required]],
@@ -66,10 +65,10 @@ export class PersonFormComponent implements OnInit {
       }
     )
 
-    this.form.valueChanges.subscribe(() => {
+    /* this.form.valueChanges.subscribe(() => {
       this._form = this.form
       this.formChanged.emit(this.form)
-    })
+    }) */
 
     this.formChanged.emit(this.form)
   }
