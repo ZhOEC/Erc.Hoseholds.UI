@@ -1,0 +1,20 @@
+<form nz-form #closeExemptionForm="ngForm">
+    <div>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="4" nzRequired>Дата</nz-form-label>
+            <nz-form-control [nzSpan]="20">
+                <nz-date-picker required [(ngModel)]="date" name="date"></nz-date-picker>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="4">Примітка</nz-form-label>
+            <nz-form-control [nzSpan]="20">
+                <textarea nz-input rows="2" placeholder="Можете щось написати" [(ngModel)]="note" name="note"></textarea>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+    <div *nzModalFooter>
+        <button nz-button nzType="default" (click)="destroyModal()">Ні, залишити</button>
+        <button type="submit" nz-button nzType="primary" (click)="submitForm()" [disabled]="!closeExemptionForm.form.valid" [nzLoading]="isProcessing">Так, закрити пільгу</button>
+    </div>
+</form>

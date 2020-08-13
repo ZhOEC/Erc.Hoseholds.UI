@@ -1,0 +1,80 @@
+<ng-template #titleTemplate>
+  <nz-row nzJustify="space-between" nzAlign="middle" nzGutter="12">
+    <nz-col>
+      <span>Список пачки платежів</span>
+    </nz-col>
+    <nz-col>
+      <nz-space [nzSize]="8">
+        <nz-space-item>
+          <label nz-checkbox [(ngModel)]="showClosedPaymentsBatch" (ngModelChange)="onChangedShowClosedPaymentsBatch($event)">Показувати закриті</label>
+        </nz-space-item>
+        <nz-space-item>
+          <button nz-button nzType="primary" (click)="openDialogAddPaymentsBatch()">Додати</button>
+        </nz-space-item>
+      </nz-space>
+    </nz-col>
+  </nz-row>
+</ng-template>
+<nz-table #paymentsBatchTable 
+  [nzData]="paymentsBatchList"
+  [nzFrontPagination]="false"
+  [nzTotal]="totalCount"
+  [nzPageSize]="pageSize"
+  [nzPageIndex]="pageNumber"
+  [nzShowSizeChanger]="true"
+  [nzLoading]="isLoading"
+  [nzTitle]="titleTemplate"
+  [nzFooter]="totalCount ? 'Всього: ' + totalCount : null"
+  nzSize="small"
+  nzBordered="true"
+  (nzPageIndexChange)="pageIndexChange($event)"
+  (nzPageSizeChange)="pageSizeChange($event)">
+  <thead>
+    <tr>
+      <th>ЦОК</th>
+      <th>Канал оплати</th>
+      <th>Дата надходження</th>
+      <th>Кількість</th>
+      <th>Сума</th>
+      <th>Статус</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let pb of paymentsBatchTable.data">
+      <ng-container *ngIf="!editCache[pb.id].edit; else editTemplate">
+        <td>{{ pb.branchOfficeName }}</td>
+        <td>{{ pb.paymentChannelName }}</td>
+        <td>{{ pb.incomingDate | date: dateFormat }}</td>
+        <td>{{ pb.totalCount }}</td>
+        <td>{{ pb.totalAmount }}</td>
+        <td>{{ pb.isClosed ? 'Закрита' : 'Відкрита'}}</td> <!-- <nz-badge [nzStatus]="'success'" [nzText]="'Finished'"></nz-badge> -->
+      </ng-container>
+      <ng-template #editTemplate>
+        <td>{{ pb.branchOfficeName }}</td>
+        <td>
+          <nz-select [(ngModel)]="editCache[pb.id].data.paymentChannelId" nzShowSearch>
+            <nz-option *ngFor="let paymentChannel of paymentChannelsList" [nzValue]="paymentChannel.id" [nzLabel]="paymentChannel.name"></nz-option>
+          </nz-select>
+        </td>
+        <td><nz-date-picker [(ngModel)]="editCache[pb.id].data.incomingDate" [nzFormat]="dateFormat" [nzDisabledDate]="datesMoreToday"></nz-date-picker></td>
+        <td>{{ editCache[pb.id].data.totalCount }}</td>
+        <td>{{ editCache[pb.id].data.totalAmount }}</td>
+        <td>{{ editCache[pb.id].data.isClosed ? 'Закрита' : 'Відкрита'}}</td>
+      </ng-template>
+      <td nzAlign="center">
+        <a routerLink="/payment-batch/{{pb.id}}" title="Відкрити"><i nz-icon nzType="export" nzTheme="outline"></i></a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a><i nz-icon nzType="edit" *ngIf="!editCache[pb.id].edit; else editButtonsTemplate" (click)="editBatch(pb.id)" nzTheme="outline" title="Редагувати"></i></a>
+        <ng-template #editButtonsTemplate>
+          <a title="Зберегти"><i nz-icon nzType="save" nzTheme="outline" class="edit-icon" (click)="updateBatch(pb)"></i></a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a title="Скасувати"><i nz-icon nzType="close" nzTheme="outline" class="edit-icon" (click)="cancelEdit(pb.id)"></i></a>
+        </ng-template>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a nz-popconfirm nzPopconfirmTitle="Впевнені що хочете видалити?" (nzOnConfirm)="deleteBatch(pb.id)" title="Видалити"><i nz-icon nzType="delete" nzTheme="outline"></i></a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+<app-payment-batch-add-modal (addPaymentsBatchToList)="onAddPaymentsBatchToList($event)"></app-payment-batch-add-modal>

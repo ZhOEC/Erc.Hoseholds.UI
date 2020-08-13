@@ -1,0 +1,127 @@
+<form nz-form [formGroup]="accountingPointForm">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="branchOfficeId">ЦОК</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Не обрано ЦОК">
+      <nz-select nzPlaceHolder="Виберіть ЦОК" formControlName="branchOfficeId" (ngModelChange)="getCities($event)">
+        <nz-option *ngFor="let branchOffice of branchOfficesList" [nzValue]="branchOffice.id"
+          [nzLabel]="branchOffice.name">
+        </nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="name">EIC</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="eicErrorTpl">
+      <input id="eic" type="text" nz-input formControlName="eic" />
+      <ng-template #eicErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Не введено EIC
+        </ng-container>
+        <ng-container *ngIf="control.hasError('maxLength') || control.hasError('minLength')">
+          Довжина EIC повинна бути - 16 символів
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="name">Назва (особовий рахунок)</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Не введено назву (особового рахунку) точки обліку">
+      <input id="name" type="text" nz-input formControlName="name" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzFor="distributionSystemOperatorId" nzRequired>Оператор системи розподілу
+    </nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Не обрано оператора системи розподілу">
+      <nz-select nzPlaceHolder="Оберіть оператора системи розподілу" formControlName="distributionSystemOperatorId">
+        <nz-option *ngFor="let distributionSystemOperator of distributionSystemOperatorsList"
+          [nzValue]="distributionSystemOperator.id" [nzLabel]="distributionSystemOperator.name">
+        </nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzFor="tariffId" nzRequired>Тариф</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Не обрано тариф">
+      <nz-select nzPlaceHolder="Оберіть тариф" formControlName="tariffId">
+        <nz-option *ngFor="let tariff of tariffsList" [nzValue]="tariff.id" [nzLabel]="tariff.name">
+        </nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <div formGroupName="address">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="5" nzRequired nzFor="cityId">Населений пункт</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzErrorTip="Не введено назву міста">
+        <nz-select nzPlaceHolder="Оберіть населений пункт" formControlName="cityId"
+          (ngModelChange)="getStreets($event)">
+          <nz-option *ngFor="let city of citiesList" [nzValue]="city.id"
+            [nzLabel]="city.isRegionCity ? city.name : city.name + ', ' + city.districtName">
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSpan]="5" nzRequired nzFor="streetId">Вулиця</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzErrorTip="Не введено назва вулиці">
+        <nz-select nzPlaceHolder="Оберіть вулицю" formControlName="streetId">
+          <nz-option *ngFor="let street of streetsList" [nzValue]="street.id" [nzLabel]="street.name">
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <div nz-row>
+      <div nz-col [nzSpan]="7">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="17" nzRequired nzFor="building">Будинок</nz-form-label>
+          <nz-form-control [nzSpan]="6" nzErrorTip="Не введено номер будинку">
+            <input id="building" type="text" nz-input formControlName="building" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="4">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="12" nzFor="apt">Квартира</nz-form-label>
+          <nz-form-control [nzSpan]="10">
+            <input id="apt" type="text" nz-input formControlName="apt" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="9" nzRequired nzFor="zip">Поштовий індекс</nz-form-label>
+          <nz-form-control [nzSpan]="4" nzErrorTip="Не введено індекс">
+            <input id="zip" type="text" nz-input formControlName="zip" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </div>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="buildingTypeId">Тип будівлі</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Не обрано тип будівлі">
+      <nz-select nzPlaceHolder="Оберіть тип будівлі" formControlName="buildingTypeId">
+        <nz-option *ngFor="let type of buildingTypes" [nzValue]="type.id" [nzLabel]="type.name">
+        </nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="usageCategoryId">Категорія споживання</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Не обрано категорія споживання">
+      <nz-select nzPlaceHolder="Оберіть категорію споживання" formControlName="usageCategoryId">
+        <nz-option *ngFor="let category of usageCategories" [nzValue]="category.id" [nzLabel]="category.name">
+        </nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+</form>

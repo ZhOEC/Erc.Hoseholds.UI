@@ -1,0 +1,54 @@
+<nz-table #nestedTable [nzData]="invoices" [nzPageSize]="pageSize" [nzFrontPagination]="false" [nzLoading]="loading"
+    [nzTotal]="total" [nzPageIndex]="pageIndex" (nzQueryParams)="onQueryParamsChange($event)" nzSize="small">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Період нарахувань</th>
+            <th>Вхідне сальдо</th>
+            <th>Спожито, кВт⋅год</th>
+            <th>Нараховано, Грн.</th>
+            <th>Пільга, Грн.</th>
+            <th>До сплати, Грн.</th>
+            <th>Оплачений</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-template ngFor let-data [ngForOf]="nestedTable.data">
+            <tr>
+                <td [(nzExpand)]="data.isExpand"></td>
+                <td>{{ data.fromDate | date:'mediumDate' }} - {{ data.toDate | date:'mediumDate' }}</td>
+                <td>{{ data.incomingBalance | number : '1.2' }}</td>
+                <td>{{ data.totalUnits }}</td>
+                <td>{{ data.totalCharge | number : '1.2' }}</td>
+                <td>{{ data.totalDiscount | number : '1.2' }}</td>
+                <td>{{ data.totalAmountDue | number : '1.2' }}</td>
+                <td><i [title]="data.isPaid ? 'Так' : 'Ні'" nz-icon [nzType]="data.isPaid ? 'check' : 'stop'"
+                        nzTheme="twotone" [nzTwotoneColor]="data.isPaid ? '#52c41a':'#e4521a'"></i></td>
+                <td><i nz-icon nzType="printer" nzTheme="outline"></i></td>        
+            </tr>
+            <tr [nzExpand]="data.isExpand">
+                <nz-table #innerTable [nzData]="data.zoneUsages" [nzShowPagination]="false">
+                    <thead class="height: 20px">
+                      <tr>
+                        <th *ngIf="data.zoneUsages.length>1"></th>
+                        <th>Попередні покази</th>
+                        <th>Поточні покази</th>
+                        <th>різниця, кВт⋅год</th>
+                        <th>Грн.</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let zoneUsage of innerTable.data">
+                        <td *ngIf="data.zoneUsages.length>1">{{ zoneUsage.name }}</td>
+                        <td>{{ zoneUsage.previousMeterReading }}</td>
+                        <td>{{ zoneUsage.presentMeterReading }}</td>
+                        <td>{{ zoneUsage.units }}</td>
+                        <td>{{ zoneUsage.charge | number : '1.2' }}</td>
+                      </tr>
+                    </tbody>
+                </nz-table>
+            </tr>
+        </ng-template>
+    </tbody>
+</nz-table>

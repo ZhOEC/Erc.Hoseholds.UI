@@ -1,0 +1,46 @@
+<h2>Точка обліку</h2>
+<ng-container *ngIf="accountingPointDetail as ap">
+  <nz-descriptions nzBordered nzSize="small">
+    <nz-descriptions-item nzTitle="Філія">{{ ap.branchOfficeName }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Оператор системи розподілу">{{ ap.distributionSystemOperatorName }}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="EIC">{{ ap.eic }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Особовий рахунок">{{ ap.name }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Адреса">
+      {{ ap.addressStreetLocation + ', '+ ap.addressCityName + ', '+ ap.addressZip }}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Діючий тариф">{{ ap.currentTariffName }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Договір про постачання від">
+      {{ ap.currentContractStartDate | date:'mediumDate' }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Відправляти паперевову квитанцію">
+      {{ ap.currentContractSendPaperBill ? 'Так' : 'Ні' }}</nz-descriptions-item>
+  </nz-descriptions>
+</ng-container>
+
+<h2>Договір</h2>
+<form nz-form [formGroup]="form">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="contractStartDate">Дата заключення договору</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Не обрано дату заключення договру">
+      <nz-date-picker nzFormat="dd.MM.yyyy" formControlName="contractStartDate" [nzDisabledDate]="datesMoreToday">
+      </nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control [nzSpan]="12" [nzOffset]="5">
+      <label nz-checkbox formControlName="sendPaperBill">Отримувати паперову квитанцію</label>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<h2>Власник</h2>
+<app-person-search [(person)]="person" (foundPersonChanged)="onFoundPersonChanged($event)"></app-person-search>
+<app-person-form [(form)]="form.get('owner')!" (formChanged)="onPersonFormChanged($event)"></app-person-form>
+
+<div nz-row>
+  <div nz-col [nzSpan]="12" [nzOffset]="5">
+    <button nz-button nzType="primary" [nzLoading]="isSubmit" (click)="submitForm()">Зберегти</button>
+    <button nz-button (click)="cancel()">Відміна</button>
+  </div>
+</div>

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { AuthService } from './core/auth.service';
-import { BranchOfficeService } from './baranch-office/branch-office.service';
-import { BranchOffice } from './baranch-office/branch-office';
-import { SelectedBranchOffice } from './baranch-office/selected-branch-office';
+import { AuthService } from './core/auth/auth.service';
+import { BranchOfficeService } from './shared/services/branch-office.service';
+import { BranchOffice } from './shared/models/branch-office.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -10,30 +10,28 @@ import { SelectedBranchOffice } from './baranch-office/selected-branch-office';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  
   currentUser: string;
-  branchOfficesList: BranchOffice[];
 
   visibilityDrawer = false;
   placementDrawer = 'left';
 
-  constructor(private authService: AuthService, private apiService: BranchOfficeService, public selectedBranchOffice: SelectedBranchOffice) { }
+  branchOfficesList$: Observable<BranchOffice[]>
+
+  constructor(private authService: AuthService,
+    private branchOfficeService: BranchOfficeService) { }
 
   ngOnInit() {
-    this.getBranchOffices();
+    this.branchOfficesList$ = this.branchOfficeService.getBranchOffices();;
     this.currentUser = this.authService.getUserName();
-  }
-
-  getBranchOffices() {
-    this.apiService.getBranchOffices().subscribe(data => {
-      this.branchOfficesList = data.sort((a, b) => a.name.localeCompare(b.name));
-      if (this.branchOfficesList.length == 1) {
-        this.selectedBranchOffice.id = this.branchOfficesList[0].id;
-      }
-    });
   }
 
   logout() {
     this.authService.logout();
   }
+
+  /* getBranchOffices() {
+    this.branchOfficeService.getBranchOffices().subscribe(data => {
+      this.branchOfficesList = data.sort((a, b) => a.name.localeCompare(b.name))
+    })
+  } */
 }

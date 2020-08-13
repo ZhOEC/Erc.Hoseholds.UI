@@ -1,0 +1,67 @@
+<div *ngIf="accountingPointDetail as a">
+    <nz-page-header [nzGhost]="false" style="padding-left: 0px; padding-right: 0px;">
+        <nz-page-header-title>Побутовий споживач</nz-page-header-title>
+        <nz-page-header-extra>
+            <button nz-button nz-dropdown [nzDropdownMenu]="menu">Додатково<i nz-icon nzType="down"></i></button>
+            <nz-dropdown-menu #menu="nzDropdownMenu">
+                <ul nz-menu>
+                    <li nz-menu-item><a routerLink="/accounting-point/{{a.id}}/open-new-contract">Новий договір</a></li>
+                    <li nz-menu-item>Змінити тариф</li>
+                    <li nz-menu-item *ngIf="!a.exemption"><a routerLink="/accounting-point/{{a.id}}/open-exemption">Відкрити пільгу</a></li>
+                    <li nz-menu-item *ngIf="a.exemption" (click)="showCloseExemptionDialog(a.name)">Закрити пільгу</li>
+                    <li nz-menu-item><a routerLink="/person/{{a.owner.id}}/edit">Редагувати персональні дані</a></li>
+                    <li nz-menu-item><a routerLink="/accounting-point/{{a.id}}/edit">Редагувати точку обліку</a></li>
+                </ul>
+            </nz-dropdown-menu>
+        </nz-page-header-extra>
+    </nz-page-header>
+    <nz-collapse>
+        <nz-collapse-panel nzHeader="Загальна інформація" nzActive="true" class="general-info">
+            <nz-descriptions>
+                <nz-descriptions-item nzTitle="Філія">{{a.branchOfficeName}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Оператор системи розподілу">{{a.distributionSystemOperatorName}}
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="EIC">{{a.eic}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Особовий рахунок">{{a.name}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Адреса">
+                    {{a.addressStreetLocation + ', '+ a.addressCityName + ', '+ a.addressZip}}
+                </nz-descriptions-item>
+                <nz-descriptions-item [nzTitle]="a.debt < 0 ? 'Залишок': 'Борг'"><span
+                        [ngStyle]="{'color': (a.debt < 0 ? 'blue' : 'red')}">{{(a.debt < 0 ? 1-a.debt : a.debt) | currency:'UAH':'грн.'}}</span>
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Діючий тариф">{{a.currentTariffName}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Договір про постачання від">
+                    {{a.currentContractStartDate | date:'mediumDate'}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Відправляти паперевову квитанцію">
+                        {{a.currentContractSendPaperBill ? 'Так' : 'Ні'}}</nz-descriptions-item>
+            </nz-descriptions>
+            <nz-descriptions nzTitle="Власник">
+                <nz-descriptions-item nzTitle="ПІБ">{{a.owner.fullName}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Паспорт">{{a.owner.idCardNumber}}<span style="color:rgba(0, 0, 0, 0.85)">
+                        виданий</span> {{a.owner.idCardIssuanceDate | date:'mediumDate'}}
+                    {{a.owner.idCardIssuer}}{{a.owner.idCardExpDate ? ' дійсний до '+(a.owner.idCardExpDate | date:'mediumDate'):''}}
+                </nz-descriptions-item>
+
+                <nz-descriptions-item nzTitle="Ідентифікаційний код">{{a.owner.taxCode}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Мобільні телефони"><span
+                        *ngFor="let ph of a.owner.mobilePhones; last as isLast">{{ph + (isLast ? '' : ',')}}
+                    </span></nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Email">{{a.owner.email}}</nz-descriptions-item>
+            </nz-descriptions>
+            <nz-descriptions nzTitle="Діюча пільга" *ngIf="a.exemption">
+                <nz-descriptions-item nzTitle="Категорія">{{a.exemption.categoryName}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Пільговик">{{a.exemption.person.fullName}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Кількість осіб">{{a.exemption.personsNumber}}</nz-descriptions-item>
+            </nz-descriptions>
+        </nz-collapse-panel>
+        <nz-collapse-panel nzHeader="Рахунки" class="invoices-info">
+            <div>
+                <app-accounting-point-invoices [accountingPointId]="a.id"></app-accounting-point-invoices>
+            </div>
+        </nz-collapse-panel>
+        <nz-collapse-panel nzHeader="Платежі" class="payments-info">
+
+        </nz-collapse-panel>
+    </nz-collapse>
+
+</div>
