@@ -9,4 +9,5 @@ export interface Person {
     idCardIssuer: string
     idCardExpDate: Date
     mobilePhones: string[]
+    email: string
 }

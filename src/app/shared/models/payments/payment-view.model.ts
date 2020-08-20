@@ -7,6 +7,6 @@ export interface PaymentView {
     payerInfo: string
     payDate: Date
     amount: number
-    status: string
-    type: string
+    status: number
+    type: number
 }

@@ -1,0 +1,56 @@
+<h2>Пільга</h2>
+<form nz-form [formGroup]="openExemptionForm">
+    <div>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="5" nzRequired nzFor="exemptionCategoryId">Категорія</nz-form-label>
+            <nz-form-control [nzSpan]="12" nzErrorTip="Не обрано категорію пільги">
+                <nz-select
+                    formControlName="exemptionCategoryId"
+                    nzPlaceHolder="Пільга">
+                    <nz-option *ngFor="let e of exemtions" [nzValue]="e.id" [nzLabel]="e.name"></nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="5" nzRequired nzFor="date">Дата</nz-form-label>
+            <nz-form-control [nzSpan]="12" nzErrorTip="Не обрану дату початку дії пільги">
+                <nz-date-picker required formControlName="date" name="date"></nz-date-picker>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="5" nzRequired nzFor="certificate">Документ</nz-form-label>
+            <nz-form-control [nzSpan]="12" nzErrorTip="Не введено номер документу">
+                <input nz-input placeholder="Номер документу" formControlName="certificate" name="certificate"/>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="5" nzRequired nzFor="personCount">Кількість пільговіків</nz-form-label>
+            <nz-form-control [nzSpan]="12" nzErrorTip="Не введено кількість пільговіків">
+                <nz-input-number [nzMin]="1" [nzMax]="100" [nzStep]="1" placeholder="Кількість пільговіків" 
+                    formControlName="personCount" name="personCount"></nz-input-number>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-control [nzSpan]="12" [nzOffset]="5">
+                <label nz-checkbox formControlName="limit">Ліміт</label>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="5">Примітка</nz-form-label>
+            <nz-form-control [nzSpan]="12">
+                <textarea nz-input rows="2" placeholder="Коментар" formControlName="note" name="note"></textarea>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+</form>
+
+<h2>Пільговик</h2>
+<app-person-search [(person)]="person" (foundPersonChanged)="onFoundPersonChanged($event)"></app-person-search>
+<app-person-form (formChanged)="onPersonFormChanged($event)"></app-person-form>
+
+<div nz-row>
+    <div nz-col [nzSpan]="12" [nzOffset]="5">
+        <button nz-button nzType="primary" [nzLoading]="isLoadingSubmit" (click)="submitForm()">Зберегти</button>
+        <button nz-button (click)="resetForm()">Очистити</button>
+    </div>
+</div>

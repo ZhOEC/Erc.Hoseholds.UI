@@ -1,5 +1,5 @@
 <nz-table #nestedTable [nzData]="invoices" [nzPageSize]="pageSize" [nzFrontPagination]="false" [nzLoading]="loading"
-    [nzTotal]="total" [nzPageIndex]="pageIndex" (nzQueryParams)="onQueryParamsChange($event)">
+    [nzTotal]="total" [nzPageIndex]="pageIndex" (nzQueryParams)="onQueryParamsChange($event)" nzSize="small">
     <thead>
         <tr>
             <th></th>
@@ -28,8 +28,8 @@
                 <td><i nz-icon nzType="printer" nzTheme="outline"></i></td>        
             </tr>
             <tr [nzExpand]="data.isExpand">
-                <nz-table #innerTable [nzData]="data.zoneUsages" nzSize="middle" [nzShowPagination]="false">
-                    <thead>
+                <nz-table #innerTable [nzData]="data.zoneUsages" [nzShowPagination]="false">
+                    <thead class="height: 20px">
                       <tr>
                         <th *ngIf="data.zoneUsages.length>1"></th>
                         <th>Попередні покази</th>

@@ -63,7 +63,7 @@
         <td>{{ editCache[pb.id].data.isClosed ? 'Закрита' : 'Відкрита'}}</td>
       </ng-template>
       <td nzAlign="center">
-        <a routerLink="/payment-batch-detail/{{pb.id}}" title="Відкрити"><i nz-icon nzType="export" nzTheme="outline"></i></a>
+        <a routerLink="/payment-batch/{{pb.id}}" title="Відкрити"><i nz-icon nzType="export" nzTheme="outline"></i></a>
         <nz-divider nzType="vertical"></nz-divider>
         <a><i nz-icon nzType="edit" *ngIf="!editCache[pb.id].edit; else editButtonsTemplate" (click)="editBatch(pb.id)" nzTheme="outline" title="Редагувати"></i></a>
         <ng-template #editButtonsTemplate>

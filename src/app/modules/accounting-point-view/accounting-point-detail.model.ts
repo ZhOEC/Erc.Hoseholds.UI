@@ -1,5 +1,6 @@
 import { Person } from '../../shared/models/person.model';
 import { Exemption } from './exemption';
+import { City } from 'src/app/shared/models/address/city.model';
 
 export interface AccountingPointDetail {
     id: number
@@ -12,6 +13,7 @@ export interface AccountingPointDetail {
     owner: Person
     eic: string
     currentContractStartDate: Date
+    currentContractSendPaperBill: boolean
     debt: number
     exemption: Exemption
 }

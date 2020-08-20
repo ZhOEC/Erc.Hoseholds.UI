@@ -6,10 +6,12 @@
             <button nz-button nz-dropdown [nzDropdownMenu]="menu">Додатково<i nz-icon nzType="down"></i></button>
             <nz-dropdown-menu #menu="nzDropdownMenu">
                 <ul nz-menu>
-                    <li nz-menu-item>Новий договір</li>
+                    <li nz-menu-item><a routerLink="/accounting-point/{{a.id}}/open-new-contract">Новий договір</a></li>
                     <li nz-menu-item>Змінити тариф</li>
+                    <li nz-menu-item *ngIf="!a.exemption"><a routerLink="/accounting-point/{{a.id}}/open-exemption">Відкрити пільгу</a></li>
                     <li nz-menu-item *ngIf="a.exemption" (click)="showCloseExemptionDialog(a.name)">Закрити пільгу</li>
-                    <li nz-menu-item *ngIf="!a.exemption">Відкрити пільгу</li>
+                    <li nz-menu-item><a routerLink="/person/{{a.owner.id}}/edit">Редагувати персональні дані</a></li>
+                    <li nz-menu-item><a routerLink="/accounting-point/{{a.id}}/edit">Редагувати точку обліку</a></li>
                 </ul>
             </nz-dropdown-menu>
         </nz-page-header-extra>
@@ -31,6 +33,8 @@
                 <nz-descriptions-item nzTitle="Діючий тариф">{{a.currentTariffName}}</nz-descriptions-item>
                 <nz-descriptions-item nzTitle="Договір про постачання від">
                     {{a.currentContractStartDate | date:'mediumDate'}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Відправляти паперевову квитанцію">
+                        {{a.currentContractSendPaperBill ? 'Так' : 'Ні'}}</nz-descriptions-item>
             </nz-descriptions>
             <nz-descriptions nzTitle="Власник">
                 <nz-descriptions-item nzTitle="ПІБ">{{a.owner.fullName}}</nz-descriptions-item>
@@ -43,6 +47,7 @@
                 <nz-descriptions-item nzTitle="Мобільні телефони"><span
                         *ngFor="let ph of a.owner.mobilePhones; last as isLast">{{ph + (isLast ? '' : ',')}}
                     </span></nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Email">{{a.owner.email}}</nz-descriptions-item>
             </nz-descriptions>
             <nz-descriptions nzTitle="Діюча пільга" *ngIf="a.exemption">
                 <nz-descriptions-item nzTitle="Категорія">{{a.exemption.categoryName}}</nz-descriptions-item>

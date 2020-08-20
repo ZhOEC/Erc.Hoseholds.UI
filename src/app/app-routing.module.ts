@@ -7,18 +7,23 @@ import { PaymentChannelListComponent } from './modules/payments/payment-channel-
 import { PaymentBatchListComponent } from './modules/payments/payment-batch-list/payment-batch-list.component'
 import { PaymentBatchDetailComponent } from './modules/payments/payment-batch-detail/payment-batch-detail.component'
 import { ExemptionCategyListComponent } from './modules/common-references/exemption-categy-list/exemption-categy-list.component'
-import { PersonAddComponent } from './modules/person/person-add/person-add.component'
-
+import { PersonEditComponent } from './modules/person/person-edit/person-edit.component'
+import { ContractNewComponent } from './modules/contract/contract-new/contract-new.component'
+import { AccountingPointEditComponent } from './modules/accounting-point/accounting-point-edit/accounting-point-edit.component'
+import { OpenExemptionComponent } from './modules/accounting-point/open-exemption/open-exemption.component'
 
 const routes: Routes = [
-  { path: 'accounting-point-new', component: AccountingPointNewComponent, },
+  { path: 'accounting-point/new', component: AccountingPointNewComponent, },
+  { path: 'accounting-point/:id/edit', component: AccountingPointEditComponent },
+  { path: 'accounting-point/:id/open-new-contract', component: ContractNewComponent },
+  { path: 'accounting-point/:id/open-exemption', component: OpenExemptionComponent },
   { path: 'accounting-points/:id', component: AccountingPointDetailComponent },
   { path: 'tariffs', component: TariffListComponent },
   { path: 'exemption-categories', component: ExemptionCategyListComponent },
-  { path: 'payment-channel', component: PaymentChannelListComponent },
-  { path: 'payment-batch-list', component: PaymentBatchListComponent },
-  { path: 'payment-batch-detail/:id', component: PaymentBatchDetailComponent },
-  { path: 'person-add', component: PersonAddComponent }
+  { path: 'payment-channels', component: PaymentChannelListComponent },
+  { path: 'payment-batches', component: PaymentBatchListComponent },
+  { path: 'payment-batch/:id', component: PaymentBatchDetailComponent },
+  { path: 'person/:id/edit', component: PersonEditComponent }
 ];
 
 @NgModule({

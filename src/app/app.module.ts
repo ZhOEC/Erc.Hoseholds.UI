@@ -17,8 +17,9 @@ import { AccountingPointModule } from './modules/accounting-point/accounting-poi
 import { TariffModule } from './modules/tariffs/tariff.module'
 import { PaymentsModule } from './modules/payments/payments.module'
 import { PersonModule } from './modules/person/person.module'
-import { AccountingPointViewModule } from './modules/accounting-point-view/accounting-point-view.module';
-import { CommonReferencesModule } from './modules/common-references/common-references.module';
+import { AccountingPointViewModule } from './modules/accounting-point-view/accounting-point-view.module'
+import { CommonReferencesModule } from './modules/common-references/common-references.module'
+import { ContractModule } from './modules/contract/contract.module'
 import { BranchOfficeService } from './shared/services/branch-office.service'
 import { AccountingPointService } from './shared/services/accounting-point.service'
 import { DistributionSystemOperatorService } from './shared/services/distribution-system-operator.service'
@@ -27,6 +28,8 @@ import { PersonService } from './shared/services/person.service'
 import { PaymentChannelService } from './shared/services/payment-channel.service'
 import { PaymentBatchService } from './shared/services/payment-batch.service'
 import { PaymentService } from './shared/services/payment.service'
+import { UsageCategoryService } from './shared/services/usage-category.service'
+import { BuildingTypeService } from './shared/services/building-type.service'
 
 registerLocaleData(uk);
 
@@ -50,7 +53,8 @@ registerLocaleData(uk);
     PaymentsModule,
     AccountingPointViewModule,
     CommonReferencesModule,
-    PersonModule
+    PersonModule,
+    ContractModule
   ],
   providers: [
     DistributionSystemOperatorService,
@@ -61,6 +65,8 @@ registerLocaleData(uk);
     PaymentChannelService,
     PaymentBatchService,
     PaymentService,
+    BuildingTypeService,
+    UsageCategoryService,
     { provide: NZ_I18N, useValue: uk_UA },
     { provide: LOCALE_ID, useValue: 'uk-UA' },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
