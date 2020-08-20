@@ -25,9 +25,7 @@ export class PersonEditComponent implements OnInit, AfterViewInit {
     private notification: NotificationComponent) { }
 
   ngOnInit() {
-    this.form = this.formBuilder.group({
-      person: this.formBuilder.array([])
-    })
+    this.form = this.formBuilder.group({})
   }
 
   ngAfterViewInit() {
@@ -35,7 +33,7 @@ export class PersonEditComponent implements OnInit, AfterViewInit {
       switchMap((params: ParamMap) => this.personService.getOne(+params.get('id')))
     ).subscribe(data => {
       this.person = data
-      this.form.get('person')?.patchValue(this.person)
+      this.form.patchValue(this.person)
     })
   }
 
