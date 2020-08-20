@@ -6,7 +6,7 @@ export interface AccountingPointDetail {
     branchOfficeName: string
     name: string
     distributionSystemOperatorName: string
-    tarriffName: string
+    currentTarriffName: string
     addressCityName: string
     adressStreetLocation: string
     owner: Person

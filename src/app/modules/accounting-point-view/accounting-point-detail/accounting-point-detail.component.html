@@ -1,6 +1,7 @@
-<div *ngIf="accountingPointDetail as a">
+ <div *ngIf="accountingPointDetail as a">
     <nz-page-header [nzGhost]="false" style="padding-left: 0px; padding-right: 0px;">
         <nz-page-header-title>Побутовий споживач</nz-page-header-title>
+        <nz-page-header-subtitle>{{a.name}} / {{a.owner.fullName}}</nz-page-header-subtitle>
         <nz-page-header-extra>
             <button nz-button nz-dropdown [nzDropdownMenu]="menu">Додатково<i nz-icon nzType="down"></i></button>
             <nz-dropdown-menu #menu="nzDropdownMenu">
