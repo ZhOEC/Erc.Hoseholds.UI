@@ -7,6 +7,8 @@ COPY package.json /Erc.Households.UI
 RUN npm install
 RUN npm audit fix
 COPY . ./
+
+ENV NODE_OPTIONS --max_old_space_size=709
 RUN npm run build-prod
 
 FROM nginx:alpine

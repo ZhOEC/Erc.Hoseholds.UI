@@ -11,6 +11,7 @@ import { PersonEditComponent } from './modules/person/person-edit/person-edit.co
 import { ContractNewComponent } from './modules/contract/contract-new/contract-new.component'
 import { AccountingPointEditComponent } from './modules/accounting-point/accounting-point-edit/accounting-point-edit.component'
 import { OpenExemptionComponent } from './modules/accounting-point/open-exemption/open-exemption.component'
+import { BranchOfficePeriodsComponent } from './modules/branch-office/branch-office-periods/branch-office-periods.component'
 
 const routes: Routes = [
   { path: 'accounting-point/new', component: AccountingPointNewComponent, },
@@ -23,7 +24,8 @@ const routes: Routes = [
   { path: 'payment-channels', component: PaymentChannelListComponent },
   { path: 'payment-batches', component: PaymentBatchListComponent },
   { path: 'payment-batch/:id', component: PaymentBatchDetailComponent },
-  { path: 'person/:id/edit', component: PersonEditComponent }
+  { path: 'person/:id/edit', component: PersonEditComponent },
+  { path: 'branch-office-periods', component: BranchOfficePeriodsComponent }
 ];
 
 @NgModule({

@@ -30,6 +30,7 @@ import { PaymentBatchService } from './shared/services/payment-batch.service'
 import { PaymentService } from './shared/services/payment.service'
 import { UsageCategoryService } from './shared/services/usage-category.service'
 import { BuildingTypeService } from './shared/services/building-type.service'
+import { BranchOfficeModule } from './modules/branch-office/branch-office.module'
 
 registerLocaleData(uk);
 
@@ -43,7 +44,7 @@ registerLocaleData(uk);
     BrowserAnimationsModule,
     LayoutModule,
     HttpClientModule,
-    //IconsProviderModule,
+    BranchOfficeModule,
     NgZorroAntdModule,
     ReactiveFormsModule,
     FormsModule,
