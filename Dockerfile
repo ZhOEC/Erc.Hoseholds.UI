@@ -8,7 +8,6 @@ RUN npm install
 RUN npm audit fix
 COPY . ./
 
-ENV NODE_OPTIONS --max_old_space_size=1409
 RUN npm run build-prod
 
 FROM nginx:alpine
