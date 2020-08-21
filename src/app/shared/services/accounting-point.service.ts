@@ -29,7 +29,7 @@ export class AccountingPointService {
   }
 
   openNewContract(accountingPointId: number, newContract: NewContract) {
-    return this.http.post(`${this.apiUri}${accountingPointId}/open-new-contract`, { id: accountingPointId, contractStartDate: newContract.contractStartDate, 
+    return this.http.post(`${this.apiUri}${accountingPointId}/contract`, { id: accountingPointId, contractStartDate: newContract.contractStartDate, 
       sendPaperBill: newContract.sendPaperBill, owner: newContract.owner })
   }
   

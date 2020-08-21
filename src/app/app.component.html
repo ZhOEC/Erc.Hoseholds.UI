@@ -25,6 +25,24 @@
           Новий споживач
         </a>
       </li>
+      <li nz-submenu nzTitle="Регламент" nzIcon="schedule">
+        <ul>
+          <li nz-menu-item>
+            <a [routerLink]="['/tariffs']" routerLinkActive="router-link-active" routerLinkActive="router-link-active"
+              (click)="visibilityDrawer = false">
+              <i nz-icon nzType="usb"></i>
+              Завантажити споживання
+            </a>
+          </li>
+          <li nz-menu-item>
+            <a [routerLink]="['/branch-office-periods']" routerLinkActive="router-link-active" routerLinkActive="router-link-active"
+              (click)="visibilityDrawer = false">
+              <i nz-icon nzType="calendar"></i>
+              Перейти на новий період
+            </a>
+          </li>
+        </ul>
+      </li>
       <li nz-submenu nzTitle="Довідники" nzIcon="snippets">
         <ul>
           <li nz-menu-item>
