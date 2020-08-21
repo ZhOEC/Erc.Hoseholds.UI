@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { LayoutModule } from '@angular/cdk/layout'
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
-import { IconsProviderModule } from './icons-provider.module'
+//import { IconsProviderModule } from './icons-provider.module'
 import { NgZorroAntdModule, NZ_I18N, uk_UA } from 'ng-zorro-antd'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { AngularSvgIconModule } from 'angular-svg-icon'
@@ -43,7 +43,7 @@ registerLocaleData(uk);
     BrowserAnimationsModule,
     LayoutModule,
     HttpClientModule,
-    IconsProviderModule,
+    //IconsProviderModule,
     NgZorroAntdModule,
     ReactiveFormsModule,
     FormsModule,

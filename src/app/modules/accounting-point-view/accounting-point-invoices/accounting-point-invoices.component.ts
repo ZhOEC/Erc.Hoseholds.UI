@@ -11,7 +11,7 @@ export class AccountingPointInvoicesComponent implements OnChanges {
   @Input() accountingPointId: number
   invoices = [];
   loading = true;
-  total = 0;
+  total = 30;
   pageIndex = 1;
   pageSize = 6
 
