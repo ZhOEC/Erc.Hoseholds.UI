@@ -9,26 +9,23 @@
     </div>
     <ul nzTheme="dark" nz-menu nzMode="inline">
       <li nz-menu-item>
-        <a [routerLink]="['/']" routerLinkActive="router-link-active" routerLinkActive="router-link-active"
-          (click)="visibilityDrawer = false">
+        <a [routerLink]="['/payment-batches']" routerLinkActive="router-link-active"
+          routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
           <i nz-icon>
-            <svg-icon src="assets/users.svg" [svgStyle]="{ 'width.px':16 }"></svg-icon>
+            <svg-icon src="assets/stack.svg" [svgStyle]="{ 'width.px':16, 'fill':'rgba(255, 255, 255, 0.65)'}">
+            </svg-icon>
           </i>
-          Споживачі
+          Платежі
         </a>
       </li>
-      <li nz-submenu nzTitle="Інше" nzIcon="appstore">
-        <ul>
-          <li nz-menu-item>
-            <a [routerLink]="['/accounting-point/new']" routerLinkActive="router-link-active"
-              routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
-              <i nz-icon nzType="plus"></i>
-              Нова точку обліку
-            </a>
-          </li>
-        </ul>
+      <li nz-menu-item>
+        <a [routerLink]="['/accounting-point/new']" routerLinkActive="router-link-active"
+          routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
+          <i nz-icon nzType="plus"></i>
+          Новий споживач
+        </a>
       </li>
-      <li nz-submenu nzTitle="Довідники" nzIcon="setting">
+      <li nz-submenu nzTitle="Довідники" nzIcon="snippets">
         <ul>
           <li nz-menu-item>
             <a [routerLink]="['/tariffs']" routerLinkActive="router-link-active" routerLinkActive="router-link-active"
@@ -40,8 +37,8 @@
           <li nz-menu-item>
             <a [routerLink]="['/payment-channels']" routerLinkActive="router-link-active"
               routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
-              <i nz-icon nzType="fork" nzTheme="outline"></i>
-              Канали оплати
+              <i nz-icon nzType="bank" nzTheme="outline"></i>
+              Канали оплат
             </a>
           </li>
           <li nz-menu-item>
@@ -49,16 +46,6 @@
               routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
               <i nz-icon nzType="solution" nzTheme="outline"></i>
               Пільгові категорії громадян
-            </a>
-          </li>
-          <li nz-menu-item>
-            <a [routerLink]="['/payment-batches']" routerLinkActive="router-link-active"
-              routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
-              <i nz-icon>
-                <svg-icon src="assets/stack.svg" [svgStyle]="{ 'width.px':16, 'fill':'rgba(255, 255, 255, 0.65)'}">
-                </svg-icon>
-              </i>
-              Пачки платежів
             </a>
           </li>
         </ul>
@@ -71,13 +58,13 @@
         <div class="header-trigger" nz-col nzSpan="1">
           <i nz-icon nzType="menu" nzTheme="outline" (click)="visibilityDrawer = true" class="trigger"></i>
         </div>
-        <div nz-col nzSpan="17">
+        <div nz-col nzFlex="auto">
           <app-accounting-points-search></app-accounting-points-search>
         </div>
-        <div nz-col nzSpan="4">
+        <div nz-col nzSpan="2">
           <div *ngIf="branchOfficesList$ | async as branchOfficesList">
             <span *ngIf="branchOfficesList.length==1; else manyBranchOffices"
-              style="white-space: nowrap; color: darkblue;">{{ branchOfficesList[0].currentPeriodName }}</span>
+              style="white-space: nowrap; color: darkblue; float: right; margin-right: 24px;">{{ branchOfficesList[0].currentPeriodName }}</span>
             <ng-template #manyBranchOffices>
               <button nz-button nz-popover [nzPopoverContent]="periodsTemplate" nzPopoverPlacement="bottomRight">
                 ЦОКі...
@@ -92,7 +79,7 @@
             </ng-template>
           </div>
         </div>
-        <div nz-col nzSpan="1">
+        <div nz-col style="margin-right: 24px;">
           <a title="{{currentUser}}">
             <nz-avatar nzIcon="user" [nzSize]="32" nz-popover nzPopoverTitle="Ви увійшли як: {{currentUser}}"
               nzPopoverTrigger="click" [nzPopoverContent]="userMenu" nzPopoverPlacement="bottomRight"
