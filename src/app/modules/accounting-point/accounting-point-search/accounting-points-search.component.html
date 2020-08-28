@@ -1,15 +1,8 @@
-
-    <nz-select
-      nzShowSearch
-      nzServerSearch
-      [nzShowArrow]="false"
-      nzPlaceHolder="Введіть текст для пошуку абонента"
-      [(ngModel)]="selectedValue"
-      (nzOnSearch)="search($event)"
-      (ngModelChange)="select()"
-      (nzFocus)="selectedValue=0"
-    >
-      <nz-option *ngFor="let o of searchResults" [nzLabel]="o.text" [nzValue]="o.id"> </nz-option>
-    </nz-select>
-    <div>
-   </div>
+<nz-select [nzSuffixIcon]="suffixIconSearch" nzShowSearch nzServerSearch
+  nzPlaceHolder="Введіть текст для пошуку абонента" [(ngModel)]="selectedValue" (nzOnSearch)="search($event)"
+  (ngModelChange)="select()" (nzFocus)="selectedValue=0" [nzOptionOverflowSize]=10>
+  <nz-option *ngFor="let o of searchResults$ | async" [nzLabel]="o.text" [nzValue]="o.id"> </nz-option>
+</nz-select>
+<ng-template #suffixIconSearch>
+  <i nz-icon nzType="search"></i>
+</ng-template>

@@ -80,7 +80,7 @@
           <app-accounting-points-search></app-accounting-points-search>
         </div>
         <div nz-col nzSpan="2">
-          <div *ngIf="branchOfficesList$ | async as branchOfficesList">
+          <div *ngIf="branchOffices$ | async as branchOfficesList">
             <span *ngIf="branchOfficesList.length==1; else manyBranchOffices"
               style="white-space: nowrap; color: darkblue; float: right; margin-right: 24px;">{{ branchOfficesList[0].currentPeriodName }}</span>
             <ng-template #manyBranchOffices>

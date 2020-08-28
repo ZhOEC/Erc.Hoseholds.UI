@@ -11,9 +11,9 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 })
 
 export class NotificationComponent {
-  constructor(private notification: NzNotificationService) {}
+  constructor(private notification: NzNotificationService) { }
 
-  show(type: string, title: string, text: string) {
-    this.notification.create(type, title, text, { nzDuration: 15000 });
+  show(type: string, title: string, text: string, duration: number = 15000) {
+    this.notification.create(type, title, text, { nzDuration: duration });
   }
 }

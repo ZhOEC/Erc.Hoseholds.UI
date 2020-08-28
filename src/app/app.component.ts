@@ -15,13 +15,13 @@ export class AppComponent {
   visibilityDrawer = false;
   placementDrawer = 'left';
 
-  branchOfficesList$: Observable<BranchOffice[]>
+  branchOffices$: Observable<BranchOffice[]>
 
   constructor(private authService: AuthService,
     private branchOfficeService: BranchOfficeService) { }
 
   ngOnInit() {
-    this.branchOfficesList$ = this.branchOfficeService.getBranchOffices();;
+    this.branchOffices$ = this.branchOfficeService.getBranchOffices(); 
     this.currentUser = this.authService.getUserName();
   }
 
@@ -29,9 +29,4 @@ export class AppComponent {
     this.authService.logout();
   }
 
-  /* getBranchOffices() {
-    this.branchOfficeService.getBranchOffices().subscribe(data => {
-      this.branchOfficesList = data.sort((a, b) => a.name.localeCompare(b.name))
-    })
-  } */
 }
