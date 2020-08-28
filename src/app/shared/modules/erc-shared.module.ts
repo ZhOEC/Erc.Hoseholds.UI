@@ -6,7 +6,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { SharedModule } from '../components/shared.module';
-
+import { NzGridModule } from 'ng-zorro-antd/grid';
 
 @NgModule({
   declarations: [],
@@ -17,7 +17,8 @@ import { SharedModule } from '../components/shared.module';
     NzListModule,
     NzButtonModule,
     NzIconModule,
-    NzModalModule
+    NzModalModule,
+    NzGridModule
   ],
   exports: [
     SharedModule,
@@ -26,7 +27,8 @@ import { SharedModule } from '../components/shared.module';
     NzListModule,
     NzButtonModule,
     NzIconModule,
-    NzModalModule
+    NzModalModule,
+    NzGridModule
   ]
 })
 export class ErcSharedModule { }
