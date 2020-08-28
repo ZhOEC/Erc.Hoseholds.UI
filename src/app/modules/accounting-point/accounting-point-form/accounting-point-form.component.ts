@@ -81,7 +81,7 @@ export class AccountingPointFormComponent implements OnInit {
   }
 
   getBranchOffices() {
-    this.branchOfficeService.getBranchOffices().subscribe(offices => {
+    this.branchOfficeService.branchOffices$.subscribe(offices => {
       this.branchOfficesList = offices.sort((a, b) => a.name.localeCompare(b.name))
       if (this.branchOfficesList.length === 1) {
         this.accountingPointForm.get('branchOfficeId').setValue(this.branchOfficesList[0].id)

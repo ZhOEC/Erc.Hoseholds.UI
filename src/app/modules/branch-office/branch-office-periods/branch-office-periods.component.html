@@ -3,5 +3,15 @@
         <nz-page-header-title>Центри обслуговування клієнтів</nz-page-header-title>
         <nz-page-header-subtitle>Керування періодами</nz-page-header-subtitle>
     </nz-page-header>
-    <p>branch-office-list works!</p>
+    <ul nz-list nzBordered nzSize="large">
+        <li nz-list-item *ngFor="let bo of branchOffices$ | async" nzNoFlex>
+            <ul nz-list-item-actions>
+                <nz-list-item-action>
+                    <button nz-button nzType="primary" (click)="newPeriodConfirm(bo.id)"><i nz-icon
+                            nzType="history"></i>Перейти на новий період</button>
+                </nz-list-item-action>
+            </ul>
+            {{ bo.name }} / {{ bo.currentPeriodName}}
+        </li>
+    </ul>
 </div>

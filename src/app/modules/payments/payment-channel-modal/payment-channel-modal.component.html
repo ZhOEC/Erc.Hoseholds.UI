@@ -12,21 +12,21 @@
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label [nzSpan]="9" nzFor="recordpointFieldName">Особовий рахунок</nz-form-label>
+          <nz-form-label [nzSpan]="9" nzFor="recordpointFieldName">Колонка особового рахунку</nz-form-label>
           <nz-form-control [nzSpan]="12">
-            <input nz-input formControlName="recordpointFieldName" placeholder="Особовий рахунок" />
+            <input nz-input formControlName="recordpointFieldName" placeholder="Назва поля в дбф" />
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label [nzSpan]="9" nzFor="sumFieldName">Сума</nz-form-label>
+          <nz-form-label [nzSpan]="9" nzFor="sumFieldName">Колонка суми</nz-form-label>
           <nz-form-control [nzSpan]="12">
-            <input nz-input formControlName="sumFieldName" placeholder="Сума" />
+            <input nz-input formControlName="sumFieldName" placeholder="Назва поля в дбф" />
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label [nzSpan]="9" nzFor="dateFieldName">Дата</nz-form-label>
+          <nz-form-label [nzSpan]="9" nzFor="dateFieldName">Колонка дати</nz-form-label>
           <nz-form-control [nzSpan]="12">
-            <input nz-input formControlName="dateFieldName" placeholder="Дата" />
+            <input nz-input formControlName="dateFieldName" placeholder="Назва поля в дбф" />
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
@@ -36,13 +36,13 @@
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label [nzSpan]="9" nzFor="personFieldName">Інформація</nz-form-label>
+          <nz-form-label [nzSpan]="9" nzFor="personFieldName">Колонка інформації</nz-form-label>
           <nz-form-control [nzSpan]="12">
-            <input nz-input formControlName="personFieldName" placeholder="Інформація" />
+            <input nz-input formControlName="personFieldName" placeholder="Назва поля в дбф" />
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label [nzSpan]="9" nzFor="totalRecord">Рядок суми</nz-form-label>
+          <nz-form-label [nzSpan]="9" nzFor="totalRecord">Рядок суми пачки</nz-form-label>
           <nz-form-control [nzSpan]="12">
             <nz-select nzPlaceHolder="Рядок суми" formControlName="totalRecord">
               <nz-option *ngFor="let totalRecord of totalRecordList" [nzValue]="totalRecord.id" [nzLabel]="totalRecord.name"></nz-option>
