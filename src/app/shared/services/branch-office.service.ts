@@ -25,6 +25,9 @@ export class BranchOfficeService {
       )
   }
 
+  refreshBranchOffices = () => this.http
+    .get<BranchOffice[]>(environment.apiServer + "branch-offices").subscribe(res => this.branchOffices$.next(res));
+
   getBranchOffices() {
     return this.branchOffices$;
   }
