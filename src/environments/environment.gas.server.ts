@@ -8,5 +8,5 @@ export const environment = {
   apiServer: 'http://10.67.1.238:5050/api/',
   userNotificationHub: 'http://10.67.1.238:5050/user-notification-hub',
   logoutUri: 'http://10.67.1.238:8080/auth/realms/master/protocol/openid-connect/logout',
-  units: 'кВт⋅год'
+  units: 'м³'
 };

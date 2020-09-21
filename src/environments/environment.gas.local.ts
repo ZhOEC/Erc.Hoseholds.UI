@@ -12,7 +12,7 @@ export const environment = {
   apiServer: 'http://localhost:5000/api/',
   userNotificationHub: 'http://localhost:5000/user-notification-hub',
   logoutUri: 'http://10.67.1.238:8080/auth/realms/master/protocol/openid-connect/logout',
-  units: 'кВт⋅год'
+  units: 'м³'
 };
 
 /*

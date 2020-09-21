@@ -39,6 +39,22 @@
             "scripts": []
           },
           "configurations": {
+            "gas-local":{
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.gas.local.ts"
+                }
+              ]
+            },
+            "gas-server":{
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.gas.server.ts"
+                }
+              ]
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -77,6 +93,12 @@
           "configurations": {
             "production": {
               "browserTarget": "erc-households-ui:build:production"
+            },
+            "gas-local": {
+              "browserTarget": "erc-households-ui:build:gas-local"
+            },
+            "gas-server": {
+              "browserTarget": "erc-households-ui:build:gas-server"
             }
           }
         },

@@ -7,9 +7,12 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { SharedModule } from '../components/shared.module';
 import { NzGridModule } from 'ng-zorro-antd/grid';
+import { UnitPipe } from '../pipes/unit.pipe';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    UnitPipe
+  ],
   imports: [
     SharedModule,
     CommonModule,
@@ -29,6 +32,7 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
     NzIconModule,
     NzModalModule,
     NzGridModule
+    ,UnitPipe
   ]
 })
 export class ErcSharedModule { }

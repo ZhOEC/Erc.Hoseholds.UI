@@ -30,7 +30,8 @@ import { PaymentBatchService } from './shared/services/payment-batch.service'
 import { PaymentService } from './shared/services/payment.service'
 import { UsageCategoryService } from './shared/services/usage-category.service'
 import { BuildingTypeService } from './shared/services/building-type.service'
-import { BranchOfficeModule } from './modules/branch-office/branch-office.module'
+import { BranchOfficeModule } from './modules/branch-office/branch-office.module';
+import { UnitPipe } from './shared/pipes/unit.pipe'
 
 registerLocaleData(uk);
 

@@ -29,7 +29,7 @@ export class SignalRService {
       })
       .catch(err => {
         console.log(`Error while starting connection: ${err}. Trying reconnect`)
-        setTimeout(() => this.startConnection(), 5000);
+        setTimeout(() => this.startConnection(), 50000);
       })
   }
 
