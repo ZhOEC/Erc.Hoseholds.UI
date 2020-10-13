@@ -8,7 +8,7 @@ import { map } from 'rxjs/internal/operators/map'
 
 @Injectable()
 export class PaymentService {
-    private urn = environment.apiServer + 'payments/'
+    private url = environment.apiServer + 'payments/'
     
     constructor(private http: HttpClient) {}
 
@@ -18,7 +18,7 @@ export class PaymentService {
             .append('pageNumber', pageNumber.toString())
             .append('pageSize', pageSize.toString())
             .append('showProcessed', showProcessed.toString())
-        return this.http.get<PaymentView[]>(this.urn, { params: queryParams, observe: 'response' })
+        return this.http.get<PaymentView[]>(this.url, { params: queryParams, observe: 'response' })
             .pipe(map((data) => {
                 data.body.forEach(element => {
                     element.payDate = new Date(element.payDate)
@@ -28,14 +28,14 @@ export class PaymentService {
     }
 
     add(payment: PaymentPost): Observable<PaymentView> {
-        return this.http.post<PaymentView>(this.urn, payment)
+        return this.http.post<PaymentView>(this.url, payment)
     }
 
     update(payment: PaymentPost): Observable<PaymentView> {
-        return this.http.put<PaymentView>(this.urn + payment.id, payment)
+        return this.http.put<PaymentView>(this.url + payment.id, payment)
     }
 
     delete(id: number): Observable<PaymentView> {
-        return this.http.delete<PaymentView>(this.urn + id)
+        return this.http.delete<PaymentView>(this.url + id)
     }
 }

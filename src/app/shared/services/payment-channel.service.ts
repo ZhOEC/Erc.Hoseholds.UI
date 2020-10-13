@@ -6,23 +6,23 @@ import { PaymentChannel } from '../models/payments/payment-channel.model';
 
 @Injectable()
 export class PaymentChannelService {
-    private urn: string = environment.apiServer + 'paymentchannels/';
+    private url: string = environment.apiServer + 'paymentchannels/';
     
     constructor(private http: HttpClient) { }
 
     getAll(): Observable<PaymentChannel[]> {
-        return this.http.get<PaymentChannel[]>(this.urn)
+        return this.http.get<PaymentChannel[]>(this.url)
     }
 
     add(paymentChannel: PaymentChannel): Observable<PaymentChannel> {
-        return this.http.post<PaymentChannel>(this.urn, paymentChannel)
+        return this.http.post<PaymentChannel>(this.url, paymentChannel)
     }
 
     update(paymentChannel: PaymentChannel): Observable<PaymentChannel> {
-        return this.http.put<PaymentChannel>(this.urn + paymentChannel.id, paymentChannel)
+        return this.http.put<PaymentChannel>(this.url + paymentChannel.id, paymentChannel)
     }
 
     delete(id: number): Observable<PaymentChannel> {
-        return this.http.delete<PaymentChannel>(this.urn + id)
+        return this.http.delete<PaymentChannel>(this.url + id)
     }
 }

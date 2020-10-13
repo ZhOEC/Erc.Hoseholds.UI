@@ -1,21 +1,20 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { NzTableModule } from 'ng-zorro-antd/table';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { ExemptionCategyListComponent } from './exemption-categy-list/exemption-categy-list.component';
+import { NgModule } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { ExemptionCategyListComponent } from './exemption-categy-list/exemption-categy-list.component'
+import { ConsumptionLoaderFormComponent } from './consumption-loader-form/consumption-loader-form.component'
+import { ErcSharedModule } from 'src/app/shared/modules/erc-shared.module'
 
 @NgModule({
   declarations: [
-    ExemptionCategyListComponent
+    ExemptionCategyListComponent,
+    ConsumptionLoaderFormComponent
   ],
   imports: [
     CommonModule,
-    NzTableModule,
-    NzIconModule
+    ErcSharedModule
   ],
   exports: [
-    
     ExemptionCategyListComponent
   ]
 })
-export class CommonReferencesModule { }
+export class CommonReferencesModule {}

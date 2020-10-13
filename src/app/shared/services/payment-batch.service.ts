@@ -6,7 +6,7 @@ import { PaymentBatchView } from '../models/payments/payment-batch-view.model'
 
 @Injectable()
 export class PaymentBatchService {
-    private urn: string = environment.apiServer + 'paymentbatches/'
+    private url: string = environment.apiServer + 'paymentbatches/'
     
     constructor(private http: HttpClient) {}
 
@@ -15,22 +15,22 @@ export class PaymentBatchService {
             .append('pageNumber', pageNumber.toString())
             .append('pageSize', pageSize.toString())
             .append('showClosed', showClosed.toString())
-        return this.http.get(this.urn, { params: queryParams, observe: 'response' })
+        return this.http.get(this.url, { params: queryParams, observe: 'response' })
     }
 
     getOne(id: number): Observable<PaymentBatchView> {
-        return this.http.get<PaymentBatchView>(this.urn + id)
+        return this.http.get<PaymentBatchView>(this.url + id)
     }
 
     add(paymentBatch: FormData): Observable<PaymentBatchView> {
-        return this.http.post<PaymentBatchView>(this.urn, paymentBatch)
+        return this.http.post<PaymentBatchView>(this.url, paymentBatch)
     }
 
     update(paymentBatch: PaymentBatchView): Observable<PaymentBatchView> {
-        return this.http.put<PaymentBatchView>(this.urn + paymentBatch.id, paymentBatch)
+        return this.http.put<PaymentBatchView>(this.url + paymentBatch.id, paymentBatch)
     }
 
     delete(id: number): Observable<PaymentBatchView> {
-        return this.http.delete<PaymentBatchView>(this.urn + id)
+        return this.http.delete<PaymentBatchView>(this.url + id)
     }
 }
