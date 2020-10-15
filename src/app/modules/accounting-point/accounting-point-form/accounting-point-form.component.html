@@ -42,8 +42,7 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSpan]="5" nzFor="distributionSystemOperatorId" nzRequired>Оператор системи розподілу
-    </nz-form-label>
+    <nz-form-label [nzSpan]="5" nzFor="distributionSystemOperatorId" nzRequired>Оператор системи розподілу</nz-form-label>
     <nz-form-control [nzSpan]="12" nzErrorTip="Не обрано оператора системи розподілу">
       <nz-select nzPlaceHolder="Оберіть оператора системи розподілу" formControlName="distributionSystemOperatorId">
         <nz-option *ngFor="let distributionSystemOperator of distributionSystemOperatorsList"

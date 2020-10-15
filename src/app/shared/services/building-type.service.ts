@@ -5,11 +5,11 @@ import { BuildingType } from '../models/building-type'
 
 @Injectable()
 export class BuildingTypeService {
-  private apiUrn = `${environment.apiServer}buildingtypes/`
+  private apiUrl = `${environment.apiServer}buildingtypes/`
 
   constructor(private http: HttpClient) { }
 
   getAll() {
-    return this.http.get<BuildingType[]>(this.apiUrn)
+    return this.http.get<BuildingType[]>(this.apiUrl)
   }
 }
