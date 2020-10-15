@@ -25,16 +25,11 @@ export class AccountingPointEditComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.formBuilder.group({})
-
     this.route.paramMap.pipe(
-      switchMap((params: ParamMap) => params.getAll('id'))
-    ).subscribe(id => {
-      if (id) {
-        this.accountingPointDetailService.getOne(+id).subscribe(acd => {
-          this.form.patchValue(acd)
-          this.form.get('tariffId').disable()
-        })
-      }
+      switchMap((params: ParamMap) => this.accountingPointDetailService.getOne(+params.get('id')))
+    ).subscribe(acd => {
+      this.form.patchValue(acd)
+      this.form.get('tariffId').disable()
     })
   }
 
@@ -45,7 +40,7 @@ export class AccountingPointEditComponent implements OnInit {
   }
 
   cancelEdit() {
-    this.router.navigate(['accounting-points/', this.form.get('id').value])
+    this.router.navigate(['accounting-points/', +this.route.snapshot.params['id']])
   }
 
   submitForm() {

@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Tariff } from '../models/tariff';
 import { TariffRate } from '../models/tariff-rate';
+import { Commodity } from '../models/commodity';
 
 @Injectable({
   providedIn: 'root'
@@ -14,21 +15,24 @@ export class TariffService {
 
   constructor(private http: HttpClient) { }
 
-  getTariffList() {
+  getTariffList(commodity: Commodity) {
     return this.http
-      .get<Tariff[]>(this.apiUri).pipe(map((data) => {
-        data.forEach(t => {
-          t.rates.forEach(r => {
-            r.startDate = new Date(r.startDate);
-            if (r.heatingEndDay) {
-              r.heatingEndDay = new Date(r.heatingEndDay);
-            }
-            if (r.heatingStartDay) {
-              r.heatingStartDay = new Date(r.heatingStartDay);
-            }
+      .get<Tariff[]>(this.apiUri, {params: {commodity: commodity.toString() }})
+      .pipe(map((data) => {
+        if (commodity === Commodity.ElectricPower) {
+          data.forEach(t => {
+            t.rates.forEach(r => {
+              r.startDate = new Date(r.startDate);
+              if (r.heatingEndDay) {
+                r.heatingEndDay = new Date(r.heatingEndDay);
+              }
+              if (r.heatingStartDay) {
+                r.heatingStartDay = new Date(r.heatingStartDay);
+              }
 
-          })
-        });
+            })
+          });
+        }
         return data;
       }));
   }
@@ -43,13 +47,13 @@ export class TariffService {
       .post<Tariff>(this.apiUri, tariff);
   }
 
-  addTariffRate(tariffId, tariffRate: TariffRate) {
+  addTariffRate(tariffId: number, tariffRate: TariffRate) {
     tariffRate.tariffId = tariffId;
     return this.http
       .post<TariffRate>(`${this.apiUri}/${tariffId}/rates`, tariffRate);
   }
 
-  updateTariffRate(tariffId, tariffRate: TariffRate) {
+  updateTariffRate(tariffId: number, tariffRate: TariffRate) {
     tariffRate.tariffId = tariffId;
     return this.http
       .put<TariffRate>(`${this.apiUri}/${tariffId}/rates/${tariffRate.id}`, tariffRate);

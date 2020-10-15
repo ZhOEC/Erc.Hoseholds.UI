@@ -2,14 +2,23 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="5" nzRequired nzFor="branchOfficeId">ЦОК</nz-form-label>
     <nz-form-control [nzSpan]="12" nzErrorTip="Не обрано ЦОК">
-      <nz-select nzPlaceHolder="Виберіть ЦОК" formControlName="branchOfficeId" (ngModelChange)="getCities($event)">
+      <nz-select nzPlaceHolder="Виберіть ЦОК" formControlName="branchOfficeId" (ngModelChange)="branchOfficeChanged($event)">
         <nz-option *ngFor="let branchOffice of branchOfficesList" [nzValue]="branchOffice.id"
           [nzLabel]="branchOffice.name">
         </nz-option>
       </nz-select>
     </nz-form-control>
   </nz-form-item>
-
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="commodity">Товар постачання</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Не обрано товар постачання">
+      <nz-select nzPlaceHolder="Виберіть товар постачання" formControlName="commodity" (ngModelChange)="commodityChanged($event)" >
+        <nz-option *ngFor="let commodity of availableCommodities" [nzValue]="commodity.value"
+          [nzLabel]="commodity.title">
+        </nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
   <nz-form-item>
     <nz-form-label [nzSpan]="5" nzRequired nzFor="name">EIC</nz-form-label>
     <nz-form-control [nzSpan]="12" [nzErrorTip]="eicErrorTpl">

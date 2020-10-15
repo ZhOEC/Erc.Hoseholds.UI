@@ -54,7 +54,7 @@ export class TariffRateComponent implements OnInit {
     this.tariffRateForm.reset();
     this.tariff = tariff;
     this.isVisible = true;
-    this.title = "Нове значення тарифу для " + this.tariff.name;
+    this.title = "Нове значення тарифу " + this.tariff.name;
     this.tariffRateForm.markAsUntouched();
   }
 
@@ -62,7 +62,7 @@ export class TariffRateComponent implements OnInit {
     this.tariff = tariff;
     this.tariffRate = tariffRate;
     this.isVisible = true;
-    this.title = "Редагування значення тарифу для " + tariff.name;
+    this.title = "Редагування значення тарифу " + tariff.name;
     this.tariffRateForm.patchValue(this.tariffRate);
     this.tariffRateForm.markAsUntouched();
   }

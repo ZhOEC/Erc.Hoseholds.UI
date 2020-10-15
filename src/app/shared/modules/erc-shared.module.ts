@@ -31,8 +31,8 @@ import { UnitPipe } from '../pipes/unit.pipe';
     NzButtonModule,
     NzIconModule,
     NzModalModule,
-    NzGridModule
-    ,UnitPipe
+    NzGridModule,
+    UnitPipe
   ]
 })
 export class ErcSharedModule { }

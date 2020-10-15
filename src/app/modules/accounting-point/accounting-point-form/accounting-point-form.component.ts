@@ -13,6 +13,7 @@ import { DistributionSystemOperator } from 'src/app/shared/models/distribution-s
 import { Tariff } from 'src/app/shared/models/tariff'
 import { BuildingType } from 'src/app/shared/models/building-type'
 import { UsageCategory } from 'src/app/shared/models/usage-category'
+import { Commodity, CommodityData, commodityMap } from 'src/app/shared/models/commodity'
 
 @Component({
   selector: 'app-accounting-point-form',
@@ -21,15 +22,15 @@ import { UsageCategory } from 'src/app/shared/models/usage-category'
 })
 export class AccountingPointFormComponent implements OnInit {
   private _accountingPointForm: FormGroup
-  @Input() 
-    set accountingPointForm(fg: FormGroup) {
-      this._accountingPointForm = fg
-    }
-    get accountingPointForm() { 
-      return this._accountingPointForm 
-    }
-  @Output() 
-    formChanged = new EventEmitter()
+  @Input()
+  set accountingPointForm(fg: FormGroup) {
+    this._accountingPointForm = fg
+  }
+  get accountingPointForm() {
+    return this._accountingPointForm
+  }
+  @Output()
+  formChanged = new EventEmitter()
 
   branchOfficesList: BranchOffice[]
   citiesList: City[]
@@ -38,6 +39,7 @@ export class AccountingPointFormComponent implements OnInit {
   tariffsList: Tariff[]
   buildingTypes: BuildingType[]
   usageCategories: UsageCategory[]
+  availableCommodities: CommodityData[] = []
 
   isLoadingCities = false
   isLoadingStreets = false
@@ -49,7 +51,7 @@ export class AccountingPointFormComponent implements OnInit {
     private addressService: AddressService,
     private tariffService: TariffService,
     private buildingTypeService: BuildingTypeService,
-    private usageCategoryService: UsageCategoryService) {}
+    private usageCategoryService: UsageCategoryService) { }
 
   ngOnInit() {
     this.accountingPointForm = this.formBuilder.group({
@@ -68,23 +70,23 @@ export class AccountingPointFormComponent implements OnInit {
         zip: [null, Validators.required],
       }),
       usageCategoryId: [null, Validators.required],
-      buildingTypeId: [null, Validators.required]
+      buildingTypeId: [null, Validators.required],
+      commodity: [null, Validators.required]
     })
 
     this.getBranchOffices()
-    this.getDistributionSystemOperators()
-    this.getTariffs()
     this.getBuildingTypes()
     this.getUsageCategories()
-    
     this.formChanged.emit(this.accountingPointForm)
   }
 
   getBranchOffices() {
-    this.branchOfficeService.branchOffices$.subscribe(offices => {
-      this.branchOfficesList = offices.sort((a, b) => a.name.localeCompare(b.name))
-      if (this.branchOfficesList.length === 1) {
+    this.branchOfficeService.getBranchOffices().subscribe(offices => {
+      if (offices.length == 1) {
         this.accountingPointForm.get('branchOfficeId').setValue(this.branchOfficesList[0].id)
+      }
+      else {
+        this.branchOfficesList = offices;
       }
     })
   }
@@ -92,6 +94,25 @@ export class AccountingPointFormComponent implements OnInit {
   getCities(branchOfficeId: number) {
     this.accountingPointForm.controls.address.get('cityId').reset()
     if (branchOfficeId) {
+      this.isLoadingCities = true
+      this.addressService.getCities(branchOfficeId).subscribe(cities => {
+        this.citiesList = cities
+        this.accountingPointForm.controls.address.get('cityId').enable()
+        this.isLoadingCities = false
+      })
+    }
+  }
+
+  branchOfficeChanged(branchOfficeId: any) {
+    this.accountingPointForm.controls.address.get('cityId').reset()
+    if (branchOfficeId) {
+      this.availableCommodities = [];
+      this.branchOfficesList.find(b => b.id == branchOfficeId).availableCommodities.forEach(c => {
+        this.availableCommodities.push(commodityMap[c])
+      });
+      if (this.availableCommodities.length == 1)
+        this.accountingPointForm.get('commodity').setValue(this.availableCommodities[0].value)
+
       this.isLoadingCities = true
       this.addressService.getCities(branchOfficeId).subscribe(cities => {
         this.citiesList = cities
@@ -113,16 +134,23 @@ export class AccountingPointFormComponent implements OnInit {
     }
   }
 
-  getDistributionSystemOperators() {
-    this.distributionSystemOperatorService.getDistributionSystemOperators().subscribe(operators => {
+  getDistributionSystemOperators(commodity: Commodity) {
+    this.distributionSystemOperatorService.getDistributionSystemOperators(commodity).subscribe(operators => {
       this.distributionSystemOperatorsList = operators.sort((a, b) => a.name.localeCompare(b.name))
       if (this.distributionSystemOperatorsList.length == 1) {
-        this.accountingPointForm.get('dsoId').setValue(this.distributionSystemOperatorsList[0].id)
+        this.accountingPointForm.get('distributionSystemOperatorId').setValue(this.distributionSystemOperatorsList[0].id)
       }
     })
   }
 
-  getTariffs() { this.tariffService.getTariffList().subscribe(tariffs => this.tariffsList = tariffs) }
+  commodityChanged(commodity: Commodity) {
+    this.accountingPointForm.get('tariffId').reset()
+    this.accountingPointForm.get('distributionSystemOperatorId').reset()
+    this.getTariffs(commodity)
+    this.getDistributionSystemOperators(commodity)
+  }
+
+  getTariffs = (commodity: Commodity) => this.tariffService.getTariffList(commodity).subscribe(tariffs => this.tariffsList = tariffs)
   getUsageCategories() { this.usageCategoryService.getAll().subscribe(categories => this.usageCategories = categories) }
   getBuildingTypes() { this.buildingTypeService.getAll().subscribe(types => this.buildingTypes = types) }
 }

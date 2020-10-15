@@ -1,9 +1,16 @@
-<nz-table [nzShowPagination]="false" #tariffsTable [nzData]="tariffs" nzTitle="Тарифи на електроенергію">
+<nz-table [nzShowPagination]="false" #tariffsTable [nzData]="tariffs" nzTitle="Довідник тарифів">
+    <thead>
+        <tr>
+          <th></th>
+          <th>Назва</th>
+          <th></th>
+        </tr>
+      </thead>
     <tbody>
         <ng-template ngFor let-tariff [ngForOf]="tariffsTable.data">
             <tr>
                 <td nzShowExpand [(nzExpand)]="tariff.expand"></td>
-                <td width="80%">
+                <td>
                     <ng-container *ngIf="editRowId!=tariff.id; else nameInputTpl">
                         {{ tariff.name }}
                     </ng-container>
@@ -24,39 +31,41 @@
                 </td>
             </tr>
             <tr [nzExpand]="tariff.expand">
-                <td></td>
-                <td colspan="2">
-                    <nz-table nzSize="middle" [nzShowPagination]="false" #tariffRatesTable [nzData]="tariff.rates">
+                    <nz-table [nzShowPagination]="false" #tariffRatesTable [nzData]="tariff.rates">
                         <thead>
                             <tr>
                                 <th>Дата початку дії</th>
-                                <th>Значення</th>
-                                <th>Споживання, кВт⋅год</th>
-                                <th>Споживання в опалювальний період, кВт⋅год</th>
-                                <th>Почтаок опалювального періоду</th>
-                                <th>Кінець опалювального періоду</th>
-                                <th><a (click)="addNewRate(tariff)" title="Нове значення" ><i nz-icon nzType="plus-circle" nzTheme="outline"></i></a></th>
+                                <th>Значення, Грн.</th>
+                                <th *ngIf="tariff.commodity==1">Споживання, кВт⋅год</th>
+                                <th *ngIf="tariff.commodity==1">Споживання в опалювальний період, кВт⋅год</th>
+                                <th *ngIf="tariff.commodity==1">Почтаок опалювального періоду</th>
+                                <th *ngIf="tariff.commodity==1">Кінець опалювального періоду</th>
+                                <th><a (click)="addNewRate(tariff)" title="Нове значення"><i nz-icon
+                                            nzType="plus-circle" nzTheme="outline"></i></a></th>
                             </tr>
                         </thead>
     <tbody>
         <tr *ngFor="let rate of tariff.rates">
             <td>{{ rate.startDate | date:'mediumDate' }}</td>
             <td>{{ rate.value | number:'1.2-6'}}</td>
-            <td>{{ rate.consumptionLimit }}</td>
-            <td>{{ rate.heatingConsumptionLimit }}</td>
-            <td>{{ rate.heatingStartDay | date:'d MMMM' }}</td>
-            <td>{{ rate.heatingEndDay | date:'d MMMM'}}</td>
+            <td *ngIf="tariff.commodity==1">{{ rate.consumptionLimit }}</td>
+            <td *ngIf="tariff.commodity==1">{{ rate.heatingConsumptionLimit }}</td>
+            <td *ngIf="tariff.commodity==1">{{ rate.heatingStartDay | date:'d MMMM' }}</td>
+            <td *ngIf="tariff.commodity==1">{{ rate.heatingEndDay | date:'d MMMM'}}</td>
             <td>
                 <span class="table-operation">
-                    <a title="Редагувати запис" (click)="editRate(rate)"><i nz-icon nzType="edit" nzTheme="outline"></i></a>
+                    <a title="Редагувати запис" (click)="editRate(tariff.id, rate)"><i nz-icon nzType="edit"
+                            nzTheme="outline"></i></a>
                     <nz-divider nzType="vertical"></nz-divider>
-                    <a class="operation" title="Видалити запис"><i nz-icon nzType="delete" nzTheme="outline" (click)="deleteRate(tariff.id, rate.id)"></i></a>
+                    <a class="operation" title="Видалити запис"><i nz-icon nzType="delete" nzTheme="outline"
+                            (click)="deleteRate(tariff.id, rate.id)"></i></a>
                 </span>
             </td>
         </tr>
     </tbody>
 </nz-table>
-</td>
+
+
 </tr>
 </ng-template>
 </tbody>

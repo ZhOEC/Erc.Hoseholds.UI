@@ -25,7 +25,6 @@ export class SignalRService {
       .start()
       .then(() => {
         this.hubConnection.onclose(() => this.startConnection());
-        console.log('Connection started')
       })
       .catch(err => {
         console.log(`Error while starting connection: ${err}. Trying reconnect`)
