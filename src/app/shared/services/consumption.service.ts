@@ -6,7 +6,7 @@ import { ConsumptionRecord } from '../models/consumption-record'
 
 @Injectable()
 export class ConsumptionService {
-    private url: string = environment.apiServer + 'consumption'
+    private url: string = environment.apiServer + 'consumptions'
     
     constructor(private http: HttpClient) {}
 
