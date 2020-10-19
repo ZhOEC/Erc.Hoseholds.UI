@@ -65,6 +65,7 @@ export class PaymentBatchAddComponent implements OnInit {
   }
 
   beforeUpload = (file: UploadFile): boolean => {
+    console.log(file.originFileObj)
     this.paymentBatchForm.get('uploadFile').setValue(file)
     return false;
   };

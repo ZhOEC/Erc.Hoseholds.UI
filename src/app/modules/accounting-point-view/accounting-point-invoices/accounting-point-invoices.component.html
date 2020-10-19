@@ -5,7 +5,7 @@
             <th></th>
             <th>Період нарахувань</th>
             <th>Вхідне сальдо</th>
-            <th>{{'Спожито,' | unit}}</th>
+            <th>{{'Спожито,' | unit:commodity}}</th>
             <th>Нараховано, Грн.</th>
             <th>Пільга, Грн.</th>
             <th>До сплати, Грн.</th>
@@ -34,7 +34,7 @@
                         <th *ngIf="data.zoneUsages.length>1"></th>
                         <th>Попередні покази</th>
                         <th>Поточні покази</th>
-                        <th>{{'Різниця,' | unit}}</th>
+                        <th>{{'Різниця,' | unit:commodity}}</th>
                         <th>Грн.</th>
                         <th>Пільга</th>
                       </tr>
@@ -46,7 +46,7 @@
                         <td>{{ zoneUsage.presentMeterReading }}</td>
                         <td>{{ zoneUsage.units }}</td>
                         <td>{{ zoneUsage.charge | number : '1.2' }}</td>
-                        <td>{{ zoneUsage.discountUnits | unit}} / {{ zoneUsage.discount | number : '1.2' }} Грн.</td>
+                        <td>{{ zoneUsage.discountUnits | unit:commodity}} / {{ zoneUsage.discount | number : '1.2' }} Грн.</td>
                       </tr>
                     </tbody>
                 </nz-table>

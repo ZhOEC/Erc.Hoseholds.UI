@@ -17,6 +17,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "@ant-design/colors"
+           ],
             "outputPath": "dist/erc-households-ui",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -39,19 +42,11 @@
             "scripts": []
           },
           "configurations": {
-            "gas-local":{
+            "obl-server":{
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.gas.local.ts"
-                }
-              ]
-            },
-            "gas-server":{
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.gas.server.ts"
+                  "with": "src/environments/environment.dev.server.ts"
                 }
               ]
             },
@@ -94,11 +89,8 @@
             "production": {
               "browserTarget": "erc-households-ui:build:production"
             },
-            "gas-local": {
-              "browserTarget": "erc-households-ui:build:gas-local"
-            },
-            "gas-server": {
-              "browserTarget": "erc-households-ui:build:gas-server"
+            "obl-server": {
+              "browserTarget": "erc-households-ui:build:obl-server"
             }
           }
         },

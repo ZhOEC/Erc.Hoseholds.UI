@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { AccountingPointDetailService } from '../accounting-point-detail.service';
 import { NzTableQueryParams } from 'ng-zorro-antd/table/ng-zorro-antd-table';
+import { Commodity } from 'src/app/shared/models/commodity';
 
 @Component({
   selector: 'app-accounting-point-invoices',
@@ -9,6 +10,7 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table/ng-zorro-antd-table';
 })
 export class AccountingPointInvoicesComponent implements OnChanges {
   @Input() accountingPointId: number
+  @Input() commodity: Commodity 
   invoices = [];
   loading = true;
   total = 30;

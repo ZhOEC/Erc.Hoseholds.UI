@@ -7,9 +7,9 @@ import { map } from 'rxjs/operators'
   
 @Injectable()
 export class PersonService {
-    constructor(private http: HttpClient) {}
+    private url = `${environment.apiServer}people/`
     
-    private urn = `${environment.apiServer}people/`
+    constructor(private http: HttpClient) {}
 
     searchPerson(searchString: string) {
         let queryParams = new HttpParams()
@@ -18,7 +18,7 @@ export class PersonService {
     }
 
     getOne(id: number): Observable<Person> {
-        return this.http.get<Person>(this.urn + id)
+        return this.http.get<Person>(this.url + id)
             .pipe(map((data) => {
                 data.idCardExpDate = new Date(data.idCardExpDate)
                 data.idCardIssuanceDate = new Date(data.idCardIssuanceDate)
@@ -27,6 +27,6 @@ export class PersonService {
     }
 
     update(person: Person): Observable<Person> {
-        return this.http.put<Person>(this.urn + person.id, person)
+        return this.http.put<Person>(this.url + person.id, person)
     }
 }

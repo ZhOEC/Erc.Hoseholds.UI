@@ -11,7 +11,7 @@
                     <li nz-menu-item *ngIf="!a.exemption"><a routerLink="/accounting-point/{{a.id}}/open-exemption">Відкрити пільгу</a></li>
                     <li nz-menu-item *ngIf="a.exemption" (click)="showCloseExemptionDialog(a.name)">Закрити пільгу</li>
                     <li nz-menu-item><a routerLink="/person/{{a.owner.id}}/edit">Редагувати персональні дані</a></li>
-                    <li nz-menu-item><a routerLink="/accounting-point/{{a.id}}/edit">Редагувати точку обліку</a></li>
+                    <li nz-menu-item><a [routerLink]="['/accounting-point', a.id, 'edit']">Редагувати точку обліку</a></li>
                 </ul>
             </nz-dropdown-menu>
         </nz-page-header-extra>
@@ -57,7 +57,7 @@
         </nz-collapse-panel>
         <nz-collapse-panel nzHeader="Рахунки" class="invoices-info">
             <div>
-                <app-accounting-point-invoices [accountingPointId]="a.id"></app-accounting-point-invoices>
+                <app-accounting-point-invoices [accountingPointId]="a.id" [commodity]="a.commodity" ></app-accounting-point-invoices>
             </div>
         </nz-collapse-panel>
         <nz-collapse-panel nzHeader="Платежі" class="payments-info">
