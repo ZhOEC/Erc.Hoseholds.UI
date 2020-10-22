@@ -82,11 +82,9 @@ export class AccountingPointFormComponent implements OnInit {
 
   getBranchOffices() {
     this.branchOfficeService.getBranchOffices().subscribe(offices => {
-      if (offices.length == 1) {
+      this.branchOfficesList = offices;
+      if (this.branchOfficesList.length == 1) {
         this.accountingPointForm.get('branchOfficeId').setValue(this.branchOfficesList[0].id)
-      }
-      else {
-        this.branchOfficesList = offices;
       }
     })
   }
