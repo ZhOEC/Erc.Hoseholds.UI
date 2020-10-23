@@ -1,4 +1,3 @@
-import { UploadFile } from 'ng-zorro-antd/upload/interface'
 import { Component, OnInit, Output, EventEmitter } from '@angular/core'
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { BranchOfficeService } from 'src/app/shared/services/branch-office.service'
@@ -8,6 +7,7 @@ import { NotificationComponent } from 'src/app/shared/components/notification/no
 import { PaymentChannelService } from '../../../shared/services/payment-channel.service'
 import { PaymentChannel } from '../../../shared/models/payments/payment-channel.model'
 import { PaymentBatchView } from 'src/app/shared/models/payments/payment-batch-view.model'
+import { NzUploadFile } from 'ng-zorro-antd/upload'
 
 @Component({
   selector: 'app-payment-batch-add-modal',
@@ -50,11 +50,12 @@ export class PaymentBatchAddComponent implements OnInit {
   }
 
   getBranchOffices() {
-    this.branchOfficeService.branchOffices$.subscribe(data => {
-      this.branchOfficesList = data.sort((a, b) => a.name.localeCompare(b.name))
-      if (this.branchOfficesList.length === 1) {
-        this.paymentBatchForm.get('branchOfficeId').setValue(this.branchOfficesList[0].id)
-      }
+    this.branchOfficeService.getBranchOffices().subscribe(
+      data => {
+        this.branchOfficesList = data.sort((a, b) => a.name.localeCompare(b.name))
+        if (this.branchOfficesList.length === 1) {
+          this.paymentBatchForm.get('branchOfficeId').setValue(this.branchOfficesList[0].id)
+        }
     })
   }
 
@@ -64,8 +65,7 @@ export class PaymentBatchAddComponent implements OnInit {
     })
   }
 
-  beforeUpload = (file: UploadFile): boolean => {
-    console.log(file.originFileObj)
+  beforeUpload = (file: NzUploadFile): boolean => {
     this.paymentBatchForm.get('uploadFile').setValue(file)
     return false;
   };

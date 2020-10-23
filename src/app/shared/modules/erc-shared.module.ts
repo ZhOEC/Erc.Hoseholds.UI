@@ -15,6 +15,7 @@ import { NzSpaceModule } from 'ng-zorro-antd/space'
 import { NzInputModule } from 'ng-zorro-antd/input'
 import { NzCardModule } from 'ng-zorro-antd/card'
 import { UnitPipe } from '../pipes/unit.pipe';
+import { FormsModule } from '@angular/forms'
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { UnitPipe } from '../pipes/unit.pipe';
     AngularSvgIconModule,
     NzSpaceModule,
     NzInputModule,
-    NzCardModule
+    NzCardModule,
+    FormsModule
   ],
   exports: [
     SharedModule,
@@ -53,7 +55,8 @@ import { UnitPipe } from '../pipes/unit.pipe';
     UnitPipe,
     NzSpaceModule,
     NzInputModule,
-    NzCardModule
+    NzCardModule,
+    FormsModule
   ]
 })
 export class ErcSharedModule { }

@@ -4,7 +4,6 @@ import { BrowserModule } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { LayoutModule } from '@angular/cdk/layout'
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
-//import { IconsProviderModule } from './icons-provider.module'
 import { NgZorroAntdModule, NZ_I18N, uk_UA } from 'ng-zorro-antd'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { AngularSvgIconModule } from 'angular-svg-icon'
@@ -20,6 +19,7 @@ import { PersonModule } from './modules/person/person.module'
 import { AccountingPointViewModule } from './modules/accounting-point-view/accounting-point-view.module'
 import { CommonReferencesModule } from './modules/common-references/common-references.module'
 import { ContractModule } from './modules/contract/contract.module'
+import { TaxesModule } from './modules/taxes/taxes.module'
 import { BranchOfficeService } from './shared/services/branch-office.service'
 import { AccountingPointService } from './shared/services/accounting-point.service'
 import { DistributionSystemOperatorService } from './shared/services/distribution-system-operator.service'
@@ -33,6 +33,7 @@ import { BuildingTypeService } from './shared/services/building-type.service'
 import { BranchOfficeModule } from './modules/branch-office/branch-office.module';
 import { UnitPipe } from './shared/pipes/unit.pipe'
 import { ConsumptionService } from './shared/services/consumption.service'
+import { TaxInvoiceService } from './shared/services/tax-invoices.service'
 
 registerLocaleData(uk);
 
@@ -57,7 +58,8 @@ registerLocaleData(uk);
     AccountingPointViewModule,
     CommonReferencesModule,
     PersonModule,
-    ContractModule
+    ContractModule,
+    TaxesModule
   ],
   providers: [
     DistributionSystemOperatorService,
@@ -71,6 +73,7 @@ registerLocaleData(uk);
     BuildingTypeService,
     UsageCategoryService,
     ConsumptionService,
+    TaxInvoiceService,
     { provide: NZ_I18N, useValue: uk_UA },
     { provide: LOCALE_ID, useValue: 'uk-UA' },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
