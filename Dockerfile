@@ -1,9 +1,10 @@
-FROM node:alpine as builder
-ARG http_proxy=http://10.67.1.66:3128
-ARG https_proxy=http://10.67.1.66:3128
+FROM node:lts-alpine as builder
+ENV http_proxy=http://10.67.1.66:3128
+ENV https_proxy=http://10.67.1.66:3128
 
 WORKDIR /build
 COPY . .
+
 RUN npm install
 RUN npm audit fix
 
