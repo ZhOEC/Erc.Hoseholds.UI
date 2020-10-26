@@ -1,6 +1,6 @@
 FROM node:alpine as builder
-ARG http_proxy http://10.67.1.66:3128
-ARG https_proxy http://10.67.1.66:3128
+ARG http_proxy=http://10.67.1.66:3128
+ARG https_proxy=http://10.67.1.66:3128
 
 WORKDIR /build
 COPY . .
