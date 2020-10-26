@@ -87,8 +87,9 @@ export class AccountingPointFormComponent implements OnInit {
         this.accountingPointForm.get('branchOfficeId').setValue(this.branchOfficesList[0].id)
         this.availableCommodities = [];
         this.branchOfficesList[0].availableCommodities.forEach(c => {
-        this.availableCommodities.push(commodityMap[c])
-      });
+          this.availableCommodities.push(commodityMap[c])
+          this.getCities(this.branchOfficesList[0].id)
+        });
       }
     })
   }
