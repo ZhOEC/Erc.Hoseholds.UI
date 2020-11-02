@@ -17,7 +17,7 @@ export class AccountingPointDetailService {
 
   constructor(private http: HttpClient) { }
 
-  getOne(id: number) {
+  getOne(id: string) {
     return this.http.get<AccountingPointDetail>(this.accountingpointsUri + id)
     .pipe(
       catchError(this.handleError<AccountingPointDetail>('getOne'))
