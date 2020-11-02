@@ -44,7 +44,7 @@ export class OpenExemptionComponent implements OnInit {
     this.getExemptions()
 
     this.route.paramMap.pipe(switchMap((params: ParamMap) => 
-      this.accountingPointDetailService.getOne(+params.get('id'))))
+      this.accountingPointDetailService.getOne(params.get('id'))))
         .subscribe(ap => {
           this.accountingPointId = ap.id
           this.person = ap.owner

@@ -26,7 +26,7 @@ export class AccountingPointEditComponent implements OnInit {
   ngOnInit() {
     this.form = this.formBuilder.group({})
     this.route.paramMap.pipe(
-      switchMap((params: ParamMap) => this.accountingPointDetailService.getOne(+params.get('id')))
+      switchMap((params: ParamMap) => this.accountingPointDetailService.getOne(params.get('id')))
     ).subscribe(acd => {
       this.form.patchValue(acd)
       this.form.get('tariffId').disable()
