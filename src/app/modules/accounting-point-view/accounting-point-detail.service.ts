@@ -6,6 +6,7 @@ import { map, catchError } from 'rxjs/operators';
 import { Invoice } from './invoice';
 import { AccountingPointDetail } from './accounting-point-detail.model';
 import { Observable, of } from 'rxjs';
+import { privateEncrypt } from 'crypto';
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +20,9 @@ export class AccountingPointDetailService {
 
   getOne(id: string) {
     return this.http.get<AccountingPointDetail>(this.accountingpointsUri + id)
-    .pipe(
-      catchError(this.handleError<AccountingPointDetail>('getOne'))
-    );
+      .pipe(
+        catchError(this.handleError<AccountingPointDetail>('getOne'))
+      );
   }
 
   getInvoices(accountingPointId: number, pageNumber: number, pageSize: number) {
@@ -50,6 +51,10 @@ export class AccountingPointDetailService {
             inv.zoneUsages[2].name = 'Пік';
           }
           inv.isExpand = false;
+          inv.zoneUsages.forEach(element => {
+            element.priceValue = element.calculations[0].priceValue;
+          });
+          inv.billUri = `${environment.apiServer}bills/${inv.id}`;
         });
         return {
           items: response.body,
@@ -62,7 +67,7 @@ export class AccountingPointDetailService {
     return (error: any): Observable<T> => {
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
-      
+
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };

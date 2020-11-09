@@ -16,5 +16,6 @@ export interface Invoice {
     periodName: string
     type: string
     zoneUsages: ZoneUsage[]
-    isExpand: boolean;
+    billUri: string
+    isExpand: boolean
 }
