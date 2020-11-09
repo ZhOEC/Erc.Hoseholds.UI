@@ -1,0 +1,71 @@
+<form nz-form [formGroup]="form">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="name">Назва компанії</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Не введено назву компанії">
+      <input type="text" nz-input formControlName="name"/>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="shortName">Коротка назва компанії</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Не введено коротку назву компанії">
+      <input type="text" nz-input formControlName="shortName"/>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="directorName">Директор</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Не введено ФІО директора">
+      <input type="text" nz-input formControlName="directorName"/>
+    </nz-form-control>
+  </nz-form-item>
+  
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="address">Адреса</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Не введено адресу">
+      <input type="text" nz-input formControlName="address"/>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="email">Електронна адреса (email)</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Не введено електронну адресу">
+      <input type="text" nz-input formControlName="email"/>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="www">Сайт компанії</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Не введено сайт компанії">
+      <input type="text" nz-input formControlName="www"/>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="taxpayerPhone">ЄДРПОУ компанії</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Не введено ЄДРПОУ компанії">
+      <input type="text" nz-input formControlName="taxpayerPhone"/>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="bookkeeperName">Головний бухгалтер</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Не введено ФІО головного бухгалтера">
+      <input type="text" nz-input formControlName="bookkeeperName"/>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="bookkeeperTaxNumber">РНОКПП головного бухгалтера</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Не введено РНОКПП головного бухгалтера">
+      <input type="text" nz-input formControlName="bookkeeperTaxNumber"/>
+    </nz-form-control>
+  </nz-form-item>
+
+  <div nz-row>
+    <div nz-col [nzSpan]="12" [nzOffset]="5">
+        <button nz-button nzType="primary" [nzLoading]="isSubmit" (click)="submitForm()">Оновити</button>
+        <button nz-button (click)="cancel()">Відміна</button>
+    </div>
+  </div>
+</form>

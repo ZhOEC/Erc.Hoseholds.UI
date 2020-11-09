@@ -1,3 +1,4 @@
+import { CompanyEditComponent } from './modules/company/company-edit/company-edit.component';
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 import { TariffListComponent } from './modules/tariffs/tariff-list/tariff-list.component'
@@ -27,7 +28,8 @@ const routes: Routes = [
   { path: 'payment-batch/:id', component: PaymentBatchDetailComponent },
   { path: 'person/:id/edit', component: PersonEditComponent },
   { path: 'branch-office-periods', component: BranchOfficePeriodsComponent },
-  { path: 'consumption-loader', component: ConsumptionLoaderFormComponent }
+  { path: 'consumption-loader', component: ConsumptionLoaderFormComponent },
+  { path: 'company/:id/edit', component: CompanyEditComponent }
 ];
 
 @NgModule({

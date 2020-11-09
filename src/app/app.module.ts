@@ -30,8 +30,9 @@ import { PaymentBatchService } from './shared/services/payment-batch.service'
 import { PaymentService } from './shared/services/payment.service'
 import { UsageCategoryService } from './shared/services/usage-category.service'
 import { BuildingTypeService } from './shared/services/building-type.service'
-import { BranchOfficeModule } from './modules/branch-office/branch-office.module';
-import { UnitPipe } from './shared/pipes/unit.pipe'
+import { CompanyService } from './shared/services/company.service'
+import { BranchOfficeModule } from './modules/branch-office/branch-office.module'
+import { CompanyModule } from './modules/company/company.module'
 import { ConsumptionService } from './shared/services/consumption.service'
 
 registerLocaleData(uk);
@@ -57,7 +58,8 @@ registerLocaleData(uk);
     AccountingPointViewModule,
     CommonReferencesModule,
     PersonModule,
-    ContractModule
+    ContractModule,
+    CompanyModule
   ],
   providers: [
     DistributionSystemOperatorService,
@@ -71,6 +73,7 @@ registerLocaleData(uk);
     BuildingTypeService,
     UsageCategoryService,
     ConsumptionService,
+    CompanyService,
     { provide: NZ_I18N, useValue: uk_UA },
     { provide: LOCALE_ID, useValue: 'uk-UA' },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
