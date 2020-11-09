@@ -33,8 +33,7 @@ export class CompanyEditComponent implements OnInit {
       www: [null, [Validators.required]],
       taxpayerPhone: [null, [Validators.required]],
       bookkeeperName: [null, [Validators.required]],
-      bookkeeperTaxNumber: [null, [Validators.required]],
-      branchOffices: [null, [Validators.required]]
+      bookkeeperTaxNumber: [null, [Validators.required]]
     })
   }
 
@@ -57,7 +56,6 @@ export class CompanyEditComponent implements OnInit {
   }
 
   submitForm() {
-    console.log(this.validateForm())
     if (this.validateForm()) {
       this.isSubmit = true
       this.companyService.update(this.form.value).subscribe(

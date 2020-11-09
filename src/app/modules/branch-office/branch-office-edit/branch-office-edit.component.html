@@ -1,0 +1,50 @@
+<form nz-form [formGroup]="form">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="name">Назва ЦОК</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Не введено назву ЦОК">
+      <input type="text" nz-input formControlName="name"/>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="chiefName">Директор</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Не введено ФІО директора">
+      <input type="text" nz-input formControlName="chiefName"/>
+    </nz-form-control>
+  </nz-form-item>
+  
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="address">Адреса</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Не введено адресу">
+      <input type="text" nz-input formControlName="address"/>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="bookkeeperName">Головний бухгалтер</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Не введено ФІО головного бухгалтера">
+      <input type="text" nz-input formControlName="bookkeeperName"/>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="bankFullName">Повна назва банку</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Не введено повну назву банку">
+      <input type="text" nz-input formControlName="bankFullName"/>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="iban">IBAN</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Не введено IBAN">
+      <input type="text" nz-input formControlName="iban"/>
+    </nz-form-control>
+  </nz-form-item>
+
+  <div nz-row>
+    <div nz-col [nzSpan]="12" [nzOffset]="5">
+        <button nz-button nzType="primary" [nzLoading]="isSubmit" (click)="submitForm()">Оновити</button>
+        <button nz-button (click)="cancel()">Відміна</button>
+    </div>
+  </div>
+</form>

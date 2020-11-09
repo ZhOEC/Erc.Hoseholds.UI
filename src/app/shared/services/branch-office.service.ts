@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { BranchOffice } from '../models/branch-office.model';
+import { BranchOffice } from '../models/branch-office.model'
 import { environment } from 'src/environments/environment';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
-import { Commodity } from '../models/commodity';
 
 @Injectable()
 export class BranchOfficeService {
@@ -33,4 +32,12 @@ export class BranchOfficeService {
 
   private getBranchOfficesInternal = () =>
     this.http.get<BranchOffice[]>(environment.apiServer + "branch-offices")
+
+    getOne(id: number): Observable<BranchOffice> {
+      return this.http.get<BranchOffice>(`${environment.apiServer}branch-offices/${id}`)
+    }
+
+    update(branchOffice: BranchOffice): Observable<BranchOffice> {
+      return this.http.put<BranchOffice>(`${environment.apiServer}branch-offices/${branchOffice.id}`, branchOffice)
+    }
 }
