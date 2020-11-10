@@ -51,7 +51,7 @@ export class AccountingPointDetailService {
             inv.zoneUsages[2].name = 'Пік';
           }
           inv.isExpand = false;
-          inv.zoneUsages.forEach(element => {
+          inv.zoneUsages.forEach((element: { priceValue: any; calculations: { priceValue: any; }[]; }) => {
             element.priceValue = element.calculations[0].priceValue;
           });
           inv.billUri = `${environment.apiServer}bills/${inv.id}`;
