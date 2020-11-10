@@ -41,6 +41,13 @@
               Керування періодами
             </a>
           </li>
+          <li nz-menu-item>
+            <a [routerLink]="['/print-bills']" routerLinkActive="router-link-active"
+              routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
+              <i nz-icon nzType="profile"></i>
+              Друк рахунків
+            </a>
+          </li>
         </ul>
       </li>
       <li nz-submenu nzTitle="Довідники" nzIcon="snippets">
