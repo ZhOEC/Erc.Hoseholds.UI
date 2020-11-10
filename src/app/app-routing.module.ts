@@ -1,4 +1,5 @@
-import { CompanyEditComponent } from './modules/company/company-edit/company-edit.component';
+import { PrintBillsComponent } from './modules/common-references/print-bills/print-bills.component'
+import { CompanyEditComponent } from './modules/company/company-edit/company-edit.component'
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 import { TariffListComponent } from './modules/tariffs/tariff-list/tariff-list.component'
@@ -31,7 +32,8 @@ const routes: Routes = [
   { path: 'branch-office-periods', component: BranchOfficePeriodsComponent },
   { path: 'consumption-loader', component: ConsumptionLoaderFormComponent },
   { path: 'company/:id/edit', component: CompanyEditComponent },
-  { path: 'branch-office/:id/edit', component: BranchOfficeEditComponent }
+  { path: 'branch-office/:id/edit', component: BranchOfficeEditComponent },
+  { path: 'print-bills', component: PrintBillsComponent }
 ];
 
 @NgModule({

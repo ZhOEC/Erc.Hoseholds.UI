@@ -4,6 +4,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { BranchOffice } from '../models/branch-office.model'
 import { environment } from 'src/environments/environment';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
+import { Period } from '../models/period.model';
 
 @Injectable()
 export class BranchOfficeService {
@@ -27,8 +28,11 @@ export class BranchOfficeService {
 
   getBranchOffices = () => this.branchOffices$.pipe(
       filter(bo => bo != null)
-    )
-  
+  )
+
+  getPeriods(id: number): Observable<Period[]> {
+    return this.http.get<Period[]>(`${environment.apiServer}branch-offices/${id}/periods`)
+  }
 
   private getBranchOfficesInternal = () =>
     this.http.get<BranchOffice[]>(environment.apiServer + "branch-offices")
