@@ -13,8 +13,9 @@ import { privateEncrypt } from 'crypto';
 })
 
 export class AccountingPointDetailService {
-  private invoicesUri = `${environment.apiServer}invoices/`;
-  accountingpointsUri = `${environment.apiServer}accountingpoints/`;;
+  private invoicesUri = `${environment.apiServer}invoices/`
+  private paymentsUri = `${environment.apiServer}payments/`
+  private accountingpointsUri = `${environment.apiServer}accountingpoints/`
 
   constructor(private http: HttpClient) { }
 
@@ -23,6 +24,20 @@ export class AccountingPointDetailService {
       .pipe(
         catchError(this.handleError<AccountingPointDetail>('getOne'))
       );
+  }
+
+  getPayments(accountingPointId: number, pageNumber: number, pageSize: number) {
+    const params = new HttpParams()
+      .append('accountingPointId', accountingPointId.toString())
+      .append('pageNumber', pageNumber.toString())
+      .append('pageSize', pageSize.toString());
+
+    return this.http
+      .get<Invoice[]>(this.paymentsUri, { params: params, observe: 'response' })
+      .pipe(map(response => <InvoiceList>{
+          items: response.body,
+          totalCount: Number(response.headers.get('X-Total-Count'))
+      }));
   }
 
   getInvoices(accountingPointId: number, pageNumber: number, pageSize: number) {
