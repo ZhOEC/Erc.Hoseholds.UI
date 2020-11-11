@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { BranchOffice } from 'src/app/shared/models/branch-office.model'
 import { Period } from 'src/app/shared/models/period.model'
 import { BranchOfficeService } from 'src/app/shared/services/branch-office.service'
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'app-print-bills',
@@ -62,7 +63,7 @@ export class PrintBillsComponent implements OnInit {
 
   submitForm() {
     if (this.validateForm()) {
-      this.isSubmit = true
+      window.location.href = `${environment.apiServer}bills/?branch_office_id=${this.form.get('branchOfficeId').value}&period_id=${this.form.get('periodId').value}`
     }
   }
 }

@@ -30,6 +30,7 @@ export class AccountingPointInvoicesComponent implements OnChanges {
   LoadInvoices() {
     this.accountingPointDetailService.getInvoices(this.accountingPointId, this.pageIndex, this.pageSize)
     .subscribe(data => {
+      console.log(data.items)
       this.invoices = data.items;
       this.loading = false;
       this.total = data.totalCount;
