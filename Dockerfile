@@ -1,6 +1,7 @@
 FROM node:lts-alpine as builder
-ENV http_proxy=http://10.67.1.66:3128
-ENV https_proxy=http://10.67.1.66:3128
+ARG http_proxy=http://10.67.1.66:3128
+ARG https_proxy=http://10.67.1.66:3128
+ARG BUILD_CONFIG=prod
 
 WORKDIR /build
 COPY . .
@@ -8,7 +9,7 @@ COPY . .
 RUN npm install
 RUN npm audit fix
 
-RUN npm run build-prod
+RUN npm run build-$BUILD_CONFIG
 
 FROM nginx:alpine
 COPY nginx.conf /etc/nginx/conf.d/default.conf

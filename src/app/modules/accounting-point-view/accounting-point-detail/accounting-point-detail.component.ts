@@ -23,12 +23,12 @@ export class AccountingPointDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.pipe(
-      switchMap((params: ParamMap) =>this.accountingPointDetailService.getOne(+params.get('id')))
+      switchMap((params: ParamMap) =>this.accountingPointDetailService.getOne(params.get('id')))
       ).subscribe(a => this.accountingPointDetail = a);
   }
 
   private reloadAccountingPointDetail() {
-    const id = +this.route.snapshot.paramMap.get('id');
+    const id = this.route.snapshot.paramMap.get('id');
     this.accountingPointDetailService.getOne(id).subscribe(a => this.accountingPointDetail = a);
   }
 

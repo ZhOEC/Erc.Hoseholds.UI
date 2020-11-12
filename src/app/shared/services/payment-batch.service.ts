@@ -7,8 +7,8 @@ import { PaymentBatchView } from '../models/payments/payment-batch-view.model'
 @Injectable()
 export class PaymentBatchService {
     private url: string = environment.apiServer + 'paymentbatches/'
-    
-    constructor(private http: HttpClient) {}
+
+    constructor(private http: HttpClient) { }
 
     getPart(pageNumber: number, pageSize: number, showClosed: boolean) {
         let queryParams = new HttpParams()
@@ -32,5 +32,10 @@ export class PaymentBatchService {
 
     delete(id: number): Observable<PaymentBatchView> {
         return this.http.delete<PaymentBatchView>(this.url + id)
+    }
+
+    process(id: number)  {
+        console.log(`service process ${this.url}${id}/processing`);
+        return this.http.post(this.url + id + '/processing', null);
     }
 }

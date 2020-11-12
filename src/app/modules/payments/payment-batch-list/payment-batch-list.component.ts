@@ -5,6 +5,7 @@ import { PaymentBatchAddComponent } from '../payment-batch-add-modal/payment-bat
 import { PaymentChannelService } from './../../../shared/services/payment-channel.service'
 import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
 import { PaymentChannel } from 'src/app/shared/models/payments/payment-channel.model'
+import { switchMap } from 'rxjs/operators'
 
 @Component({
   selector: 'app-payment-batch-list',
@@ -91,6 +92,16 @@ export class PaymentBatchListComponent implements OnInit {
 
   editBatch(id: number) {
     this.editCache[id].edit = true
+  }
+
+  processBatch(id: number) {
+    this.paymentBatchService.process(id) .subscribe(
+      () => {
+        this.notification.show('success', 'Успіх', `Пачку платежів успішно оброблено!`)
+      },
+      () => {
+        this.notification.show('error', 'Фіаско', `Не вдалося обробити платежі в пачці`)
+    });
   }
 
   updateBatch(paymentBatch: PaymentBatchView) {
