@@ -1,29 +1,31 @@
+<div style="text-align: center;">
 <h1>Друк рахунків</h1>
-
-<form nz-form [formGroup]="form">
-  <nz-form-item>
-      <nz-form-label [nzSpan]="2" nzRequired nzFor="branchOfficeId">ЦОК</nz-form-label>
-      <nz-form-control [nzSpan]="6" nzErrorTip="Не обрано ЦОК">
-        <nz-select formControlName="branchOfficeId" nzPlaceHolder="Оберіть ЦОК" (ngModelChange)="getPeriods($event)">
-          <nz-option *ngFor="let branchOffice of branchOffices" [nzValue]="branchOffice.id"
-            [nzLabel]="branchOffice.name">
-          </nz-option>
-        </nz-select>
-      </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="2" nzRequired nzFor="periodId">Період</nz-form-label>
-    <nz-form-control [nzSpan]="6" nzErrorTip="Не обрано період">
-      <nz-select formControlName="periodId" nzPlaceHolder="Оберіть період" [nzLoading]=isLoadingPeriods>
-        <nz-option *ngFor="let period of periods" [nzValue]="period.id"
-          [nzLabel]="period.name">
-        </nz-option>
-      </nz-select>
-    </nz-form-control>
-  </nz-form-item>
-  <div nz-row>
-    <div nz-col [nzSpan]="12">
-      <button nz-button nzType="primary" [nzLoading]="isSubmit" (click)="submitForm()">Отримати</button>
-    </div>
+</div>
+<div nz-row>
+  <div nz-col [nzSpan]="4" nzOffset="10">
+    <form nz-form [formGroup]="form">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzRequired nzFor="branchOfficeId">ЦОК</nz-form-label>
+        <nz-form-control [nzSpan]="18" nzErrorTip="Не обрано ЦОК">
+          <nz-select formControlName="branchOfficeId" nzPlaceHolder="Оберіть ЦОК" (ngModelChange)="getPeriods($event)">
+            <nz-option *ngFor="let branchOffice of branchOffices" [nzValue]="branchOffice.id"
+              [nzLabel]="branchOffice.name">
+            </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzRequired nzFor="periodId">Період</nz-form-label>
+        <nz-form-control [nzSpan]="18" nzErrorTip="Не обрано період">
+          <nz-select formControlName="periodId" nzPlaceHolder="Оберіть період" [nzLoading]=isLoadingPeriods>
+            <nz-option *ngFor="let period of periods" [nzValue]="period.id" [nzLabel]="period.name">
+            </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+        <div  style="text-align:right">
+          <button nz-button nzType="primary" [nzLoading]="isSubmit" (click)="submitForm()">Отримати</button>
+        </div>
+    </form>
   </div>
-</form>
+</div>

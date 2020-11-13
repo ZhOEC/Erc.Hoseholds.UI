@@ -16,6 +16,7 @@ import { OpenExemptionComponent } from './modules/accounting-point/open-exemptio
 import { BranchOfficePeriodsComponent } from './modules/branch-office/branch-office-periods/branch-office-periods.component'
 import { ConsumptionLoaderFormComponent } from './modules/common-references/consumption-loader-form/consumption-loader-form.component'
 import { BranchOfficeEditComponent } from './modules/branch-office/branch-office-edit/branch-office-edit.component'
+import { ReportsComponent } from './modules/common-references/reports/reports.component'
 
 const routes: Routes = [
   { path: 'accounting-point/new', component: AccountingPointNewComponent, },
@@ -33,7 +34,8 @@ const routes: Routes = [
   { path: 'consumption-loader', component: ConsumptionLoaderFormComponent },
   { path: 'company/:id/edit', component: CompanyEditComponent },
   { path: 'branch-office/:id/edit', component: BranchOfficeEditComponent },
-  { path: 'print-bills', component: PrintBillsComponent }
+  { path: 'print-bills', component: PrintBillsComponent },
+  { path: 'reports', component: ReportsComponent }
 ];
 
 @NgModule({
