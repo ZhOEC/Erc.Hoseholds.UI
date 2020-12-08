@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment'
 })
 export class ReportsComponent implements OnInit {
   form: FormGroup
-  reports: Array<{ slug: string, name: string }> = [{ slug: 'tobs', name: 'Обігово-сальдова відомість' }]
+  reports: Array<{ slug: string, name: string }> = [{ slug: 'tobs', name: 'Обігово-сальдова відомість' }, { slug: 'tobspl', name: 'Обігово-сальдова відомість поіменна' }]
   branchOffices: BranchOffice[]
   periods: Period[]
   isSubmit: boolean
