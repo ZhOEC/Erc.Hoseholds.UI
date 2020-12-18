@@ -28,7 +28,7 @@
                     {{a.addressStreetLocation + ', '+ a.addressCityName + ', '+ a.addressZip}}
                 </nz-descriptions-item>
                 <nz-descriptions-item [nzTitle]="a.debt < 0 ? 'Залишок': 'Борг'"><span
-                        [ngStyle]="{'color': (a.debt < 0 ? 'blue' : 'red')}">{{(a.debt < 0 ? 1-a.debt : a.debt) | currency:'UAH':'грн.'}}</span>
+                        [ngStyle]="{'color': (a.debt < 0 ? 'blue' : 'red')}">{{(a.debt < 0 ? 0-a.debt : a.debt) | currency:'UAH':'грн.'}}</span>
                 </nz-descriptions-item>
                 <nz-descriptions-item nzTitle="Діючий тариф">{{a.currentTariffName}}</nz-descriptions-item>
                 <nz-descriptions-item nzTitle="Договір про постачання від">
