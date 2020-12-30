@@ -11,13 +11,13 @@
 </div>
 <div nz-row [nzGutter]="[0, 20]">
   <div nz-col nzSpan="8">
-    <button nz-button nzType="primary" (click)=onSubmit() [nzLoading]="isSubmitLoading"
-      [disabled]="isSubmitDisabled">Завантажити</button>
+    <button nz-button nzType="primary" (click)=onSubmit() [nzLoading]="isSubmitLoading" [disabled]="isSubmitDisabled">Завантажити</button>
   </div>
 </div>
 <br/>
 <div nz-col nzSpan="24">
-    <nz-table #problematicRecordsTable [nzData]="problematicDisplayRecords" 
+    <nz-table #problematicRecordsTable 
+      [nzData]="problematicDisplayRecords" 
       [nzTitle]="titleTemplate"
       nzBordered="true"
       nzShowSizeChanger
@@ -41,6 +41,7 @@
       <thead>
         <tr>
           <th>Файл</th>
+          <th>Eic</th>
           <th>Рядок</th>
           <th>Помилка</th>
         </tr>
@@ -49,6 +50,7 @@
         <ng-container *ngFor="let pr of problematicRecordsTable.data">
           <tr *ngFor="let error of pr.errors">
             <td>{{ pr.fileName }}</td>
+            <td>{{ error.eic }}</td>
             <td>{{ error.rowNumber }}</td>
             <td>{{ error.errorMessage }}</td>
           </tr>
