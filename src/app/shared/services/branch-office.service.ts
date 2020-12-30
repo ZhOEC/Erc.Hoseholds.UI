@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { BranchOffice } from '../models/branch-office.model'
 import { environment } from 'src/environments/environment';
-import { filter, map, switchMap, tap } from 'rxjs/operators';
+import { filter, switchMap, tap } from 'rxjs/operators';
 import { Period } from '../models/period.model';
 
 @Injectable()
@@ -37,11 +37,11 @@ export class BranchOfficeService {
   private getBranchOfficesInternal = () =>
     this.http.get<BranchOffice[]>(environment.apiServer + "branch-offices")
 
-    getOne(id: number): Observable<BranchOffice> {
-      return this.http.get<BranchOffice>(`${environment.apiServer}branch-offices/${id}`)
-    }
+  getOne(id: number): Observable<BranchOffice> {
+    return this.http.get<BranchOffice>(`${environment.apiServer}branch-offices/${id}`)
+  }
 
-    update(branchOffice: BranchOffice): Observable<BranchOffice> {
-      return this.http.put<BranchOffice>(`${environment.apiServer}branch-offices/${branchOffice.id}`, branchOffice)
-    }
+  update(branchOffice: BranchOffice): Observable<BranchOffice> {
+    return this.http.put<BranchOffice>(`${environment.apiServer}branch-offices/${branchOffice.id}`, branchOffice)
+  }
 }
