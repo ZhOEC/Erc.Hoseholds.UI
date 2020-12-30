@@ -1,3 +1,5 @@
+import { PrintBillsComponent } from './modules/common-references/print-bills/print-bills.component'
+import { CompanyEditComponent } from './modules/company/company-edit/company-edit.component'
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 import { TariffListComponent } from './modules/tariffs/tariff-list/tariff-list.component'
@@ -13,6 +15,8 @@ import { AccountingPointEditComponent } from './modules/accounting-point/account
 import { OpenExemptionComponent } from './modules/accounting-point/open-exemption/open-exemption.component'
 import { BranchOfficePeriodsComponent } from './modules/branch-office/branch-office-periods/branch-office-periods.component'
 import { ConsumptionLoaderFormComponent } from './modules/common-references/consumption-loader-form/consumption-loader-form.component'
+import { BranchOfficeEditComponent } from './modules/branch-office/branch-office-edit/branch-office-edit.component'
+import { ReportsComponent } from './modules/common-references/reports/reports.component'
 
 const routes: Routes = [
   { path: 'accounting-point/new', component: AccountingPointNewComponent, },
@@ -27,7 +31,11 @@ const routes: Routes = [
   { path: 'payment-batch/:id', component: PaymentBatchDetailComponent },
   { path: 'person/:id/edit', component: PersonEditComponent },
   { path: 'branch-office-periods', component: BranchOfficePeriodsComponent },
-  { path: 'consumption-loader', component: ConsumptionLoaderFormComponent }
+  { path: 'consumption-loader', component: ConsumptionLoaderFormComponent },
+  { path: 'company/:id/edit', component: CompanyEditComponent },
+  { path: 'branch-office/:id/edit', component: BranchOfficeEditComponent },
+  { path: 'print-bills', component: PrintBillsComponent },
+  { path: 'reports', component: ReportsComponent }
 ];
 
 @NgModule({

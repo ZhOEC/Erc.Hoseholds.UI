@@ -50,7 +50,7 @@ export class PaymentBatchAddComponent implements OnInit {
   }
 
   getBranchOffices() {
-    this.branchOfficeService.branchOffices$.subscribe(data => {
+    this.branchOfficeService.getBranchOffices().subscribe(data => {
       this.branchOfficesList = data.sort((a, b) => a.name.localeCompare(b.name))
       if (this.branchOfficesList.length === 1) {
         this.paymentBatchForm.get('branchOfficeId').setValue(this.branchOfficesList[0].id)

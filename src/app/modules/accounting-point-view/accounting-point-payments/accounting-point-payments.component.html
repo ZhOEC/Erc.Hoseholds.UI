@@ -1,0 +1,21 @@
+<nz-table #paymentsTable [nzData]="payments" [nzPageSize]="pageSize" [nzFrontPagination]="false" [nzLoading]="loading"
+    [nzTotal]="total" [nzPageIndex]="pageIndex" (nzQueryParams)="onQueryParamsChange($event)" nzSize="small">
+    <thead>
+        <tr>
+            <th>Розрахунковий період</th>
+            <th>Сума, Грн</th>
+            <th>Джерело надходження</th>
+            <th>Дата находження</th>
+            <th>Дата оплати</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of paymentsTable.data">
+            <td>{{data.periodName}}</td>
+            <td>{{data.amount}}</td>
+            <td>{{data.source}}</td>
+            <td>{{data.enterDate | date:'mediumDate'}}</td>
+            <td>{{data.payDate | date:'mediumDate'}}</td>
+        </tr>
+    </tbody>
+</nz-table>

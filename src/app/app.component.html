@@ -41,7 +41,24 @@
               Керування періодами
             </a>
           </li>
+          <li nz-menu-item>
+            <a [routerLink]="['/print-bills']" routerLinkActive="router-link-active"
+              routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
+              <i nz-icon nzType="profile"></i>
+              Друк рахунків
+            </a>
+          </li>
         </ul>
+      </li>
+      <li nz-menu-item>
+        <a [routerLink]="['/reports']" routerLinkActive="router-link-active"
+          routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
+          <i nz-icon>
+            <svg-icon src="assets/stack.svg" [svgStyle]="{ 'width.px':16, 'fill':'rgba(255, 255, 255, 0.65)'}">
+            </svg-icon>
+          </i>
+          Звіти
+        </a>
       </li>
       <li nz-submenu nzTitle="Довідники" nzIcon="snippets">
         <ul>
