@@ -1,7 +1,7 @@
-import { PrintBillsComponent } from './modules/common-references/print-bills/print-bills.component'
-import { CompanyEditComponent } from './modules/company/company-edit/company-edit.component'
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
+import { PrintBillsComponent } from './modules/common-references/print-bills/print-bills.component'
+import { CompanyEditComponent } from './modules/company/company-edit/company-edit.component'
 import { TariffListComponent } from './modules/tariffs/tariff-list/tariff-list.component'
 import { AccountingPointNewComponent } from './modules/accounting-point/accounting-point-new/accounting-point-new.component'
 import { AccountingPointDetailComponent } from './modules/accounting-point-view/accounting-point-detail/accounting-point-detail.component'
@@ -17,6 +17,7 @@ import { BranchOfficePeriodsComponent } from './modules/branch-office/branch-off
 import { ConsumptionLoaderFormComponent } from './modules/common-references/consumption-loader-form/consumption-loader-form.component'
 import { BranchOfficeEditComponent } from './modules/branch-office/branch-office-edit/branch-office-edit.component'
 import { ReportsComponent } from './modules/common-references/reports/reports.component'
+import { ExportConsumptionSocialServicesComponent } from './modules/information-exchange/export-consumption-social-services/export-consumption-social-services.component'
 
 const routes: Routes = [
   { path: 'accounting-point/new', component: AccountingPointNewComponent, },
@@ -35,7 +36,8 @@ const routes: Routes = [
   { path: 'company/:id/edit', component: CompanyEditComponent },
   { path: 'branch-office/:id/edit', component: BranchOfficeEditComponent },
   { path: 'print-bills', component: PrintBillsComponent },
-  { path: 'reports', component: ReportsComponent }
+  { path: 'reports', component: ReportsComponent },
+  { path: 'export-consumption-social-services', component: ExportConsumptionSocialServicesComponent }
 ];
 
 @NgModule({

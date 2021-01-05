@@ -1,0 +1,34 @@
+<div style="text-align: center;">
+  <h1>Обмін інформацією</h1>
+</div>
+<div nz-row>
+  <div nz-col [nzSpan]="6" nzOffset="9">
+    <form nz-form #exportForm="ngForm">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzRequired nzFor="branchOfficeId">ЦОК</nz-form-label>
+        <nz-form-control [nzSpan]="18" nzErrorTip="Не обрано ЦОК">
+          <nz-select [(ngModel)]="branchOfficeId" nzPlaceHolder="Оберіть ЦОК" (ngModelChange)="getPeriods($event)"
+            name="branchOfficeId" required>
+            <nz-option *ngFor="let branchOffice of branchOffices" [nzValue]="branchOffice.id"
+              [nzLabel]="branchOffice.name">
+            </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzRequired nzFor="periodStartDate">Період</nz-form-label>
+        <nz-form-control [nzSpan]="18" nzErrorTip="Не обрано період">
+          <nz-select [(ngModel)]="periodStartDate" nzPlaceHolder="Оберіть період" [nzLoading]=isLoadingPeriods name="periodStartDate"
+            required>
+            <nz-option *ngFor="let period of periods" [nzValue]="period.startDate" [nzLabel]="period.name">
+            </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <div style="text-align:right">
+        <button nz-button nzType="primary" [nzLoading]="isSubmit" (click)="submitForm()"
+          [disabled]="exportForm.form.invalid">Отримати</button>
+      </div>
+    </form>
+  </div>
+</div>

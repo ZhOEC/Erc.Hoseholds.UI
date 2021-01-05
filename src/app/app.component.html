@@ -96,6 +96,17 @@
           </li>
         </ul>
       </li>
+      <li nz-submenu nzTitle="Обмін інформацією" nzIcon="swap">
+        <ul>
+          <li nz-menu-item>
+            <a [routerLink]="['/export-consumption-social-services']" routerLinkActive="router-link-active"
+              routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
+              <i nz-icon nzType="bank" nzTheme="outline"></i>
+              Cпоживання (СППСЗН)
+            </a>
+          </li>
+        </ul>
+      </li>
     </ul>
   </nz-drawer>
   <nz-layout>
