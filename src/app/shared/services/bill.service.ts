@@ -11,6 +11,6 @@ export class BillService {
         let queryParams = new HttpParams();
         queryParams = queryParams.append('branch_office_id', branchOfficeId.toString())
         queryParams = queryParams.append('period_id', periodId.toString())
-        return this.http.get<Blob>(`${environment.apiServer}bills/`, { params: queryParams })
+        return this.http.get(`${environment.apiServer}bills/`, { params: queryParams, responseType: 'blob' })
     }
 }

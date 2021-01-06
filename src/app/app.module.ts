@@ -10,7 +10,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon'
 import { registerLocaleData } from '@angular/common'
 import { AuthInterceptor } from './core/interceptors/auth.interceptor'
 import uk from '@angular/common/locales/uk'
-import * as FileSaver from 'file-saver'
+import { saveAs } from 'file-saver'
 
 import { AppRoutingModule } from './app-routing.module'
 import { AccountingPointModule } from './modules/accounting-point/accounting-point.module'

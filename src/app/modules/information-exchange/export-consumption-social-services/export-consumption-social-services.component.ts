@@ -1,3 +1,4 @@
+import { NotificationComponent } from 'src/app/shared/components/notification/notification.component';
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { BranchOffice } from 'src/app/shared/models/branch-office.model'
@@ -21,6 +22,7 @@ export class ExportConsumptionSocialServicesComponent implements OnInit {
   periodStartDate: Date
   
   constructor(
+    private notification: NotificationComponent,
     private formBuilder: FormBuilder,
     private branchOfficeService: BranchOfficeService,
     private informationExchangeService: InformationExchangeService) { }
@@ -57,8 +59,16 @@ export class ExportConsumptionSocialServicesComponent implements OnInit {
   }
 
   submitForm () {
+    this.isSubmit = true
     this.informationExchangeService.exportConsumptionSocialService(this.periodStartDate).subscribe(
-      response => FileSaver.saveAs(response, 'list.csv')
+      response => {
+        FileSaver.saveAs(response, 'list.csv')
+        this.isSubmit = false
+      },
+      _ => {
+        this.notification.show('error', 'Фіаско', `Не вдалося отримати файл`)
+        this.isSubmit = false
+      }
     )
   }
 }

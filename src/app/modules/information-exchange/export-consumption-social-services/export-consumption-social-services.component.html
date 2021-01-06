@@ -18,8 +18,8 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="6" nzRequired nzFor="periodStartDate">Період</nz-form-label>
         <nz-form-control [nzSpan]="18" nzErrorTip="Не обрано період">
-          <nz-select [(ngModel)]="periodStartDate" nzPlaceHolder="Оберіть період" [nzLoading]=isLoadingPeriods name="periodStartDate"
-            required>
+          <nz-select [(ngModel)]="periodStartDate" nzPlaceHolder="Оберіть період" [nzLoading]=isLoadingPeriods 
+            name="periodStartDate" required>
             <nz-option *ngFor="let period of periods" [nzValue]="period.startDate" [nzLabel]="period.name">
             </nz-option>
           </nz-select>
