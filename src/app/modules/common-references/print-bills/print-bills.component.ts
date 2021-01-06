@@ -23,7 +23,7 @@ export class PrintBillsComponent implements OnInit {
     private notification: NotificationComponent,
     private formBuilder: FormBuilder,
     private branchOfficeService: BranchOfficeService,
-    private billService: BillService) {}
+    private billService: BillService) { }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -58,16 +58,16 @@ export class PrintBillsComponent implements OnInit {
   }
 
   submitForm() {
-      this.isSubmit = true
-      this.billService.getBillsByFile(this.form.get('branchOfficeId').value, this.form.get('periodId').value).subscribe(
-        response => {
-          FileSaver.saveAs(response, this.form.get('branchOfficeId').value + '_' + this.form.get('periodId').value + '.xlsx')
-          this.isSubmit = false
-        },
-        _ => {
-          this.notification.show('error', 'Фіаско', `Не вдалося отримати файл`)
-          this.isSubmit = false
-        }
-      )
+    this.isSubmit = true
+    this.billService.getBillsByPeriod(this.form.get('branchOfficeId').value, this.form.get('periodId').value).subscribe(
+      response => {
+        FileSaver.saveAs(response, this.form.get('branchOfficeId').value + '_' + this.form.get('periodId').value + '.xlsx')
+        this.isSubmit = false
+      },
+      _ => {
+        this.notification.show('error', 'Фіаско', `Не вдалося отримати файл`)
+        this.isSubmit = false
+      }
+    )
   }
 }

@@ -6,8 +6,12 @@ import { environment } from 'src/environments/environment'
 @Injectable()
 export class BillService {  
     constructor(private http: HttpClient) {}
+
+    getBillById(billId: number): Observable<Blob> {
+        return this.http.get(`${environment.apiServer}bills/` + billId, { responseType: 'blob' })
+    }
   
-    getBillsByFile(branchOfficeId: number, periodId: number): Observable<Blob> {
+    getBillsByPeriod(branchOfficeId: number, periodId: number): Observable<Blob> {
         let queryParams = new HttpParams();
         queryParams = queryParams.append('branch_office_id', branchOfficeId.toString())
         queryParams = queryParams.append('period_id', periodId.toString())
