@@ -58,6 +58,15 @@ export class AuthService {
       return null;
   }
 
+  getUserRoles() {
+    if (this.accessTokens) {
+      var decodedToken = this.jwtHelper.decodeToken(this.accessTokens.access_token)
+      return decodedToken.roles
+    } 
+    else 
+      return null
+  }
+
   logout() {
     localStorage.clear();
     window.location.href = `${environment.logoutUri}?redirect_uri=${window.location.href}&client_id=${environment.clientId}&response_type=${environment.responseType}`;
