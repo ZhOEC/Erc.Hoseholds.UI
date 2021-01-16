@@ -3,7 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { BranchOffice } from 'src/app/shared/models/branch-office.model'
 import { Period } from 'src/app/shared/models/period.model'
 import { BranchOfficeService } from 'src/app/shared/services/branch-office.service'
-import { environment } from 'src/environments/environment'
+import { ReportService } from 'src/app/shared/services/report.service'
+import * as FileSaver from 'file-saver'
+import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
 
 @Component({
   selector: 'app-reports',
@@ -22,8 +24,10 @@ export class ReportsComponent implements OnInit {
   slug: string
 
   constructor(
+    private notification: NotificationComponent,
     private formBuilder: FormBuilder,
-    private branchOfficeService: BranchOfficeService) { }
+    private branchOfficeService: BranchOfficeService,
+    private reportService: ReportService) { }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -56,5 +60,18 @@ export class ReportsComponent implements OnInit {
     }
   }
 
-  submitForm = () => window.location.href = `${environment.apiServer}reports/${this.slug}?branch_office_id=${this.branchOfficeId}&period_id=${this.periodId}`
+  submitForm() {
+    this.isSubmit = true
+    console.log(this.slug)
+    this.reportService.getReport(this.slug, this.branchOfficeId, this.periodId).subscribe(
+      response => {
+        FileSaver.saveAs(response, this.branchOfficeId + '_' + this.periodId + '.xlsx')
+        this.isSubmit = false
+      },
+      _ => {
+        this.notification.show('error', 'Фіаско', `Не вдалося отримати файл`)
+        this.isSubmit = false
+      }
+    )
+  }
 }

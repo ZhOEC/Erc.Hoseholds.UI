@@ -34,6 +34,7 @@ import { BranchOfficeModule } from './modules/branch-office/branch-office.module
 import { CompanyModule } from './modules/company/company.module'
 import { ConsumptionService } from './shared/services/consumption.service'
 import { BillService } from './shared/services/bill.service'
+import { ReportService } from './shared/services/report.service'
 import { InformationExchangeModule } from './modules/information-exchange/information-exchange.module'
 import { InformationExchangeService } from 'src/app/shared/services/information-exchange.service'
 
@@ -78,6 +79,7 @@ registerLocaleData(uk);
     ConsumptionService,
     CompanyService,
     BillService,
+    ReportService,
     InformationExchangeService,
     { provide: NZ_I18N, useValue: uk_UA },
     { provide: LOCALE_ID, useValue: 'uk-UA' },
