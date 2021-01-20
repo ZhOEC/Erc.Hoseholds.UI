@@ -1,40 +1,38 @@
+import { NotificationComponent } from 'src/app/shared/components/notification/notification.component';
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { BranchOffice } from 'src/app/shared/models/branch-office.model'
 import { Period } from 'src/app/shared/models/period.model'
 import { BranchOfficeService } from 'src/app/shared/services/branch-office.service'
-import { ReportService } from 'src/app/shared/services/report.service'
+import { InformationExchangeService } from 'src/app/shared/services/information-exchange.service'
 import * as FileSaver from 'file-saver'
-import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
 
 @Component({
-  selector: 'app-reports',
-  templateUrl: './reports.component.html',
-  styleUrls: ['./reports.component.scss']
+  selector: 'app-export-consumption-social-services',
+  templateUrl: './export-consumption-social-services.component.html',
+  styleUrls: ['./export-consumption-social-services.component.scss']
 })
-export class ReportsComponent implements OnInit {
+export class ExportConsumptionSocialServicesComponent implements OnInit {
   form: FormGroup
-  reports: Array<{ slug: string, name: string }> = [{ slug: 'tobs', name: 'Обігово-сальдова відомість' }, { slug: 'tobspl', name: 'Обігово-сальдова відомість поіменна' }]
   branchOffices: BranchOffice[]
   periods: Period[]
   isSubmit: boolean
   isLoadingPeriods: boolean
   branchOfficeId: number
-  periodId: number
-  slug: string
-
+  periodStartDate: Date
+  
   constructor(
     private notification: NotificationComponent,
     private formBuilder: FormBuilder,
     private branchOfficeService: BranchOfficeService,
-    private reportService: ReportService) { }
+    private informationExchangeService: InformationExchangeService) { }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
        branchOfficeId: [null, Validators.required],
-       periodId: [null, Validators.required]
+       periodStartDate: [null, Validators.required]
      })
-
+     
     this.getBranchOffices()
   }
 
@@ -60,12 +58,11 @@ export class ReportsComponent implements OnInit {
     }
   }
 
-  submitForm() {
+  submitForm () {
     this.isSubmit = true
-    console.log(this.slug)
-    this.reportService.getReport(this.slug, this.branchOfficeId, this.periodId).subscribe(
+    this.informationExchangeService.exportConsumptionSocialService(this.periodStartDate).subscribe(
       response => {
-        FileSaver.saveAs(response, this.branchOfficeId + '_' + this.periodId + '.xlsx')
+        FileSaver.saveAs(response, 'list.csv')
         this.isSubmit = false
       },
       _ => {

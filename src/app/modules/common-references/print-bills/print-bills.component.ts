@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import * as FileSaver from 'file-saver'
+import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
 import { BranchOffice } from 'src/app/shared/models/branch-office.model'
 import { Period } from 'src/app/shared/models/period.model'
+import { BillService } from 'src/app/shared/services/bill.service'
 import { BranchOfficeService } from 'src/app/shared/services/branch-office.service'
-import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'app-print-bills',
@@ -18,8 +20,10 @@ export class PrintBillsComponent implements OnInit {
   isLoadingPeriods: boolean
 
   constructor(
+    private notification: NotificationComponent,
     private formBuilder: FormBuilder,
-    private branchOfficeService: BranchOfficeService) {}
+    private branchOfficeService: BranchOfficeService,
+    private billService: BillService) { }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -53,17 +57,17 @@ export class PrintBillsComponent implements OnInit {
     }
   }
 
-  validateForm() {
-    for (const p in this.form.controls) {
-      this.form.controls[p].markAsDirty()
-      this.form.controls[p].updateValueAndValidity()
-    }
-    return this.form.valid
-  }
-
   submitForm() {
-    if (this.validateForm()) {
-      window.location.href = `${environment.apiServer}bills/?branch_office_id=${this.form.get('branchOfficeId').value}&period_id=${this.form.get('periodId').value}`
-    }
+    this.isSubmit = true
+    this.billService.getBillsByPeriod(this.form.get('branchOfficeId').value, this.form.get('periodId').value).subscribe(
+      response => {
+        FileSaver.saveAs(response, this.form.get('branchOfficeId').value + '_' + this.form.get('periodId').value + '.xlsx')
+        this.isSubmit = false
+      },
+      _ => {
+        this.notification.show('error', 'Фіаско', `Не вдалося отримати файл`)
+        this.isSubmit = false
+      }
+    )
   }
 }

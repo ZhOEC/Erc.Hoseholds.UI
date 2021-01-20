@@ -17,12 +17,14 @@ export class AppComponent {
   placementDrawer = 'left';
 
   branchOffices$: Observable<BranchOffice[]>
+  roles: string[]
 
   constructor(private authService: AuthService, private signalRService: SignalRService,
     private branchOfficeService: BranchOfficeService) { }
 
   ngOnInit() {
     this.branchOffices$ = this.branchOfficeService.getBranchOffices();
+    this.roles = this.authService.getUserRoles()
     this.currentUser = this.authService.getUserName();
     this.signalRService.startConnection();
     this.signalRService.addNotficationListener();
@@ -31,5 +33,4 @@ export class AppComponent {
   logout() {
     this.authService.logout();
   }
-
 }

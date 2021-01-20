@@ -1,16 +1,18 @@
 <nz-layout class="app-layout">
   <nz-drawer [nzVisible]="visibilityDrawer" [nzPlacement]="placementDrawer"
-    [nzBodyStyle]="{ 'height': '100%', 'padding': '0px', background: '#001529'}" (nzOnClose)="visibilityDrawer = false">
+    [nzBodyStyle]="{ 'height': '100%', 'padding': '0px', background: '#001529'}" (nzOnClose)="visibilityDrawer = false" [nzClosable]="false">
     <div class="sidebar-logo">
       <a href="https://www.ztoek.com.ua/" target="_blank">
         <img src="../assets/logo.jpg" alt="logo">
         <h1>ТОВ "ЖОЕК"</h1>
       </a>
+      <i *ngIf="roles.includes('Administrator')" nz-icon nzType="edit" [nzTheme]="'twotone'"
+        [routerLink]="['/company/1/edit']" (click)="visibilityDrawer = false"></i>
     </div>
     <ul nzTheme="dark" nz-menu nzMode="inline">
       <li nz-menu-item>
         <a [routerLink]="['/payment-batches']" routerLinkActive="router-link-active"
-          routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
+          (click)="visibilityDrawer = false">
           <i nz-icon>
             <svg-icon src="assets/stack.svg" [svgStyle]="{ 'width.px':16, 'fill':'rgba(255, 255, 255, 0.65)'}">
             </svg-icon>
@@ -20,7 +22,7 @@
       </li>
       <li nz-menu-item>
         <a [routerLink]="['/accounting-point/new']" routerLinkActive="router-link-active"
-          routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
+          (click)="visibilityDrawer = false">
           <i nz-icon nzType="plus"></i>
           Нова точка обліку
         </a>
@@ -28,7 +30,7 @@
       <li nz-submenu nzTitle="Регламент" nzIcon="schedule">
         <ul>
           <li nz-menu-item>
-            <a [routerLink]="['/consumption-loader']" routerLinkActive="router-link-active" routerLinkActive="router-link-active"
+            <a [routerLink]="['/consumption-loader']" routerLinkActive="router-link-active"
               (click)="visibilityDrawer = false">
               <i nz-icon nzType="usb"></i>
               Завантажити споживання
@@ -36,14 +38,14 @@
           </li>
           <li nz-menu-item>
             <a [routerLink]="['/branch-office-periods']" routerLinkActive="router-link-active"
-              routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
+              (click)="visibilityDrawer = false">
               <i nz-icon nzType="calendar"></i>
               Керування періодами
             </a>
           </li>
           <li nz-menu-item>
             <a [routerLink]="['/print-bills']" routerLinkActive="router-link-active"
-              routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
+              (click)="visibilityDrawer = false">
               <i nz-icon nzType="profile"></i>
               Друк рахунків
             </a>
@@ -52,7 +54,7 @@
       </li>
       <li nz-menu-item>
         <a [routerLink]="['/reports']" routerLinkActive="router-link-active"
-          routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
+          (click)="visibilityDrawer = false">
           <i nz-icon>
             <svg-icon src="assets/stack.svg" [svgStyle]="{ 'width.px':16, 'fill':'rgba(255, 255, 255, 0.65)'}">
             </svg-icon>
@@ -66,14 +68,14 @@
             <ul>
               <li nz-menu-item>
                 <a [routerLink]="['/tariffs']" routerLinkActive="router-link-active"
-                  routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
+                  (click)="visibilityDrawer = false">
                   <i nz-icon nzType="fund"></i>
                   Електрична енергія
                 </a>
               </li>
               <li nz-menu-item>
                 <a [routerLink]="['/tariffs', { commodity: 2 }]" routerLinkActive="router-link-active"
-                  routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
+                  (click)="visibilityDrawer = false">
                   <i nz-icon nzType="fund"></i>
                   Природний газ
                 </a>
@@ -89,9 +91,20 @@
           </li>
           <li nz-menu-item>
             <a [routerLink]="['/exemption-categories']" routerLinkActive="router-link-active"
-              routerLinkActive="router-link-active" (click)="visibilityDrawer = false">
+              (click)="visibilityDrawer = false">
               <i nz-icon nzType="solution" nzTheme="outline"></i>
               Пільгові категорії громадян
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li nz-submenu nzTitle="Обмін інформацією" nzIcon="swap">
+        <ul>
+          <li nz-menu-item>
+            <a [routerLink]="['/export-consumption-social-services']" routerLinkActive="router-link-active"
+              (click)="visibilityDrawer = false">
+              <i nz-icon nzType="bank" nzTheme="outline"></i>
+              Cпоживання (СППСЗН)
             </a>
           </li>
         </ul>
@@ -110,7 +123,15 @@
         <div nz-col nzSpan="2">
           <div *ngIf="branchOffices$ | async as branchOfficesList">
             <span *ngIf="branchOfficesList.length==1; else manyBranchOffices"
-              style="white-space: nowrap; color: darkblue; float: right; margin-right: 24px;">{{ branchOfficesList[0].currentPeriodName }}</span>
+              style="white-space: nowrap; color: darkblue; float: right; margin-right: 24px;">
+              <a *ngIf="roles.includes('BranchOfficeEngineer') else noRole" 
+                [routerLink]="['/branch-office', branchOfficesList[0].id, 'edit']" routerLinkActive="router-link-active">
+                {{ branchOfficesList[0].currentPeriodName }}
+              </a>
+              <ng-template #noRole>
+                {{ branchOfficesList[0].currentPeriodName }}
+              </ng-template>
+            </span>
             <ng-template #manyBranchOffices>
               <button nz-button nz-popover [nzPopoverContent]="periodsTemplate" nzPopoverPlacement="bottomRight">
                 ЦОКі...
@@ -119,6 +140,8 @@
                 <div>
                   <p *ngFor="let bo of branchOfficesList">
                     {{ bo.name }} - {{ bo.currentPeriodName }}
+                    <i *ngIf="roles.includes('BranchOfficeEngineer')" nz-icon nzType="edit" nzTheme="outline" 
+                      [routerLink]="['/branch-office', bo.id, 'edit']" routerLinkActive="router-link-active"></i>
                   </p>
                 </div>
               </ng-template>

@@ -25,7 +25,12 @@
                 <td>{{ data.totalAmountDue | number : '1.2' }}</td>
                 <td><i [title]="data.isPaid ? 'Так' : 'Ні'" nz-icon [nzType]="data.isPaid ? 'check' : 'stop'"
                         nzTheme="twotone" [nzTwotoneColor]="data.isPaid ? '#52c41a':'#e4521a'"></i></td>
-                <td><a [href]="data.billUri" title="Друк рахунку на оплату"><i nz-icon nzType="printer" nzTheme="outline"></i></a></td>        
+                <td>
+                  <i *ngIf="isGetBill else elseBill" nz-icon nzType="loading"></i>
+                  <ng-template #elseBill>
+                    <a (click)="getBillFile(data.id)" title="Друк рахунку на оплату"><i nz-icon nzType="printer" nzTheme="outline"></i></a>
+                  </ng-template>
+                </td>
             </tr>
             <tr [nzExpand]="data.isExpand">
                 <nz-table #innerTable [nzData]="data.zoneUsages" [nzShowPagination]="false">

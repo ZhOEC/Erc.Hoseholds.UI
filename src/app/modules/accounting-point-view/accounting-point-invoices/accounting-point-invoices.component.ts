@@ -2,6 +2,9 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { AccountingPointDetailService } from '../accounting-point-detail.service';
 import { NzTableQueryParams } from 'ng-zorro-antd/table/ng-zorro-antd-table';
 import { Commodity } from 'src/app/shared/models/commodity';
+import { BillService } from 'src/app/shared/services/bill.service'
+import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
+import * as FileSaver from 'file-saver'
 
 @Component({
   selector: 'app-accounting-point-invoices',
@@ -16,8 +19,12 @@ export class AccountingPointInvoicesComponent implements OnChanges {
   total = 30;
   pageIndex = 1;
   pageSize = 6
+  isGetBill: boolean
 
-  constructor(private accountingPointDetailService: AccountingPointDetailService) { }
+  constructor(
+    private accountingPointDetailService: AccountingPointDetailService,
+    private billService: BillService,
+    private notification: NotificationComponent) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.accountingPointId = changes['accountingPointId'].currentValue;
@@ -41,5 +48,19 @@ export class AccountingPointInvoicesComponent implements OnChanges {
     this.pageSize = params.pageSize;
     this.pageIndex = params.pageIndex;
     this.LoadInvoices();
+  }
+
+  getBillFile(billId: number) {
+    this.isGetBill = true
+    this.billService.getBillById(billId).subscribe(
+      response => {
+        FileSaver.saveAs(response, billId + '.xlsx')
+        this.isGetBill = false
+      },
+      _ => {
+        this.notification.show('error', 'Фіаско', `Не вдалося отримати рахунок`)
+        this.isGetBill = false
+      }
+    )
   }
 }

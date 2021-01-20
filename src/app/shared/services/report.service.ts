@@ -4,17 +4,13 @@ import { Observable } from 'rxjs'
 import { environment } from 'src/environments/environment'
   
 @Injectable()
-export class BillService {  
+export class ReportService {  
     constructor(private http: HttpClient) {}
 
-    getBillById(billId: number): Observable<Blob> {
-        return this.http.get(`${environment.apiServer}bills/` + billId, { responseType: 'blob' })
-    }
-  
-    getBillsByPeriod(branchOfficeId: number, periodId: number): Observable<Blob> {
-        let queryParams = new HttpParams();
+    getReport(slug: string, branchOfficeId: number, periodId: number): Observable<Blob> {
+        let queryParams = new HttpParams()
         queryParams = queryParams.append('branch_office_id', branchOfficeId.toString())
         queryParams = queryParams.append('period_id', periodId.toString())
-        return this.http.get(`${environment.apiServer}bills/`, { params: queryParams, responseType: 'blob' })
+        return this.http.get(`${environment.apiServer}reports/` + slug, { params: queryParams, responseType: 'blob' })
     }
 }

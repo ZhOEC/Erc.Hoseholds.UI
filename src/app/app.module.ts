@@ -4,7 +4,6 @@ import { BrowserModule } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { LayoutModule } from '@angular/cdk/layout'
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
-//import { IconsProviderModule } from './icons-provider.module'
 import { NgZorroAntdModule, NZ_I18N, uk_UA } from 'ng-zorro-antd'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { AngularSvgIconModule } from 'angular-svg-icon'
@@ -35,6 +34,9 @@ import { BranchOfficeModule } from './modules/branch-office/branch-office.module
 import { CompanyModule } from './modules/company/company.module'
 import { ConsumptionService } from './shared/services/consumption.service'
 import { BillService } from './shared/services/bill.service'
+import { ReportService } from './shared/services/report.service'
+import { InformationExchangeModule } from './modules/information-exchange/information-exchange.module'
+import { InformationExchangeService } from 'src/app/shared/services/information-exchange.service'
 
 registerLocaleData(uk);
 
@@ -60,7 +62,8 @@ registerLocaleData(uk);
     CommonReferencesModule,
     PersonModule,
     ContractModule,
-    CompanyModule
+    CompanyModule,
+    InformationExchangeModule
   ],
   providers: [
     DistributionSystemOperatorService,
@@ -76,6 +79,8 @@ registerLocaleData(uk);
     ConsumptionService,
     CompanyService,
     BillService,
+    ReportService,
+    InformationExchangeService,
     { provide: NZ_I18N, useValue: uk_UA },
     { provide: LOCALE_ID, useValue: 'uk-UA' },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
