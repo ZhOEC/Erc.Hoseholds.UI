@@ -6,6 +6,7 @@ import { JwtHelperService } from '@auth0/angular-jwt/src/jwthelper.service';
 import { map, filter, take, switchMap, mapTo } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { AccessTokensPair } from './access-tokens-pair';
+import { User } from '../user'
 
 @Injectable({
   providedIn: 'root'
@@ -47,24 +48,6 @@ export class AuthService {
   private redirectToLoginPage() {
     localStorage.setItem('redirect_uri', window.location.href);
     window.location.href = `${environment.authUri}?redirect_uri=${window.location.href}&client_id=${environment.clientId}&response_type=${environment.responseType}`;
-  }
-
-  getUserName() {
-    if (this.accessTokens) {
-      var decodedToken = this.jwtHelper.decodeToken(this.accessTokens.access_token);
-      return decodedToken.username;
-    }
-    else
-      return null;
-  }
-
-  getUserRoles() {
-    if (this.accessTokens) {
-      var decodedToken = this.jwtHelper.decodeToken(this.accessTokens.access_token)
-      return decodedToken.roles
-    } 
-    else 
-      return null
   }
 
   logout() {

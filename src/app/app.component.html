@@ -1,12 +1,12 @@
 <nz-layout class="app-layout">
-  <nz-drawer [nzVisible]="visibilityDrawer" [nzPlacement]="placementDrawer"
+  <nz-drawer [nzVisible]="visibilityDrawer" nzPlacement="left"
     [nzBodyStyle]="{ 'height': '100%', 'padding': '0px', background: '#001529'}" (nzOnClose)="visibilityDrawer = false" [nzClosable]="false">
     <div class="sidebar-logo">
       <a href="https://www.ztoek.com.ua/" target="_blank">
         <img src="../assets/logo.jpg" alt="logo">
         <h1>ТОВ "ЖОЕК"</h1>
       </a>
-      <i *ngIf="roles.includes('Administrator')" nz-icon nzType="edit" [nzTheme]="'twotone'"
+      <i *ngIf="isAdmin()" nz-icon nzType="edit" [nzTheme]="'twotone'"
         [routerLink]="['/company/1/edit']" (click)="visibilityDrawer = false"></i>
     </div>
     <ul nzTheme="dark" nz-menu nzMode="inline">
@@ -124,7 +124,7 @@
           <div *ngIf="branchOffices$ | async as branchOfficesList">
             <span *ngIf="branchOfficesList.length==1; else manyBranchOffices"
               style="white-space: nowrap; color: darkblue; float: right; margin-right: 24px;">
-              <a *ngIf="roles.includes('BranchOfficeEngineer') else noRole" 
+              <a *ngIf="isBranchOfficeEngineer() else noRole" 
                 [routerLink]="['/branch-office', branchOfficesList[0].id, 'edit']" routerLinkActive="router-link-active">
                 {{ branchOfficesList[0].currentPeriodName }}
               </a>
@@ -140,7 +140,7 @@
                 <div>
                   <p *ngFor="let bo of branchOfficesList">
                     {{ bo.name }} - {{ bo.currentPeriodName }}
-                    <i *ngIf="roles.includes('BranchOfficeEngineer')" nz-icon nzType="edit" nzTheme="outline" 
+                    <i *ngIf="isBranchOfficeEngineer()" nz-icon nzType="edit" nzTheme="outline" 
                       [routerLink]="['/branch-office', bo.id, 'edit']" routerLinkActive="router-link-active"></i>
                   </p>
                 </div>
@@ -149,15 +149,17 @@
           </div>
         </div>
         <div nz-col style="margin-right: 24px;">
-          <a title="{{currentUser}}">
-            <nz-avatar nzIcon="user" [nzSize]="32" nz-popover nzPopoverTitle="Ви увійшли як: {{currentUser}}"
-              nzPopoverTrigger="click" [nzPopoverContent]="userMenu" nzPopoverPlacement="bottomRight"
-              style="background-color:#1d3d79;">
-            </nz-avatar>
-          </a>
-          <ng-template #userMenu>
-            <a nz-button (click)="logout()" class="header-user-menu-item">Вихід</a>
-          </ng-template>
+          <div *ngIf="currentUser$ | async as user">
+            <a title="{{ user.userName }}">
+              <nz-avatar nzIcon="user" [nzSize]="32" nz-popover nzPopoverTitle="Ви увійшли як: {{ user.userName }}"
+                nzPopoverTrigger="click" [nzPopoverContent]="userMenu" nzPopoverPlacement="bottomRight"
+                style="background-color:#1d3d79;">
+              </nz-avatar>
+            </a>
+            <ng-template #userMenu>
+              <a nz-button (click)="logout()" class="header-user-menu-item">Вихід</a>
+            </ng-template>
+          </div>
         </div>
       </div>
     </nz-header>
