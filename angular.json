@@ -18,7 +18,8 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": [
-              "@ant-design/colors"
+              "@ant-design/colors",
+              "file-saver"
            ],
             "outputPath": "dist/erc-households-ui",
             "index": "src/index.html",

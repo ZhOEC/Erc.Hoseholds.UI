@@ -19,12 +19,12 @@ export class AccountingPointInvoicesComponent implements OnChanges {
   total = 30;
   pageIndex = 1;
   pageSize = 6
-  isGetBill: boolean
+  isGetBill = new Map<number, boolean>()
 
   constructor(
     private accountingPointDetailService: AccountingPointDetailService,
     private billService: BillService,
-    private notification: NotificationComponent) { }
+    private notification: NotificationComponent) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     this.accountingPointId = changes['accountingPointId'].currentValue;
@@ -37,7 +37,6 @@ export class AccountingPointInvoicesComponent implements OnChanges {
   LoadInvoices() {
     this.accountingPointDetailService.getInvoices(this.accountingPointId, this.pageIndex, this.pageSize)
     .subscribe(data => {
-      console.log(data.items)
       this.invoices = data.items;
       this.loading = false;
       this.total = data.totalCount;
@@ -51,15 +50,15 @@ export class AccountingPointInvoicesComponent implements OnChanges {
   }
 
   getBillFile(billId: number) {
-    this.isGetBill = true
-    this.billService.getBillById(billId).subscribe(
+    this.isGetBill.set(billId, true)
+    this.billService.getBillById(this.commodity, billId).subscribe(
       response => {
+        this.isGetBill.clear()
         FileSaver.saveAs(response, billId + '.xlsx')
-        this.isGetBill = false
       },
       _ => {
         this.notification.show('error', 'Фіаско', `Не вдалося отримати рахунок`)
-        this.isGetBill = false
+        this.isGetBill.clear()
       }
     )
   }
