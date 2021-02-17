@@ -19,6 +19,7 @@ import { PersonModule } from './modules/person/person.module'
 import { AccountingPointViewModule } from './modules/accounting-point-view/accounting-point-view.module'
 import { CommonReferencesModule } from './modules/common-references/common-references.module'
 import { ContractModule } from './modules/contract/contract.module'
+import { TaxesModule } from './modules/taxes/taxes.module'
 import { BranchOfficeService } from './shared/services/branch-office.service'
 import { AccountingPointService } from './shared/services/accounting-point.service'
 import { DistributionSystemOperatorService } from './shared/services/distribution-system-operator.service'
@@ -33,6 +34,7 @@ import { CompanyService } from './shared/services/company.service'
 import { BranchOfficeModule } from './modules/branch-office/branch-office.module'
 import { CompanyModule } from './modules/company/company.module'
 import { ConsumptionService } from './shared/services/consumption.service'
+import { TaxInvoiceService } from './shared/services/tax-invoices.service'
 import { BillService } from './shared/services/bill.service'
 import { ReportService } from './shared/services/report.service'
 import { InformationExchangeModule } from './modules/information-exchange/information-exchange.module'
@@ -62,6 +64,7 @@ registerLocaleData(uk);
     CommonReferencesModule,
     PersonModule,
     ContractModule,
+    TaxesModule
     CompanyModule,
     InformationExchangeModule
   ],
@@ -77,6 +80,7 @@ registerLocaleData(uk);
     BuildingTypeService,
     UsageCategoryService,
     ConsumptionService,
+    TaxInvoiceService,
     CompanyService,
     BillService,
     ReportService,
