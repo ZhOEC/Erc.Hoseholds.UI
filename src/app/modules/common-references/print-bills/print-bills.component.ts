@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import * as FileSaver from 'file-saver'
 import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
 import { BranchOffice } from 'src/app/shared/models/branch-office.model'
 import { Period } from 'src/app/shared/models/period.model'
 import { BillService } from 'src/app/shared/services/bill.service'
 import { BranchOfficeService } from 'src/app/shared/services/branch-office.service'
+import * as FileSaver from 'file-saver'
 
 @Component({
   selector: 'app-print-bills',
