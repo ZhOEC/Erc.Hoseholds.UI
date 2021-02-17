@@ -30,10 +30,15 @@ import { PaymentBatchService } from './shared/services/payment-batch.service'
 import { PaymentService } from './shared/services/payment.service'
 import { UsageCategoryService } from './shared/services/usage-category.service'
 import { BuildingTypeService } from './shared/services/building-type.service'
-import { BranchOfficeModule } from './modules/branch-office/branch-office.module';
-import { UnitPipe } from './shared/pipes/unit.pipe'
+import { CompanyService } from './shared/services/company.service'
+import { BranchOfficeModule } from './modules/branch-office/branch-office.module'
+import { CompanyModule } from './modules/company/company.module'
 import { ConsumptionService } from './shared/services/consumption.service'
 import { TaxInvoiceService } from './shared/services/tax-invoices.service'
+import { BillService } from './shared/services/bill.service'
+import { ReportService } from './shared/services/report.service'
+import { InformationExchangeModule } from './modules/information-exchange/information-exchange.module'
+import { InformationExchangeService } from 'src/app/shared/services/information-exchange.service'
 
 registerLocaleData(uk);
 
@@ -60,6 +65,8 @@ registerLocaleData(uk);
     PersonModule,
     ContractModule,
     TaxesModule
+    CompanyModule,
+    InformationExchangeModule
   ],
   providers: [
     DistributionSystemOperatorService,
@@ -74,6 +81,10 @@ registerLocaleData(uk);
     UsageCategoryService,
     ConsumptionService,
     TaxInvoiceService,
+    CompanyService,
+    BillService,
+    ReportService,
+    InformationExchangeService,
     { provide: NZ_I18N, useValue: uk_UA },
     { provide: LOCALE_ID, useValue: 'uk-UA' },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

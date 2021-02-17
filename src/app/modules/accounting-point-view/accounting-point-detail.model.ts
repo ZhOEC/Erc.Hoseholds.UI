@@ -1,6 +1,5 @@
 import { Person } from '../../shared/models/person.model';
 import { Exemption } from './exemption';
-import { City } from 'src/app/shared/models/address/city.model';
 
 export interface AccountingPointDetail {
     id: number

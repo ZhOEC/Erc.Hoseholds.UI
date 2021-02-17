@@ -23,9 +23,16 @@
                 <td>{{ data.totalCharge | number : '1.2' }}</td>
                 <td>{{ data.totalDiscount | number : '1.2' }}</td>
                 <td>{{ data.totalAmountDue | number : '1.2' }}</td>
-                <td><i [title]="data.isPaid ? 'Так' : 'Ні'" nz-icon [nzType]="data.isPaid ? 'check' : 'stop'"
-                        nzTheme="twotone" [nzTwotoneColor]="data.isPaid ? '#52c41a':'#e4521a'"></i></td>
-                <td><i nz-icon nzType="printer" nzTheme="outline"></i></td>        
+                <td>
+                  <i [title]="data.isPaid ? 'Так' : 'Ні'" nz-icon [nzType]="data.isPaid ? 'check' : 'stop'"
+                        nzTheme="twotone" [nzTwotoneColor]="data.isPaid ? '#52c41a':'#e4521a'"></i>
+                </td>
+                <td>
+                  <i *ngIf="isGetBill.has(data.id) else elseBill" nz-icon nzType="loading"></i>
+                  <ng-template #elseBill>
+                    <a (click)="getBillFile(data.id)" title="Друк рахунку на оплату"><i nz-icon nzType="printer" nzTheme="outline"></i></a>
+                  </ng-template>
+                </td>
             </tr>
             <tr [nzExpand]="data.isExpand">
                 <nz-table #innerTable [nzData]="data.zoneUsages" [nzShowPagination]="false">
@@ -35,7 +42,8 @@
                         <th>Попередні покази</th>
                         <th>Поточні покази</th>
                         <th>{{'Різниця,' | unit:commodity}}</th>
-                        <th>Грн.</th>
+                        <th>{{'Ціна за 1,' | unit:commodity}} </th>
+                        <th>Нараховано, Грн.</th>
                         <th>Пільга</th>
                       </tr>
                     </thead>
@@ -45,6 +53,7 @@
                         <td>{{ zoneUsage.previousMeterReading }}</td>
                         <td>{{ zoneUsage.presentMeterReading }}</td>
                         <td>{{ zoneUsage.units }}</td>
+                        <td>{{ zoneUsage.priceValue }}</td>
                         <td>{{ zoneUsage.charge | number : '1.2' }}</td>
                         <td>{{ zoneUsage.discountUnits | unit:commodity}} / {{ zoneUsage.discount | number : '1.2' }} Грн.</td>
                       </tr>

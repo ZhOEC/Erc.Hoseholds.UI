@@ -63,7 +63,7 @@
         <td>{{ editCache[pb.id].data.isClosed ? 'Закрита' : 'Відкрита'}}</td>
       </ng-template>
       <td nzAlign="center">
-        <a routerLink="/payment-batch/{{pb.id}}" title="Відкрити"><i nz-icon nzType="export" nzTheme="outline"></i></a>
+        <a routerLink="/payment-batch/{{pb.id}}" title="Відкрити"><i nz-icon nzType="folder-open" nzTheme="outline"></i></a>
         <nz-divider nzType="vertical"></nz-divider>
         <a><i nz-icon nzType="edit" *ngIf="!editCache[pb.id].edit; else editButtonsTemplate" (click)="editBatch(pb.id)" nzTheme="outline" title="Редагувати"></i></a>
         <ng-template #editButtonsTemplate>
@@ -71,6 +71,12 @@
           <nz-divider nzType="vertical"></nz-divider>
           <a title="Скасувати"><i nz-icon nzType="close" nzTheme="outline" class="edit-icon" (click)="cancelEdit(pb.id)"></i></a>
         </ng-template>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a nz-popconfirm nzPopconfirmTitle="Ви впевнені що хочете рознести платежі по особовим рахункам?" (nzOnConfirm)="processBatch(pb.id)" 
+        nzOkText="Так, звичайно!" nzCancelText="Поки що ні"
+        title="Рознесення по особовим рахункам">
+          <i nz-icon nzType="delivered-procedure" nzTheme="outline"></i>
+        </a>
         <nz-divider nzType="vertical"></nz-divider>
         <a nz-popconfirm nzPopconfirmTitle="Впевнені що хочете видалити?" (nzOnConfirm)="deleteBatch(pb.id)" title="Видалити"><i nz-icon nzType="delete" nzTheme="outline"></i></a>
       </td>

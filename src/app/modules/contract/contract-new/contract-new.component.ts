@@ -37,10 +37,12 @@ export class ContractNewComponent implements OnInit {
     })
 
     this.route.paramMap.pipe(
-      switchMap((params: ParamMap) => this.accountingPointDetailService.getOne(+params.get('id')))
+      switchMap((params: ParamMap) => this.accountingPointDetailService.getOne(params.get('id')))
     ).subscribe(ap => {
       this.accountingPointDetail = ap
       this.person = ap.owner
+
+      //console.log(ap.owner)
     })
   }
 
@@ -51,8 +53,8 @@ export class ContractNewComponent implements OnInit {
   }
 
   onFoundPersonChanged(p: Person) {
-    if(p) this.form.get('owner')?.patchValue(p)
-    else this.form.get('owner')?.reset()
+    p ? this.form.get('owner')?.patchValue(p)
+      : this.form.get('owner')?.reset()
   }
 
   validateForm() {

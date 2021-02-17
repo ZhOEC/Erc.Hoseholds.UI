@@ -18,7 +18,8 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": [
-              "@ant-design/colors"
+              "@ant-design/colors",
+              "file-saver"
            ],
             "outputPath": "dist/erc-households-ui",
             "index": "src/index.html",
@@ -42,7 +43,7 @@
             "scripts": []
           },
           "configurations": {
-            "obl-server":{
+            "dev-server":{
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -89,8 +90,8 @@
             "production": {
               "browserTarget": "erc-households-ui:build:production"
             },
-            "obl-server": {
-              "browserTarget": "erc-households-ui:build:obl-server"
+            "dev-server": {
+              "browserTarget": "erc-households-ui:build:dev-server"
             }
           }
         },

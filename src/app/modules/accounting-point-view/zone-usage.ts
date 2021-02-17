@@ -3,6 +3,7 @@ export interface ZoneUsage {
     presentMeterReading: number
     previousMeterReading: number
     units: number
+    priceValue: number
     charge: number
     discount: number
     discountUnits: number

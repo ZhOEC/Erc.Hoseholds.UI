@@ -66,7 +66,7 @@
     <nz-form-item>
       <nz-form-label [nzSpan]="5" nzRequired nzFor="cityId">Населений пункт</nz-form-label>
       <nz-form-control [nzSpan]="12" nzErrorTip="Не введено назву міста">
-        <nz-select nzPlaceHolder="Оберіть населений пункт" formControlName="cityId"
+        <nz-select nzShowSearch nzPlaceHolder="Оберіть населений пункт" formControlName="cityId"
           (ngModelChange)="getStreets($event)">
           <nz-option *ngFor="let city of citiesList" [nzValue]="city.id"
             [nzLabel]="city.isRegionCity ? city.name : city.name + ', ' + city.districtName">
@@ -78,7 +78,7 @@
     <nz-form-item>
       <nz-form-label [nzSpan]="5" nzRequired nzFor="streetId">Вулиця</nz-form-label>
       <nz-form-control [nzSpan]="12" nzErrorTip="Не введено назва вулиці">
-        <nz-select nzPlaceHolder="Оберіть вулицю" formControlName="streetId">
+        <nz-select nzShowSearch nzPlaceHolder="Оберіть вулицю" formControlName="streetId">
           <nz-option *ngFor="let street of streetsList" [nzValue]="street.id" [nzLabel]="street.name">
           </nz-option>
         </nz-select>

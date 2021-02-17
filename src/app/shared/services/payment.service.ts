@@ -14,11 +14,10 @@ export class PaymentService {
 
     getPart(paymentsBatchId: number, pageNumber: number, pageSize: number, showProcessed: boolean) {
         let queryParams = new HttpParams()
-            .append('paymentsBatchId', paymentsBatchId.toString())
             .append('pageNumber', pageNumber.toString())
             .append('pageSize', pageSize.toString())
             .append('showProcessed', showProcessed.toString())
-        return this.http.get<PaymentView[]>(this.url, { params: queryParams, observe: 'response' })
+        return this.http.get<PaymentView[]>(`${environment.apiServer}PaymentBatches/${paymentsBatchId}/payments`, { params: queryParams, observe: 'response' })
             .pipe(map((data) => {
                 data.body.forEach(element => {
                     element.payDate = new Date(element.payDate)
