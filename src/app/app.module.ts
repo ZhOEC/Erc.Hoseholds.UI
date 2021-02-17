@@ -64,7 +64,7 @@ registerLocaleData(uk);
     CommonReferencesModule,
     PersonModule,
     ContractModule,
-    TaxesModule
+    TaxesModule,
     CompanyModule,
     InformationExchangeModule
   ],
