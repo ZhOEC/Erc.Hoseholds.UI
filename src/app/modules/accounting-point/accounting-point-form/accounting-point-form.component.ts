@@ -14,6 +14,7 @@ import { Tariff } from 'src/app/shared/models/tariff'
 import { BuildingType } from 'src/app/shared/models/building-type'
 import { UsageCategory } from 'src/app/shared/models/usage-category'
 import { Commodity, CommodityData, commodityMap } from 'src/app/shared/models/commodity'
+import { filter } from 'rxjs/operators'
 
 @Component({
   selector: 'app-accounting-point-form',
@@ -43,6 +44,11 @@ export class AccountingPointFormComponent implements OnInit {
 
   isLoadingCities = false
   isLoadingStreets = false
+  exemptionOptions: { [name: string]: boolean } = {
+    'isCentralizedHotWaterSupply': true,
+    'isCentralizedWaterSupply': true,
+    'isGasWaterHeaterInstalled': true
+  }
 
   constructor(
     private formBuilder: FormBuilder,
@@ -71,7 +77,10 @@ export class AccountingPointFormComponent implements OnInit {
       }),
       usageCategoryId: [null, Validators.required],
       buildingTypeId: [null, Validators.required],
-      commodity: [null, Validators.required]
+      commodity: [null, Validators.required],
+      isCentralizedHotWaterSupply: [],
+      isCentralizedWaterSupply: [],
+      isGasWaterHeaterInstalled: []
     })
 
     this.getBranchOffices()
@@ -151,6 +160,15 @@ export class AccountingPointFormComponent implements OnInit {
     this.accountingPointForm.get('distributionSystemOperatorId').reset()
     this.getTariffs(commodity)
     this.getDistributionSystemOperators(commodity)
+  }
+
+  exemptionOptionChanged(optionName: string) {
+    const newValue: boolean = this.accountingPointForm.get(optionName).value;
+    if (newValue) {
+      this.exemptionOptions[optionName] = !this.exemptionOptions[optionName]
+      if (this.exemptionOptions[optionName])
+        this.accountingPointForm.get(optionName).setValue(null)
+    }
   }
 
   getTariffs = (commodity: Commodity) => this.tariffService.getTariffList(commodity).subscribe(tariffs => this.tariffsList = tariffs)

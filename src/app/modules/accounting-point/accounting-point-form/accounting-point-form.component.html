@@ -132,4 +132,23 @@
       </nz-select>
     </nz-form-control>
   </nz-form-item>
+  
+  <nz-form-item>
+    <nz-form-control [nzSpan]="12" [nzOffset]="5" >
+      <label nz-checkbox formControlName="isCentralizedHotWaterSupply" [nzIndeterminate]="exemptionOptions['isCentralizedHotWaterSupply']" (ngModelChange)="exemptionOptionChanged('isCentralizedHotWaterSupply')">Наявне централізоване постачання гарячої води</label>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control [nzSpan]="12" [nzOffset]="5">
+      <label nz-checkbox formControlName="isCentralizedWaterSupply" [nzIndeterminate]="exemptionOptions['isCentralizedWaterSupply']" (ngModelChange)="exemptionOptionChanged('isCentralizedWaterSupply')">Наявне централізоване постачання холодної води</label>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control [nzSpan]="12" [nzOffset]="5">
+      <label nz-checkbox formControlName="isGasWaterHeaterInstalled" [nzIndeterminate]="exemptionOptions['isGasWaterHeaterInstalled']" (ngModelChange)="exemptionOptionChanged('isGasWaterHeaterInstalled')">Встановлено газовий водонагрівальний прилад</label>
+    </nz-form-control>
+  </nz-form-item>
+
 </form>
