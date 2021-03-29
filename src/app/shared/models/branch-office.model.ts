@@ -1,4 +1,4 @@
-import { Commodity } from './commodity';
+import { Commodity } from './commodity'
 
 export interface BranchOffice {
     id: number

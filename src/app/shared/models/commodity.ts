@@ -1,4 +1,4 @@
- export enum Commodity {
+export enum Commodity {
     ElectricPower = 1,
     NaturalGas
 }
