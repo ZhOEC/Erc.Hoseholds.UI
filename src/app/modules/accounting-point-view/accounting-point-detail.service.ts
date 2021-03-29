@@ -35,8 +35,8 @@ export class AccountingPointDetailService {
     return this.http
       .get<Invoice[]>(this.paymentsUri, { params: params, observe: 'response' })
       .pipe(map(response => <InvoiceList>{
-          items: response.body,
-          totalCount: Number(response.headers.get('X-Total-Count'))
+        items: response.body,
+        totalCount: Number(response.headers.get('X-Total-Count'))
       }));
   }
 
@@ -66,8 +66,10 @@ export class AccountingPointDetailService {
             inv.zoneUsages[2].name = 'Пік';
           }
           inv.isExpand = false;
-          inv.zoneUsages.forEach((element: { priceValue: any; calculations: { priceValue: any; }[]; }) => {
-            element.priceValue = element.calculations[0].priceValue;
+          inv.zoneUsages.forEach((element: { priceValue: number; calculations: { priceValue: number; }[]; }) => {
+            if (element.calculations.length > 0) {
+              element.priceValue = element.calculations[0].priceValue;
+            }
           });
           inv.billUri = `${environment.apiServer}bills/${inv.id}`;
         });
