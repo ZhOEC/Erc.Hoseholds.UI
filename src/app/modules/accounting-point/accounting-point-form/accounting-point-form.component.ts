@@ -63,6 +63,7 @@ export class AccountingPointFormComponent implements OnInit {
     this.accountingPointForm = this.formBuilder.group({
       id: [null],
       branchOfficeId: [null, Validators.required],
+      commodity: [null, Validators.required],
       eic: [null, [Validators.required, Validators.minLength(16), Validators.maxLength(16), Validators.pattern('[0-9a-zA-Z-]*')]],
       name: [null, [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
       distributionSystemOperatorId: [null, Validators.required],
@@ -77,7 +78,6 @@ export class AccountingPointFormComponent implements OnInit {
       }),
       usageCategoryId: [null, Validators.required],
       buildingTypeId: [null, Validators.required],
-      commodity: [null, Validators.required],
       isCentralizedHotWaterSupply: [],
       isCentralizedWaterSupply: [],
       isGasWaterHeaterInstalled: []

@@ -29,6 +29,8 @@ export class AccountingPointEditComponent implements OnInit {
       switchMap((params: ParamMap) => this.accountingPointDetailService.getOne(params.get('id')))
     ).subscribe(acd => {
       this.form.patchValue(acd)
+      this.form.get('branchOfficeId').disable()
+      this.form.get('commodity').disable()
       this.form.get('tariffId').disable()
     })
   }
