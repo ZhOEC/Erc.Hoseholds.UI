@@ -17,6 +17,7 @@ import { NzCardModule } from 'ng-zorro-antd/card'
 import { UnitPipe } from '../pipes/unit.pipe'
 import { NzFormModule } from 'ng-zorro-antd/form'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { NzRadioModule } from 'ng-zorro-antd/radio'
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
     NzCardModule,
     NzFormModule,
     FormsModule, 
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NzRadioModule
   ],
   exports: [
     SharedModule,
@@ -61,7 +63,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
     NzCardModule,
     NzFormModule,
     FormsModule, 
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NzRadioModule
   ]
 })
 export class ErcSharedModule { }

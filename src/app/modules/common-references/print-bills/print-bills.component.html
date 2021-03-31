@@ -5,10 +5,26 @@
   <div nz-col [nzSpan]="4" nzOffset="10">
     <form nz-form [formGroup]="form">
       <nz-form-item>
+        <nz-form-control [nzSpan]="18">
+          <nz-radio-group formControlName="fileType">
+            <label nz-radio nzValue="0">Друк Xerox</label>
+            <label nz-radio nzValue="1">Друк ЦОК</label>
+          </nz-radio-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
         <nz-form-label [nzSpan]="6" nzRequired nzFor="branchOfficeId">ЦОК</nz-form-label>
         <nz-form-control [nzSpan]="18" nzErrorTip="Не обрано ЦОК">
-          <nz-select nzPlaceHolder="Оберіть ЦОК" (ngModelChange)="getPeriods($event)" formControlName="branchOfficeId">
+          <nz-select nzPlaceHolder="Оберіть ЦОК" formControlName="branchOfficeId" (ngModelChange)="branchOfficeChanged($event)">
             <nz-option *ngFor="let branchOffice of branchOffices" [nzValue]="branchOffice.id" [nzLabel]="branchOffice.name"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzRequired nzFor="commodity">Товар</nz-form-label>
+        <nz-form-control [nzSpan]="18" nzErrorTip="Не обрано товар">
+          <nz-select nzPlaceHolder="Оберіть ЦОК" formControlName="commodity">
+            <nz-option *ngFor="let commodity of availableCommodities" [nzValue]="commodity.value" [nzLabel]="commodity.title"></nz-option>
           </nz-select>
         </nz-form-control>
       </nz-form-item>

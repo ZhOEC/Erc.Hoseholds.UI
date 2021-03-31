@@ -5,6 +5,7 @@ import { BranchOffice } from 'src/app/shared/models/branch-office.model'
 import { Period } from 'src/app/shared/models/period.model'
 import { BillService } from 'src/app/shared/services/bill.service'
 import { BranchOfficeService } from 'src/app/shared/services/branch-office.service'
+import { CommodityData, commodityMap } from './../../../shared/models/commodity'
 import * as FileSaver from 'file-saver'
 
 @Component({
@@ -15,6 +16,7 @@ import * as FileSaver from 'file-saver'
 export class PrintBillsComponent implements OnInit {
   form: FormGroup
   branchOffices: BranchOffice[]
+  availableCommodities: CommodityData[] = []
   periods: Period[]
   isSubmit: boolean
   isLoadingPeriods: boolean
@@ -27,6 +29,8 @@ export class PrintBillsComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
+      fileType: ['0', Validators.required],
+      commodity: [null, Validators.required],
       branchOfficeId: [null, Validators.required],
       periodId: [null, Validators.required]
     })
@@ -45,23 +49,36 @@ export class PrintBillsComponent implements OnInit {
       })
   }
 
-  getPeriods(branchOfficeId: number) {
+  branchOfficeChanged(branchOfficeId: number) {
     this.form.get('periodId').reset()
     if (branchOfficeId) {
-      this.isLoadingPeriods = true
-      this.branchOfficeService.getPeriods(branchOfficeId).subscribe(
-        periods => {
-          this.periods = periods
-          this.isLoadingPeriods = false
-        })
+      this.getPeriods(branchOfficeId)
     }
+    
+    this.availableCommodities = []
+    this.branchOffices.find(x => x.id == branchOfficeId).availableCommodities.forEach(c => {
+      this.availableCommodities.push(commodityMap[c])
+    })
+
+    if (this.availableCommodities.length == 1)
+        this.form.get('commodity').setValue(this.availableCommodities[0].value)
+  }
+
+  getPeriods(branchOfficeId: number) {
+    this.isLoadingPeriods = true
+    this.branchOfficeService.getPeriods(branchOfficeId).subscribe(
+      periods => {
+        this.periods = periods
+        this.isLoadingPeriods = false
+      })
   }
 
   submitForm() {
     this.isSubmit = true
-    this.billService.getBillsByPeriod(this.form.get('branchOfficeId').value, this.form.get('periodId').value).subscribe(
+    this.billService.getBillsByPeriod(this.form.getRawValue()).subscribe(
       response => {
-        FileSaver.saveAs(response, this.form.get('branchOfficeId').value + '_' + this.form.get('periodId').value + '.xlsx')
+        let extension = this.form.get('fileType').value == '0' ? '.csv' : '.xlsx'
+        FileSaver.saveAs(response, `${this.form.get("branchOfficeId").value}_${this.form.get("periodId").value}${extension}`)
         this.isSubmit = false
       },
       _ => {
