@@ -156,18 +156,26 @@ export class AccountingPointFormComponent implements OnInit {
   }
 
   commodityChanged(commodity: Commodity) {
-    this.accountingPointForm.get('tariffId').reset()
-    this.accountingPointForm.get('distributionSystemOperatorId').reset()
+    if (this.accountingPointForm.get('commodity').dirty) {
+      this.accountingPointForm.get('tariffId').reset()
+    }
     this.getTariffs(commodity)
     this.getDistributionSystemOperators(commodity)
   }
 
   exemptionOptionChanged(optionName: string) {
     const newValue: boolean = this.accountingPointForm.get(optionName).value;
-    if (newValue) {
-      this.exemptionOptions[optionName] = !this.exemptionOptions[optionName]
-      if (this.exemptionOptions[optionName])
-        this.accountingPointForm.get(optionName).setValue(null)
+    if (this.accountingPointForm.get(optionName).dirty) {
+      if (newValue) {
+        this.exemptionOptions[optionName] = !this.exemptionOptions[optionName]
+        if (this.exemptionOptions[optionName])
+        {
+          this.accountingPointForm.get(optionName).setValue(null)
+        }
+      }
+    } else
+    {
+      this.exemptionOptions[optionName] = newValue==null;
     }
   }
 
