@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { CloseExemptionComponent } from './close-exemption.component';
 
@@ -6,7 +6,7 @@ describe('CloseExemptionComponent', () => {
   let component: CloseExemptionComponent;
   let fixture: ComponentFixture<CloseExemptionComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ CloseExemptionComponent ]
     })
