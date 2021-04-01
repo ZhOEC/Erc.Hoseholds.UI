@@ -13,7 +13,6 @@ export class PaymentChannelListComponent implements OnInit {
 
   @ViewChild(PaymentChannelModalComponent) 
   private paymentChannelModal: PaymentChannelModalComponent
-
   paymentChannels: PaymentChannel[]
   
   constructor(private paymentChannelService: PaymentChannelService) {}
@@ -28,11 +27,11 @@ export class PaymentChannelListComponent implements OnInit {
     });
   }
 
-  addNew(paymentChannels: PaymentChannel[]) {
+  addNew(paymentChannels) {
     this.paymentChannelModal.openAddDialog(paymentChannels)
   }
 
-  edit(paymentChannels: PaymentChannel[], paymentChannel: PaymentChannel) {
+  edit(paymentChannels, paymentChannel) {
     this.paymentChannelModal.openEditDialog(paymentChannel, paymentChannels)
   }
 

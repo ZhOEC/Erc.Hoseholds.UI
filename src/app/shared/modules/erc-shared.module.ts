@@ -5,7 +5,6 @@ import { NzListModule } from 'ng-zorro-antd/list'
 import { NzButtonModule } from 'ng-zorro-antd/button'
 import { NzIconModule } from 'ng-zorro-antd/icon'
 import { NzModalModule } from 'ng-zorro-antd/modal'
-import { SharedModule } from '../components/shared.module'
 import { NzTableModule } from 'ng-zorro-antd/table'
 import { NzSelectModule } from 'ng-zorro-antd/select'
 import { NzUploadModule } from 'ng-zorro-antd/upload'
@@ -18,13 +17,22 @@ import { UnitPipe } from '../pipes/unit.pipe'
 import { NzFormModule } from 'ng-zorro-antd/form'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { NzRadioModule } from 'ng-zorro-antd/radio'
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker'
+import { NzDividerModule } from 'ng-zorro-antd/divider'
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown'
+import { NzCollapseModule } from 'ng-zorro-antd/collapse'
+import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions'
+import { NzDrawerModule } from 'ng-zorro-antd/drawer'
+import { NzAvatarModule } from 'ng-zorro-antd/avatar'
+import { NzLayoutModule } from 'ng-zorro-antd/layout'
+import { NzPopoverModule } from 'ng-zorro-antd/popover'
+import { NzNotificationModule } from 'ng-zorro-antd/notification'
 
 @NgModule({
   declarations: [
     UnitPipe
   ],
   imports: [
-    SharedModule,
     CommonModule,
     NzPageHeaderModule,
     NzListModule,
@@ -42,10 +50,19 @@ import { NzRadioModule } from 'ng-zorro-antd/radio'
     NzFormModule,
     FormsModule, 
     ReactiveFormsModule,
-    NzRadioModule
+    NzRadioModule,
+    NzDatePickerModule,
+    NzDividerModule,
+    NzDropDownModule,
+    NzCollapseModule,
+    NzDescriptionsModule,
+    NzDrawerModule,
+    NzAvatarModule,
+    NzLayoutModule,
+    NzPopoverModule,
+    NzNotificationModule
   ],
   exports: [
-    SharedModule,
     NzPageHeaderModule, 
     CommonModule,
     NzListModule,
@@ -64,7 +81,17 @@ import { NzRadioModule } from 'ng-zorro-antd/radio'
     NzFormModule,
     FormsModule, 
     ReactiveFormsModule,
-    NzRadioModule
+    NzRadioModule,
+    NzDatePickerModule,
+    NzDividerModule,
+    NzDropDownModule,
+    NzCollapseModule,
+    NzDescriptionsModule,
+    NzDrawerModule,
+    NzAvatarModule,
+    NzLayoutModule,
+    NzPopoverModule,
+    NzNotificationModule
   ]
 })
 export class ErcSharedModule { }
