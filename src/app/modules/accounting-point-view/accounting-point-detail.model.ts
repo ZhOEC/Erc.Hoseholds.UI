@@ -15,4 +15,7 @@ export interface AccountingPointDetail {
     currentContractSendPaperBill: boolean
     debt: number
     exemption: Exemption
+    isGasWaterHeaterInstalled?: boolean
+    isCentralizedWaterSupply?: boolean
+    isCentralizedHotWaterSupply: boolean
 }
