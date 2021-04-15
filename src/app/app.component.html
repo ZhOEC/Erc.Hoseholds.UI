@@ -1,15 +1,16 @@
 <nz-layout class="app-layout">
   <nz-drawer [nzVisible]="visibilityDrawer" nzPlacement="left"
     [nzBodyStyle]="{ 'height': '100%', 'padding': '0px', background: '#001529'}" (nzOnClose)="visibilityDrawer = false" [nzClosable]="false">
-    <div class="sidebar-logo">
+    <ng-container *nzDrawerContent>
+      <div class="sidebar-logo">
       <a href="https://www.ztoek.com.ua/" target="_blank">
         <img src="../assets/logo.jpg" alt="logo">
         <h1>ТОВ "ЖОЕК"</h1>
       </a>
       <i *ngIf="isAdmin()" nz-icon nzType="edit" [nzTheme]="'twotone'"
         [routerLink]="['/company/1/edit']" (click)="visibilityDrawer = false"></i>
-    </div>
-    <ul nzTheme="dark" nz-menu nzMode="inline">
+      </div>
+      <ul nzTheme="dark" nz-menu nzMode="inline">
       <li nz-menu-item>
         <a [routerLink]="['/payment-batches']" routerLinkActive="router-link-active"
           (click)="visibilityDrawer = false">
@@ -116,7 +117,8 @@
           </li>
         </ul>
       </li>
-    </ul>
+      </ul>
+  </ng-container>
   </nz-drawer>
   <nz-layout>
     <nz-header>

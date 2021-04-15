@@ -21,12 +21,8 @@
       </nz-col>
       <nz-col>
         <nz-space [nzSize]="8">
-          <nz-space-item>
-            <label nz-checkbox [(ngModel)]="showProcessedPayments" (ngModelChange)="onChangedShowProcessedPayments($event)">Показувати оброблені</label>
-          </nz-space-item>
-          <nz-space-item>
-            <button nz-button nzType="primary" (click)="openPaymentDialog(null)">Додати</button>
-          </nz-space-item>
+          <label *nzSpaceItem nz-checkbox [(ngModel)]="showProcessedPayments" (ngModelChange)="onChangedShowProcessedPayments($event)">Показувати оброблені</label>
+          <button *nzSpaceItem nz-button nzType="primary" (click)="openPaymentDialog(null)">Додати</button>
         </nz-space>
       </nz-col>
     </nz-row>
