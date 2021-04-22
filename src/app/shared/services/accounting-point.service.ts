@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core'
 import { HttpClient, HttpParams } from '@angular/common/http'
 import { environment } from 'src/environments/environment'
-import { AccountingPoint } from '../models/accounting-point.model'
+import { AccountingPoint } from '../models/accounting-point'
 import { Observable } from 'rxjs'
-import { NewContract } from '../models/new-contract.model'
+import { NewContract } from '../models/new-contract'
 import { Exemption } from '../models/exemption'
 
 @Injectable({

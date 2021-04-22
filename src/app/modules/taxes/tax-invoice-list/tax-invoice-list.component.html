@@ -1,19 +1,22 @@
 <ng-template #titleTemplate>
-  <nz-row nzJustify="space-between" nzAlign="middle" nzGutter="12">
+  <nz-row nzJustify="space-between" nzGutter="12">
     <nz-col>
       <span>Список податкових накладних</span>
     </nz-col>
     <nz-col>
-      <nz-space [nzSize]="8">
-        <nz-space-item>
-          <nz-select [(ngModel)]="selectedBranchOffice" (ngModelChange)="onChangeBranchOffice($event)" nzPlaceHolder="Оберіть ЦОК">
-            <nz-option *ngFor="let branchOffice of branchOfficesList" [nzValue]="branchOffice" [nzLabel]="branchOffice.name"></nz-option>
-          </nz-select>
-        </nz-space-item>
+      <nz-space>
+        <a *nzSpaceItem nz-button nzType="primary" [routerLink]="['/tax-invoices/create']">
+          Створити
+          <i nz-icon nzType="plus"></i>
+        </a>
+        <nz-select *nzSpaceItem [(ngModel)]="selectedBranchOffice" (ngModelChange)="onChangeBranchOffice($event)" nzPlaceHolder="Оберіть ЦОК">
+          <nz-option *ngFor="let branchOffice of branchOfficesList" [nzValue]="branchOffice" [nzLabel]="branchOffice.name"></nz-option>
+        </nz-select>
       </nz-space>
     </nz-col>
   </nz-row>
 </ng-template>
+
 <nz-table
   #taxInvoicesTable
   [nzData]="taxInvoicesList"
@@ -30,28 +33,73 @@
 >
   <thead>
     <tr>
-      <th>Товари/послуги</th>
-      <th>Дата забов'язань</th>
-      <th>Кількість (обсяг)</th>
-      <th>Ціна без ПДВ, Грн.</th>
+      <th></th>
+      <th>Дата зобов'язань</th>
       <th>База оподаткування, Грн.</th>
-      <th>Сума ПДВ, Грн.</th>
+      <th>Ціна без ПДВ, Грн.</th>
+      <th>Кількість (об'єм, обсяг)</th>
+      <th>Сума, грн.</th>
       <th>Дата формування</th>
-      <th>Завнтажити</th>
+      <th nzAlign="center">Дії</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let tx of taxInvoicesTable.data">
-      <td>{{ tx.type }}</td>
-      <td>{{ tx.liabilityDate | date: dateFormat }}</td>
-      <td>{{ tx.energyAmount }}</td>
-      <td>{{ tx.tariffValue }}</td>
-      <td>{{ tx.liabilitySum }}</td>
-      <td>{{ tx.taxSum }}</td>
-      <td>{{ tx.creationDate | date: dateFormat }}</td>
-      <td nzAlign="center">
-        <a title="Завантажити"><i nz-icon nzType="download" nzTheme="outline" (click)="downloadInvoice(tx.id)"></i></a>
-      </td>
-    </tr>
+    <ng-template ngFor let-data [ngForOf]="taxInvoicesTable.data">
+      <tr>
+        <td [(nzExpand)]="data.isExpand" nzAlign="center"></td>
+        <td>{{ data.liabilityDate | date: dateFormat }}</td>
+        <td>{{ data.quantityTotal }}</td>
+        <td>{{ data.liabilitySum }}</td>
+        <td>{{ data.fullSum }}</td>
+        <td>{{ data.taxSum }}</td>
+        <td>{{ data.creationDate | date: dateFormat }}</td>
+        <td nzAlign="center">
+          <a title="Завантажити"><i nz-icon nzType="download" nzTheme="outline"
+              (click)="exportTaxInvoice(data.id)"></i>
+          </a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a nz-popconfirm nzPopconfirmTitle="Впевнені що хочете видалити?" (nzOnConfirm)="delete(data.id)"
+            title="Видалити">
+            <i nz-icon nzType="delete" nzTheme="outline"></i>
+          </a>
+        </td>
+      </tr>
+      <tr [nzExpand]="data.isExpand">
+        <nz-table
+          #tabLinesTable
+          [nzData]="data.tabLines"
+          [nzShowPagination]="false"
+          nzSize="small"
+          nzBordered="true"
+        >
+          <thead>
+            <tr>
+              <th>№ з/п</th>
+              <th>Товар/послуга</th>
+              <th>Код товару УКТ ЗЕД</th>
+              <th>Одиниці вимірювання</th>
+              <th>Код одиниці вимірювання</th>
+              <th>База опадаткування</th>
+              <th>Ціна</th>
+              <th>Кількість (об'єм, обсяг)</th>
+              <th>Сумма ПДВ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let tabLine of tabLinesTable.data">
+              <td>{{ tabLine.rowNumber }}</td>
+              <td>{{ tabLine.productName }}</td>
+              <td>{{ tabLine.productCode }}</td>
+              <td>{{ tabLine.unit }}</td>
+              <td>{{ tabLine.unitCode }}</td>
+              <td>{{ tabLine.liabilitiesAmount }}</td>
+              <td>{{ tabLine.price }}</td>
+              <td>{{ tabLine.quantity }}</td>
+              <td>{{ tabLine.tax }}</td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </tr>
+    </ng-template>
   </tbody>
 </nz-table>

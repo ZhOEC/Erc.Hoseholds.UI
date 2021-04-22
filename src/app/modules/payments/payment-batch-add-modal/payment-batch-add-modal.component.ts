@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core'
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { BranchOfficeService } from 'src/app/shared/services/branch-office.service'
-import { BranchOffice } from 'src/app/shared/models/branch-office.model'
+import { BranchOffice } from 'src/app/shared/models/branch-office'
 import { PaymentBatchService } from 'src/app/shared/services/payment-batch.service'
 import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
 import { PaymentChannelService } from '../../../shared/services/payment-channel.service'

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BranchOfficeService } from 'src/app/shared/services/branch-office.service';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
-import { BranchOffice } from 'src/app/shared/models/branch-office.model';
+import { BranchOffice } from 'src/app/shared/models/branch-office';
 import { switchMap, tap, catchError } from 'rxjs/operators';
 import { NotificationComponent } from 'src/app/shared/components/notification/notification.component';
 import { of } from 'rxjs/internal/observable/of';

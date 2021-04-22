@@ -6,9 +6,9 @@ export interface BranchOffice {
     stringId: string
     address: string
     currentPeriodName: string
-    availableCommodities: Commodity[]
     chiefName: string
     bookkeeperName: string
     bankFullName: string
     iban: string
+    availableCommodities: Commodity[]
 }

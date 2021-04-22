@@ -1,14 +1,16 @@
-import { TaxInvoiceType } from './tax-invoice-type'
+import { TaxInvoiceTabLine } from './tax-invoice-tab-line'
 
 export interface TaxInvoice {
-    id: number
-    liabilityDate: Date // Last date month
+    id?: number
+    creationDate?: Date
+    branchOfficeId: number
+    periodId: number
+    type: number
+    liabilityDate: Date
     liabilitySum: number
-    energyAmount: number
-    tariffValue: number
+    quantityTotal: number
     taxSum: number
-    creationDate: Date
-    operatorName: string
     fullSum: number
-    type: TaxInvoiceType
+    tabLines: TaxInvoiceTabLine[]
+    isExpand?: boolean
 }

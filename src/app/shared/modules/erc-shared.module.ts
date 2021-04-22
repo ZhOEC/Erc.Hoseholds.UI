@@ -27,6 +27,7 @@ import { NzAvatarModule } from 'ng-zorro-antd/avatar'
 import { NzLayoutModule } from 'ng-zorro-antd/layout'
 import { NzPopoverModule } from 'ng-zorro-antd/popover'
 import { NzNotificationModule } from 'ng-zorro-antd/notification'
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm'
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { NzNotificationModule } from 'ng-zorro-antd/notification'
     NzAvatarModule,
     NzLayoutModule,
     NzPopoverModule,
-    NzNotificationModule
+    NzNotificationModule,
+    NzPopconfirmModule
   ],
   exports: [
     NzPageHeaderModule, 
@@ -91,7 +93,8 @@ import { NzNotificationModule } from 'ng-zorro-antd/notification'
     NzAvatarModule,
     NzLayoutModule,
     NzPopoverModule,
-    NzNotificationModule
+    NzNotificationModule,
+    NzPopconfirmModule
   ]
 })
 export class ErcSharedModule { }

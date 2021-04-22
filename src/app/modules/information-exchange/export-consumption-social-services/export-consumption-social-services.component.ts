@@ -1,8 +1,8 @@
 import { NotificationComponent } from 'src/app/shared/components/notification/notification.component';
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { BranchOffice } from 'src/app/shared/models/branch-office.model'
-import { Period } from 'src/app/shared/models/period.model'
+import { BranchOffice } from 'src/app/shared/models/branch-office'
+import { Period } from 'src/app/shared/models/period'
 import { BranchOfficeService } from 'src/app/shared/services/branch-office.service'
 import { InformationExchangeService } from 'src/app/shared/services/information-exchange.service'
 import * as FileSaver from 'file-saver'
