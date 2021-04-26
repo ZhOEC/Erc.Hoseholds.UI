@@ -1,4 +1,3 @@
-
 <form nz-form [formGroup]="taxInvoiceForm">
   <nz-form-item>
     <nz-form-label [nzSpan]="5" nzRequired nzFor="branchOffice">ЦОК</nz-form-label>
@@ -15,42 +14,72 @@
       </nz-select>
     </nz-form-control>
   </nz-form-item>
+
   <nz-form-item>
     <nz-form-label [nzSpan]="5" nzRequired nzFor="liabilityDate">Дата забов'язань</nz-form-label>
     <nz-form-control [nzSpan]="6" nzErrorTip="Не обрано">
-      <nz-date-picker formControlName="liabilityDate" nzPlaceHolder="" [nzFormat]="dateFormat"></nz-date-picker>
+      <nz-date-picker formControlName="liabilityDate" nzPlaceHolder="" [nzFormat]="dateFormat" [nzDisabledDate]="datesMoreEndDatePeriod"></nz-date-picker>
     </nz-form-control>
   </nz-form-item>
+
+  <div nz-row [nzGutter]="6">
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="15" nzRequired nzFor="paymentsSum">Сума платежів</nz-form-label>
+        <nz-form-control [nzSpan]="9" nzErrorTip="Не введено суму платежів">
+          <nz-input-group nzPrefix="₴" nzSuffix="Грн.">
+            <input type="number" nz-input formControlName="paymentsSum" (ngModelChange)="onChangePaymentsSum($event)" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="3">
+      <nz-form-item>
+        <nz-form-control nzFor="liabilitiesAmount">
+          <nz-input-group nzPrefix="₴" nzSuffix="Грн.">
+            <input type="text"nz-input formControlName="liabilitiesAmount" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+
+  <div nz-row [nzGutter]="6">
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="15" nzRequired nzFor="tariff">Тариф</nz-form-label>
+        <nz-form-control [nzSpan]="9" nzErrorTip="Не введено тариф">
+          <nz-input-group nzPrefix="₴" nzSuffix="Грн.">
+            <input type="number" nz-input formControlName="tariff" (ngModelChange)="onChangeTariff($event)" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="3">
+      <nz-form-item>
+        <nz-form-control nzFor="price">
+          <nz-input-group nzPrefix="₴" nzSuffix="Грн.">
+            <input type="text"nz-input formControlName="price" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  
   <nz-form-item>
-    <nz-form-label [nzSpan]="5" nzRequired nzFor="liabilitiesAmount">База оподаткування</nz-form-label>
-    <nz-form-control [nzSpan]="6" nzErrorTip="Не введено базу опадаткування">
-      <nz-input-group nzPrefix="₴" nzSuffix="Грн.">
-        <input type="number" nz-input formControlName="liabilitiesAmount"/>
-      </nz-input-group>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="5" nzRequired nzFor="price">Ціна (без ПДВ)</nz-form-label>
-    <nz-form-control [nzSpan]="6" nzErrorTip="Не введено тариф">
-      <nz-input-group nzPrefix="₴" nzSuffix="Грн.">
-        <input type="number" nz-input formControlName="price"/>
-      </nz-input-group>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="5" nzRequired nzFor="quantity">Кількість (об'єм, обсяг)</nz-form-label>
-    <nz-form-control [nzSpan]="6" nzErrorTip="Не введено кількість">
+    <nz-form-label [nzSpan]="5" nzFor="quantity">Кількість (об'єм, обсяг)</nz-form-label>
+    <nz-form-control [nzSpan]="6">
       <nz-input-group [nzPrefix]="prefixTemplateConsumption" [nzSuffix]="getQuantitySuffix()">
-        <input type="number" nz-input formControlName="quantity"/>
+        <input nz-input formControlName="quantity"/>
       </nz-input-group>
       <ng-template #prefixTemplateConsumption><i nz-icon nzType="dashboard" nzTheme="outline"></i></ng-template>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
-    <nz-form-label [nzSpan]="5" nzRequired nzFor="tax">Сумма ПДВ</nz-form-label>
-    <nz-form-control [nzSpan]="6" nzErrorTip="Не введено сумму ПДВ">
+    <nz-form-label [nzSpan]="5" nzFor="tax">Сумма ПДВ</nz-form-label>
+    <nz-form-control [nzSpan]="6">
       <nz-input-group nzPrefix="₴" nzSuffix="Грн.">
-        <input type="number" nz-input formControlName="tax"/>
+        <input nz-input formControlName="tax"/>
       </nz-input-group>
     </nz-form-control>
   </nz-form-item>
@@ -105,11 +134,10 @@
   </tbody>
 </nz-table>
 
-<nz-divider nzType="vertical"></nz-divider>
+<nz-divider nzType="horizontal"></nz-divider>
 
 <div nz-row>
   <div nz-col [nzSpan]="12" [nzOffset]="5">
     <button nz-button nzType="primary" [nzLoading]="isLoadingSubmit" (click)="submitTaxes()">Зберегти</button>
   </div>
 </div>
-<nz-divider nzType="vertical"></nz-divider>

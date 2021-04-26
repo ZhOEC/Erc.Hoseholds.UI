@@ -8,6 +8,7 @@ import { TaxInvoiceTabLine } from 'src/app/shared/models/tax-invoices/tax-invoic
 import { taxInvoiceMap, TaxInvoiceTypeData } from './../../../shared/models/tax-invoices/tax-invoice-type'
 import { TaxInvoice } from 'src/app/shared/models/tax-invoices/tax-invoice'
 import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
+import { TrueRoundPipe } from './../../../shared/pipes/true-round.pipe'
 
 @Component({
   selector: 'app-tax-invoice-create',
@@ -16,6 +17,7 @@ import { NotificationComponent } from 'src/app/shared/components/notification/no
 })
 export class TaxInvoiceCreateComponent implements OnInit {
   dateFormat = 'dd.MM.yyyy'
+  datesMoreEndDatePeriod = null
 
   taxInvoiceForm: FormGroup
   createTaxInvoiceData: TaxInvoiceCreateRequest[] = []
@@ -31,7 +33,8 @@ export class TaxInvoiceCreateComponent implements OnInit {
     private formBuilder: FormBuilder,
     private branchOfficeService: BranchOfficeService,
     private taxInvoiceService: TaxInvoiceService,
-    private notification: NotificationComponent) {}
+    private notification: NotificationComponent,
+    private trueRoundPipe: TrueRoundPipe) {}
 
   ngOnInit() {
     this.taxInvoiceForm = this.formBuilder.group({
@@ -39,10 +42,13 @@ export class TaxInvoiceCreateComponent implements OnInit {
       type: [null, Validators.required],
       liabilityDate: [null, Validators.required], // Дата забов'язань
 
-      liabilitiesAmount: [null, Validators.required], // База опадаткування
-      quantity: [null, Validators.required], // Кількість
-      price: [null, Validators.required], // Ціна постачання одиниці товару/послуги
-      tax: [null, Validators.required] // Сума ПДВ
+      paymentsSum: [null, Validators.required], // База опадаткування
+      tariff: [null, Validators.required], // Тариф
+
+      liabilitiesAmount: [{ value: null, disabled: true }], // База опадаткування
+      quantity: [{ value: null, disabled: true }], // Кількість
+      price: [{ value: null, disabled: true }], // Ціна постачання одиниці товару/послуги
+      tax: [{ value: null, disabled: true }] // Сума ПДВ
     })
 
     this.getDataForCreateTaxInvoice()
@@ -61,8 +67,9 @@ export class TaxInvoiceCreateComponent implements OnInit {
   onChangeBranchOffice(branchOffice: BranchOffice) {
     this.createTaxInvoiceData.filter(item => item.branchOffice.id == branchOffice?.id)
       .map(i => {
-        this.taxInvoiceForm.get('type').reset()
-        this.taxInvoiceForm.get('liabilityDate').patchValue(i.period.endDate)
+        this.taxInvoiceForm.controls.type.reset()
+        this.taxInvoiceForm.controls.liabilityDate.patchValue(i.period.endDate)
+        this.datesMoreEndDatePeriod = (date: Date): boolean => { return date > new Date(i.period.endDate) } // disabling dates more than end period date
 
         this.taxInvoiceTypes = [taxInvoiceMap[0]] // set default type: CompensationDso
         i.branchOffice.availableCommodities.forEach(c => {
@@ -71,7 +78,39 @@ export class TaxInvoiceCreateComponent implements OnInit {
       })
   }
 
-  getQuantitySuffix() { return this.taxInvoiceTypes.find(x => x.value == this.taxInvoiceForm.get('type').value)?.unit }
+  onChangePaymentsSum(paymentsSum: number) {
+    /*decimal taxSum = decimal.Round(paymentsSum / ((1 + taxKoeff) / taxKoeff), 6, MidpointRounding.AwayFromZero);
+    decimal liabilitySum = decimal.Round(paymentsSum - taxSum, 2, MidpointRounding.AwayFromZero);
+    taxSum = decimal.Round(liabilitySum / 5, 6, MidpointRounding.AwayFromZero);*/
+
+    let tax = this.trueRoundPipe.transform((paymentsSum / 6), 6)
+    let liabilityAmount = this.trueRoundPipe.transform(paymentsSum - tax, 2)
+    tax = this.trueRoundPipe.transform((liabilityAmount / 5), 6)
+
+    this.taxInvoiceForm.controls.liabilitiesAmount.setValue(liabilityAmount)
+    this.taxInvoiceForm.controls.tax.setValue(tax)
+
+    // Calculate and set quantity after change paymentsSum
+    this.quantityCalculate(this.taxInvoiceForm.controls.paymentsSum?.value, this.taxInvoiceForm.controls.tariff?.value)
+  }
+
+  onChangeTariff(tariff: number) {
+    let price = this.trueRoundPipe.transform(tariff / 6, 6)
+    this.taxInvoiceForm.controls.price.setValue(price)
+
+    // Calculate and set quantity after change tariff
+    this.quantityCalculate(this.taxInvoiceForm.controls.paymentsSum?.value, this.taxInvoiceForm.controls.tariff?.value)
+  }
+
+  private quantityCalculate(paymentsSum: number, tariff: number) {
+    // Get quantity
+    if (paymentsSum && tariff) {
+      let quantity = this.trueRoundPipe.transform(paymentsSum / tariff)
+      this.taxInvoiceForm.controls.quantity.setValue(quantity)
+    }
+  }
+
+  getQuantitySuffix() { return this.taxInvoiceTypes.find(x => x.value == this.taxInvoiceForm.controls.type.value)?.unit }
 
   private validateForm() {
     for (const p in this.taxInvoiceForm.controls) {
@@ -84,17 +123,17 @@ export class TaxInvoiceCreateComponent implements OnInit {
 
   addTabLine() {
     if (this.validateForm()) {
-      let taxInvoiceType = this.taxInvoiceForm.get('type').value
+      let taxInvoiceType = this.taxInvoiceForm.controls.type.value
       this.tabLines = [...this.tabLines, {
         rowNumber: this.tabLines.length + 1,
         productName: taxInvoiceMap[taxInvoiceType].productName,
         productCode: taxInvoiceMap[taxInvoiceType].productCode,
         unit: taxInvoiceMap[taxInvoiceType].unit,
         unitCode: taxInvoiceMap[taxInvoiceType].unitCode,
-        quantity: this.taxInvoiceForm.get('quantity').value,
-        price: this.taxInvoiceForm.get('price').value,
-        liabilitiesAmount: this.taxInvoiceForm.get('liabilitiesAmount').value,
-        tax: this.taxInvoiceForm.get('tax').value
+        quantity: this.taxInvoiceForm.controls.quantity.value,
+        price: this.taxInvoiceForm.controls.price.value,
+        liabilitiesAmount: this.taxInvoiceForm.controls.liabilitiesAmount.value,
+        tax: this.taxInvoiceForm.controls.tax.value
       }]
     }
   }
@@ -107,12 +146,12 @@ export class TaxInvoiceCreateComponent implements OnInit {
   submitTaxes() {
     this.isLoadingSubmit = true
 
-    let branchOffice = this.taxInvoiceForm.get('branchOffice').value
+    let branchOffice = this.taxInvoiceForm.controls.branchOffice.value
     this.taxInvoice = {
       branchOfficeId: branchOffice.id,
       periodId: this.createTaxInvoiceData.filter(item => item.branchOffice.id == branchOffice.id)[0].period.id,
-      type: this.taxInvoiceForm.get('type').value,
-      liabilityDate: this.taxInvoiceForm.get('liabilityDate').value,
+      type: this.taxInvoiceForm.controls.type.value,
+      liabilityDate: this.taxInvoiceForm.controls.liabilityDate.value,
       liabilitySum: this.tabLines.map(x => x.liabilitiesAmount).reduce((a, b) => a + b, 0),
       quantityTotal: this.tabLines.map(x => x.quantity).reduce((a, b) => a + b, 0),
       taxSum: this.tabLines.map(x => x.tax).reduce((a, b) => a + b, 0),
@@ -138,4 +177,3 @@ export class TaxInvoiceCreateComponent implements OnInit {
       })
   }
 }
-
