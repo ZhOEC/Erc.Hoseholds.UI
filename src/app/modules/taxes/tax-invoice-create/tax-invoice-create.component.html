@@ -9,7 +9,7 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="5" nzRequired nzFor="type">Тип податкової накладної</nz-form-label>
     <nz-form-control [nzSpan]="6" nzErrorTip="Не обрано тип податкової накладної">
-      <nz-select nzPlaceHolder="Оберіть тип накладної" formControlName="type">
+      <nz-select nzPlaceHolder="Оберіть тип накладної" formControlName="type" (ngModelChange)=onChangeInvoiceType()>
         <nz-option *ngFor="let taxInvoiceType of taxInvoiceTypes" [nzValue]="taxInvoiceType.value" [nzLabel]="taxInvoiceType.title"></nz-option>
       </nz-select>
     </nz-form-control>

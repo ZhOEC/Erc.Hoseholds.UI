@@ -87,7 +87,7 @@ export class TaxInvoiceCreateComponent implements OnInit {
         return date != new Date(cti.period.endDate)
       
     }
-    
+
     // Calculate quantity and set per
     this.quantityCalculate()
   }
