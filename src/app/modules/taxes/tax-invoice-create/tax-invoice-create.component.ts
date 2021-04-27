@@ -5,7 +5,7 @@ import { BranchOfficeService } from './../../../shared/services/branch-office.se
 import { TaxInvoiceService } from 'src/app/shared/services/tax-invoices.service'
 import { TaxInvoiceCreateRequest } from './../../../shared/models/tax-invoices/tax-invoice-create-request'
 import { TaxInvoiceTabLine } from 'src/app/shared/models/tax-invoices/tax-invoice-tab-line'
-import { taxInvoiceMap, TaxInvoiceTypeData } from './../../../shared/models/tax-invoices/tax-invoice-type'
+import { TaxInvoiceType, taxInvoiceMap, TaxInvoiceTypeData } from './../../../shared/models/tax-invoices/tax-invoice-type'
 import { TaxInvoice } from 'src/app/shared/models/tax-invoices/tax-invoice'
 import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
 import { TrueRoundPipe } from './../../../shared/pipes/true-round.pipe'
@@ -23,10 +23,9 @@ export class TaxInvoiceCreateComponent implements OnInit {
   createTaxInvoiceData: TaxInvoiceCreateRequest[] = []
   branchOfficesOptions: { label: string, value: BranchOffice, disabled: boolean }[] = []
   taxInvoiceTypes: TaxInvoiceTypeData[] = []
-
-  tabLines: TaxInvoiceTabLine[] = []
+  
   taxInvoice: TaxInvoice
-
+  tabLines: TaxInvoiceTabLine[] = []
   isLoadingSubmit: boolean
 
   constructor(
@@ -68,14 +67,29 @@ export class TaxInvoiceCreateComponent implements OnInit {
     this.createTaxInvoiceData.filter(item => item.branchOffice.id == branchOffice?.id)
       .map(i => {
         this.taxInvoiceForm.controls.type.reset()
-        this.taxInvoiceForm.controls.liabilityDate.patchValue(i.period.endDate)
-        this.datesMoreEndDatePeriod = (date: Date): boolean => { return date > new Date(i.period.endDate) } // disabling dates more than end period date
 
         this.taxInvoiceTypes = [taxInvoiceMap[0]] // set default type: CompensationDso
         i.branchOffice.availableCommodities.forEach(c => {
           this.taxInvoiceTypes.push(taxInvoiceMap[c])
         })
       })
+  }
+
+  onChangeInvoiceType() {
+    let cti = this.createTaxInvoiceData.find(x => x.branchOffice.id = this.taxInvoiceForm.controls.branchOffice.value)    
+    this.taxInvoiceForm.controls.liabilityDate.patchValue(new Date(cti.period.endDate))
+
+    // disabling dates
+    this.datesMoreEndDatePeriod = (date: Date): boolean => {
+      if(this.taxInvoiceForm.controls.type.value == TaxInvoiceType.CompensationDso)
+        return date > new Date(cti.period.endDate)
+      else
+        return date != new Date(cti.period.endDate)
+      
+    }
+    
+    // Calculate quantity and set per
+    this.quantityCalculate()
   }
 
   onChangePaymentsSum(paymentsSum: number) {
@@ -91,26 +105,30 @@ export class TaxInvoiceCreateComponent implements OnInit {
     this.taxInvoiceForm.controls.tax.setValue(tax)
 
     // Calculate and set quantity after change paymentsSum
-    this.quantityCalculate(this.taxInvoiceForm.controls.paymentsSum?.value, this.taxInvoiceForm.controls.tariff?.value)
+    this.quantityCalculate()
   }
 
   onChangeTariff(tariff: number) {
-    let price = this.trueRoundPipe.transform(tariff / 6, 6)
+    let price = this.trueRoundPipe.transform(tariff / 1.2, 8) // tariff without tax
     this.taxInvoiceForm.controls.price.setValue(price)
 
     // Calculate and set quantity after change tariff
-    this.quantityCalculate(this.taxInvoiceForm.controls.paymentsSum?.value, this.taxInvoiceForm.controls.tariff?.value)
-  }
-
-  private quantityCalculate(paymentsSum: number, tariff: number) {
-    // Get quantity
-    if (paymentsSum && tariff) {
-      let quantity = this.trueRoundPipe.transform(paymentsSum / tariff)
-      this.taxInvoiceForm.controls.quantity.setValue(quantity)
-    }
+    this.quantityCalculate()
   }
 
   getQuantitySuffix() { return this.taxInvoiceTypes.find(x => x.value == this.taxInvoiceForm.controls.type.value)?.unit }
+
+  private quantityCalculate() {
+    let paymentsSum = this.taxInvoiceForm.controls.paymentsSum?.value
+    let tariff = this.taxInvoiceForm.controls.tariff?.value
+    // Get quantity
+    if (paymentsSum && tariff) {
+      let precision = this.taxInvoiceForm.controls.type.value == TaxInvoiceType.NaturalGas ? 2 : 0
+
+      let quantity = this.trueRoundPipe.transform(paymentsSum / tariff, precision)
+      this.taxInvoiceForm.controls.quantity.setValue(quantity)
+    }
+  }
 
   private validateForm() {
     for (const p in this.taxInvoiceForm.controls) {
