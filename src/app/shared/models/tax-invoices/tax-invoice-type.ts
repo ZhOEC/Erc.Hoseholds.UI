@@ -38,7 +38,7 @@ export const taxInvoiceMap: Record<TaxInvoiceType, TaxInvoiceTypeData> = {
         value: TaxInvoiceType.NaturalGas,
         productName: "Природний газ",
         productCode: "2711210000",
-        unit: "м³",
+        unit: "м3",
         unitCode: "0134",
         precision: 2
     }

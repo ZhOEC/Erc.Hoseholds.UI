@@ -28,7 +28,7 @@ export class BranchOfficePeriodsComponent implements OnInit {
     const branchOffice = this.branchOffices$.value.find(b => b.id == branchOfficeId);
     this.openPeriodDlg = this.modalService.confirm({
       nzTitle: `${branchOffice.name}. Перехід на наступний період`,
-      nzContent: `Ви впевнені, що хочете закрити ${branchOffice.currentPeriodName} та перейти на наступний період?`,
+      nzContent: `Ви впевнені, що хочете закрити ${branchOffice.currentPeriod.name} та перейти на наступний період?`,
       nzOkText: 'Так, звісно!',
       nzCancelText: 'Ні, я ще почекаю.',
       nzOnOk: () => this.branchOfficeService.openNewPeriod(branchOfficeId).pipe(
