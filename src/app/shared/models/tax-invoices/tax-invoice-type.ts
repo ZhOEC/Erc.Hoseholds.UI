@@ -11,6 +11,7 @@ export interface TaxInvoiceTypeData {
     productCode: string,
     unit: string,
     unitCode: string,
+    precision: number
 }
 
 export const taxInvoiceMap: Record<TaxInvoiceType, TaxInvoiceTypeData> = {
@@ -20,7 +21,8 @@ export const taxInvoiceMap: Record<TaxInvoiceType, TaxInvoiceTypeData> = {
         productName: "Компенсація за недотримання гарантованих стандартів якості надання послуг ОСР",
         productCode: "35.13",
         unit: "грн",
-        unitCode: "2454"
+        unitCode: "2454",
+        precision: 0
     },
     [TaxInvoiceType.Electricity]: { 
         title: "Електроенергія",
@@ -28,7 +30,8 @@ export const taxInvoiceMap: Record<TaxInvoiceType, TaxInvoiceTypeData> = {
         productName: "Електрична енергія",
         productCode: "2716000000",
         unit: "кВт·год",
-        unitCode: "0415"
+        unitCode: "0415",
+        precision: 0
     },
     [TaxInvoiceType.NaturalGas]: {
         title: "Природний газ",
@@ -36,6 +39,7 @@ export const taxInvoiceMap: Record<TaxInvoiceType, TaxInvoiceTypeData> = {
         productName: "Природний газ",
         productCode: "2711210000",
         unit: "м³",
-        unitCode: "0134"
+        unitCode: "0134",
+        precision: 2
     }
 }
