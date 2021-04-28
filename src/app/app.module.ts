@@ -11,6 +11,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon'
 import { registerLocaleData } from '@angular/common'
 import { AuthInterceptor } from './core/interceptors/auth.interceptor'
 import uk from '@angular/common/locales/uk'
+import { DatePipe } from '@angular/common'
 
 import { AppRoutingModule } from './app-routing.module'
 import { AccountingPointModule } from './modules/accounting-point/accounting-point.module'
@@ -86,6 +87,7 @@ registerLocaleData(uk);
     BillService,
     ReportService,
     InformationExchangeService,
+    DatePipe,
     { provide: NZ_I18N, useValue: uk_UA },
     { provide: LOCALE_ID, useValue: 'uk-UA' },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

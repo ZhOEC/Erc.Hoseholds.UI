@@ -1,4 +1,4 @@
-import { BranchOffice } from './branch-office.model'
+import { BranchOffice } from './branch-office'
 
 export interface Company {
     id: number

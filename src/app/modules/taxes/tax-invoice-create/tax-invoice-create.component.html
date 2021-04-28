@@ -1,0 +1,143 @@
+<form nz-form [formGroup]="taxInvoiceForm">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="branchOffice">ЦОК</nz-form-label>
+    <nz-form-control [nzSpan]="6" nzErrorTip="Не обрано ЦОК">
+      <nz-select formControlName="branchOffice" nzPlaceHolder="Оберіть ЦОК" [nzOptions]=branchOfficesOptions
+        (ngModelChange)="onChangeBranchOffice($event)"></nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="type">Тип податкової накладної</nz-form-label>
+    <nz-form-control [nzSpan]="6" nzErrorTip="Не обрано тип податкової накладної">
+      <nz-select nzPlaceHolder="Оберіть тип накладної" formControlName="type" (ngModelChange)=onChangeInvoiceType()>
+        <nz-option *ngFor="let taxInvoiceType of taxInvoiceTypes" [nzValue]="taxInvoiceType.value" [nzLabel]="taxInvoiceType.title"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="liabilityDate">Дата забов'язань</nz-form-label>
+    <nz-form-control [nzSpan]="6" nzErrorTip="Не обрано">
+      <nz-date-picker formControlName="liabilityDate" nzPlaceHolder="" [nzFormat]="dateFormat" [nzDisabledDate]="datesMoreEndDatePeriod"></nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+
+  <div nz-row [nzGutter]="6">
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="15" nzRequired nzFor="paymentsSum">Сума платежів (з ПДВ)</nz-form-label>
+        <nz-form-control [nzSpan]="9" nzErrorTip="Не введено суму платежів">
+          <nz-input-group nzPrefix="₴" nzSuffix="Грн.">
+            <input type="number" nz-input formControlName="paymentsSum" (ngModelChange)="onChangePaymentsSum($event)" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="3">
+      <nz-form-item>
+        <nz-form-control nzFor="liabilitiesAmount">
+          <nz-input-group nzPrefix="₴" nzSuffix="Грн.">
+            <input type="text"nz-input formControlName="liabilitiesAmount" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+
+  <div nz-row [nzGutter]="6">
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="15" nzRequired nzFor="tariff">Тариф (з ПДВ)</nz-form-label>
+        <nz-form-control [nzSpan]="9" nzErrorTip="Не введено тариф">
+          <nz-input-group nzPrefix="₴" nzSuffix="Грн.">
+            <input type="number" nz-input formControlName="tariff" (ngModelChange)="onChangeTariff($event)" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="3">
+      <nz-form-item>
+        <nz-form-control nzFor="price">
+          <nz-input-group nzPrefix="₴" nzSuffix="Грн.">
+            <input type="text"nz-input formControlName="price" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzFor="quantity">Кількість (об'єм, обсяг)</nz-form-label>
+    <nz-form-control [nzSpan]="6">
+      <nz-input-group [nzPrefix]="prefixTemplateConsumption" [nzSuffix]="getQuantitySuffix()">
+        <input nz-input formControlName="quantity"/>
+      </nz-input-group>
+      <ng-template #prefixTemplateConsumption><i nz-icon nzType="dashboard" nzTheme="outline"></i></ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzFor="tax">Сумма ПДВ</nz-form-label>
+    <nz-form-control [nzSpan]="6">
+      <nz-input-group nzPrefix="₴" nzSuffix="Грн.">
+        <input nz-input formControlName="tax"/>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <div nz-row>
+    <div nz-col [nzSpan]="6" [nzOffset]="5">
+        <button nz-button nzType="primary" (click)="addTabLine()">Додати</button>
+    </div>
+  </div>
+</form>
+
+<nz-divider nzType="vertical"></nz-divider>
+
+<nz-table
+  #tabLinesTable
+  [nzData]="tabLines"
+  [nzFrontPagination]="false"
+  nzSize="small" 
+  nzBordered="true"
+  >
+  <thead>
+    <tr>
+      <th>№ з/п</th>
+      <th>Товар/послуга</th>
+      <th>Код товару УКТ ЗЕД</th>
+      <th>Одиниці вимірювання</th>
+      <th>Код одиниці вимірювання</th>
+      <th>База опадаткування</th>
+      <th>Ціна</th>
+      <th>Кількість (об'єм, обсяг)</th>
+      <th>Сумма ПДВ</th>
+      <th nzAlign="center">Дії</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let tabLine of tabLinesTable.data">
+      <td>{{ tabLine.rowNumber }}</td>
+      <td>{{ tabLine.productName }}</td>
+      <td>{{ tabLine.productCode }}</td>
+      <td>{{ tabLine.unit }}</td>
+      <td>{{ tabLine.unitCode }}</td>
+      <td>{{ tabLine.liabilitiesAmount }}</td>
+      <td>{{ tabLine.price }}</td>
+      <td>{{ tabLine.quantity }}</td>
+      <td>{{ tabLine.tax }}</td>
+      <td nzAlign="center">
+        <a nz-popconfirm nzPopconfirmTitle="Впевнені що хочете видалити?" (nzOnConfirm)="removeTabLine(tabLine)"
+          title="Видалити">
+          <i nz-icon nzType="delete" nzTheme="outline"></i>
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+
+<nz-divider nzType="horizontal"></nz-divider>
+
+<div nz-row>
+  <div nz-col [nzSpan]="12" [nzOffset]="5">
+    <button nz-button nzType="primary" [nzLoading]="isLoadingSubmit" (click)="submitTaxes()">Зберегти</button>
+  </div>
+</div>

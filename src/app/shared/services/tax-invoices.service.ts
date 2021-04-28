@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core'
 import { HttpClient, HttpParams } from '@angular/common/http'
 import { environment } from 'src/environments/environment'
+import { TaxInvoice } from '../models/tax-invoices/tax-invoice'
+import { map } from 'rxjs/operators'
 
 @Injectable()
 export class TaxInvoiceService {
@@ -13,10 +15,25 @@ export class TaxInvoiceService {
             .append('branchOfficeId', branchOfficeId.toString())
             .append('pageNumber', pageNumber.toString())
             .append('pageSize', pageSize.toString())
-        return this.http.get(this.url, { params: queryParams, observe: 'response' })
+        return this.http
+            .get<TaxInvoice[]>(this.url, { params: queryParams, observe: 'response' })
+            .pipe(map(response => {
+                response.body.forEach((taxInvoice: TaxInvoice) => {
+                    taxInvoice.isExpand = false
+                })
+                return response
+            }))
     }
 
-    downloadInvoice(id: number) {
-        return this.http.get(`${this.url}${id}/download`, { responseType: 'blob' })
+    exportTaxInvoice(id: number) {
+        return this.http.get(`${this.url}${id}/export`, { responseType: 'blob' })
+    }
+
+    create(taxInvoice: TaxInvoice) {
+        return this.http.post(`${this.url}create`, taxInvoice)
+    }
+
+    delete(id: number){
+        return this.http.delete(this.url + id)
     }
 }

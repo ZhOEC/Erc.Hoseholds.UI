@@ -27,10 +27,14 @@ import { NzAvatarModule } from 'ng-zorro-antd/avatar'
 import { NzLayoutModule } from 'ng-zorro-antd/layout'
 import { NzPopoverModule } from 'ng-zorro-antd/popover'
 import { NzNotificationModule } from 'ng-zorro-antd/notification'
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm'
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number'
+import { TrueRoundPipe } from './../pipes/true-round.pipe'
 
 @NgModule({
   declarations: [
-    UnitPipe
+    UnitPipe,
+    TrueRoundPipe
   ],
   imports: [
     CommonModule,
@@ -60,7 +64,9 @@ import { NzNotificationModule } from 'ng-zorro-antd/notification'
     NzAvatarModule,
     NzLayoutModule,
     NzPopoverModule,
-    NzNotificationModule
+    NzNotificationModule,
+    NzPopconfirmModule,
+    NzInputNumberModule
   ],
   exports: [
     NzPageHeaderModule, 
@@ -91,7 +97,13 @@ import { NzNotificationModule } from 'ng-zorro-antd/notification'
     NzAvatarModule,
     NzLayoutModule,
     NzPopoverModule,
-    NzNotificationModule
+    NzNotificationModule,
+    NzPopconfirmModule,
+    NzInputNumberModule,
+    TrueRoundPipe
+  ],
+  providers: [
+    TrueRoundPipe
   ]
 })
 export class ErcSharedModule { }

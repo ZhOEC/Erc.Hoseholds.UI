@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { DistributionSystemOperator } from '../models/distribution-system-operator.model';
+import { DistributionSystemOperator } from '../models/distribution-system-operator';
 import { environment } from '../../../environments/environment';
 import { Commodity } from '../models/commodity';
   

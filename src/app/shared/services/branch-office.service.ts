@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { BranchOffice } from '../models/branch-office.model'
+import { BranchOffice } from '../models/branch-office'
 import { environment } from 'src/environments/environment';
 import { filter, switchMap, tap } from 'rxjs/operators';
-import { Period } from '../models/period.model';
+import { Period } from '../models/period';
+import { TaxInvoiceCreateRequest } from './../models/tax-invoices/tax-invoice-create-request'
 
 @Injectable()
 export class BranchOfficeService {
@@ -29,6 +30,10 @@ export class BranchOfficeService {
   getBranchOffices = () => this.branchOffices$.pipe(
       filter(bo => bo != null)
   )
+
+  getDataCreateTaxInvoice() {
+    return this.http.get<TaxInvoiceCreateRequest[]>(`${environment.apiServer}branch-offices/tax-invoice`)
+  }
 
   getPeriods(id: number): Observable<Period[]> {
     return this.http.get<Period[]>(`${environment.apiServer}branch-offices/${id}/periods`)

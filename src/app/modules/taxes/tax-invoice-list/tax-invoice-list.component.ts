@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core'
-import { BranchOffice } from 'src/app/shared/models/branch-office.model'
+import { BranchOffice } from 'src/app/shared/models/branch-office'
 import { TaxInvoice } from 'src/app/shared/models/tax-invoices/tax-invoice'
 import { BranchOfficeService } from 'src/app/shared/services/branch-office.service'
 import { TaxInvoiceService } from 'src/app/shared/services/tax-invoices.service'
 import * as FileSaver from 'file-saver'
+import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
 
 @Component({
   selector: 'app-tax-invoice-list',
@@ -24,14 +25,15 @@ export class TaxInvoiceListComponent implements OnInit {
 
   constructor(
     private branchOfficeService: BranchOfficeService,
-    private taxInvoiceService: TaxInvoiceService) { }
+    private taxInvoiceService: TaxInvoiceService,
+    private notification: NotificationComponent) { }
 
   ngOnInit() {
     this.getBranchOffices()
   }
 
   getBranchOffices() {
-    this.branchOfficeService.getBranchOffices().subscribe(offices => {      
+    this.branchOfficeService.getBranchOffices().subscribe(offices => {
       offices.length == 1 ? this.selectedBranchOffice = offices[0] : this.branchOfficesList = offices
     })
   }
@@ -62,11 +64,22 @@ export class TaxInvoiceListComponent implements OnInit {
     this.getTaxInvoices(this.selectedBranchOffice, this.pageNumber, this.pageSize)
   }
 
-  downloadInvoice(taxInvoiceId: number) {
-    this.taxInvoiceService.downloadInvoice(taxInvoiceId)
+  exportTaxInvoice(taxInvoiceId: number) {
+    this.taxInvoiceService.exportTaxInvoice(taxInvoiceId)
       .subscribe(
         file => {
           FileSaver.saveAs(file, `${taxInvoiceId}.xml`)
+      })
+  }
+
+  delete(taxInvoiceId: number) {
+    this.taxInvoiceService.delete(taxInvoiceId).subscribe(
+      _ => {
+        this.notification.show('success', 'Успіх', `Податкову накладну, успішно видалено!`)
+        this.taxInvoicesList = this.taxInvoicesList.filter(ti => ti.id != taxInvoiceId)
+      },
+      error => {
+        this.notification.show('error', 'Фіаско', `${error}`)
       })
   }
 }

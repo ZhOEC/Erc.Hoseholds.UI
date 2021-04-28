@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import { AuthService } from './core/auth/auth.service'
 import { BranchOfficeService } from './shared/services/branch-office.service'
-import { BranchOffice } from './shared/models/branch-office.model'
+import { BranchOffice } from './shared/models/branch-office'
 import { Observable } from 'rxjs'
 import { SignalRService } from './core/signal-r.service'
 import { User } from './core/user'
