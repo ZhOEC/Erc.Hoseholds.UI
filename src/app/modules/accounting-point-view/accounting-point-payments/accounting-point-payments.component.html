@@ -12,7 +12,7 @@
     <tbody>
         <tr *ngFor="let data of paymentsTable.data">
             <td>{{data.periodName}}</td>
-            <td>{{data.amount}}</td>
+            <td>{{data.amount | number : '1.2' }}</td>
             <td>{{data.source}}</td>
             <td>{{data.enterDate | date:'mediumDate'}}</td>
             <td>{{data.payDate | date:'mediumDate'}}</td>

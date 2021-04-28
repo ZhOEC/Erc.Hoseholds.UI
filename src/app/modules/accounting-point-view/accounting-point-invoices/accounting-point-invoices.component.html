@@ -24,7 +24,7 @@
                 <td>{{ data.totalDiscount | number : '1.2' }}</td>
                 <td>{{ data.totalAmountDue | number : '1.2' }}</td>
                 <td>
-                  <i [title]="data.isPaid ? 'Так' : 'Ні'" nz-icon [nzType]="data.isPaid ? 'check' : 'stop'"
+                  <i [title]="data.isPaid ? 'Так' : 'Ні'" nz-icon [nzType]="data.isPaid ? 'check-circle' : 'stop'"
                         nzTheme="twotone" [nzTwotoneColor]="data.isPaid ? '#52c41a':'#e4521a'"></i>
                 </td>
                 <td>

@@ -38,9 +38,9 @@
             </nz-descriptions>
             <nz-descriptions nzTitle="Власник">
                 <nz-descriptions-item nzTitle="ПІБ">{{a.owner.fullName}}</nz-descriptions-item>
-                <nz-descriptions-item nzTitle="Паспорт">{{a.owner.idCardNumber}}<span style="color:rgba(0, 0, 0, 0.85)">
-                        виданий</span> {{a.owner.idCardIssuanceDate | date:'mediumDate'}}
-                    {{a.owner.idCardIssuer}}{{a.owner.idCardExpDate ? ' дійсний до '+(a.owner.idCardExpDate | date:'mediumDate'):''}}
+                <nz-descriptions-item nzTitle="Паспорт" [nzSpan]="2">{{a.owner.idCardNumber}}&nbsp;<span style="color:rgba(0, 0, 0, 0.85)">
+                        виданий&nbsp;</span>{{a.owner.idCardIssuanceDate | date:'mediumDate'}}
+                    {{a.owner.idCardIssuer}} {{a.owner.idCardExpDate ? ' дійсний до '+(a.owner.idCardExpDate | date:'mediumDate'):''}}
                 </nz-descriptions-item>
 
                 <nz-descriptions-item nzTitle="Ідентифікаційний код">{{a.owner.taxCode}}</nz-descriptions-item>
