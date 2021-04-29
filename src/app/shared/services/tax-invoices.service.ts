@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators'
 
 @Injectable()
 export class TaxInvoiceService {
-    private url: string = environment.apiServer + 'taxinvoices/';
+    private url: string = environment.apiServer + 'taxinvoices/'
     
     constructor(private http: HttpClient) { }
 
@@ -25,7 +25,11 @@ export class TaxInvoiceService {
             }))
     }
 
-    exportTaxInvoice(id: number) {
+    getByPeriod(branchOfficeId: number, periodId: number) {
+        return this.http.get<TaxInvoice[]>(`${this.url}${branchOfficeId}/${periodId}`)
+    }
+
+    export(id: number) {
         return this.http.get(`${this.url}${id}/export`, { responseType: 'blob' })
     }
 

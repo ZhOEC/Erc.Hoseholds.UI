@@ -2,15 +2,16 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="5" nzRequired nzFor="branchOffice">ЦОК</nz-form-label>
     <nz-form-control [nzSpan]="6" nzErrorTip="Не обрано ЦОК">
-      <nz-select formControlName="branchOffice" nzPlaceHolder="Оберіть ЦОК" [nzOptions]=branchOfficesOptions
-        (ngModelChange)="onChangeBranchOffice($event)"></nz-select>
+      <nz-select formControlName="branchOffice" nzPlaceHolder="Оберіть ЦОК" (ngModelChange)="onChangeBranchOffice($event)">
+        <nz-option *ngFor="let branchOffice of branchOffices" [nzValue]="branchOffice" [nzLabel]="branchOffice.name"></nz-option>
+      </nz-select>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
     <nz-form-label [nzSpan]="5" nzRequired nzFor="type">Тип податкової накладної</nz-form-label>
     <nz-form-control [nzSpan]="6" nzErrorTip="Не обрано тип податкової накладної">
-      <nz-select nzPlaceHolder="Оберіть тип накладної" formControlName="type" (ngModelChange)=onChangeInvoiceType()>
-        <nz-option *ngFor="let taxInvoiceType of taxInvoiceTypes" [nzValue]="taxInvoiceType.value" [nzLabel]="taxInvoiceType.title"></nz-option>
+      <nz-select nzPlaceHolder="Оберіть тип накладної" formControlName="type" [nzOptions]="taxInvoiceTypesOptions" 
+        (ngModelChange)=onChangeInvoiceType($event)>
       </nz-select>
     </nz-form-control>
   </nz-form-item>
@@ -18,7 +19,7 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="5" nzRequired nzFor="liabilityDate">Дата забов'язань</nz-form-label>
     <nz-form-control [nzSpan]="6" nzErrorTip="Не обрано">
-      <nz-date-picker formControlName="liabilityDate" nzPlaceHolder="" [nzFormat]="dateFormat" [nzDisabledDate]="datesMoreEndDatePeriod"></nz-date-picker>
+      <nz-date-picker formControlName="liabilityDate" nzPlaceHolder="" [nzFormat]="dateFormat" [nzDisabledDate]="disabledDates"></nz-date-picker>
     </nz-form-control>
   </nz-form-item>
 
@@ -79,7 +80,7 @@
     <nz-form-label [nzSpan]="5" nzFor="tax">Сумма ПДВ</nz-form-label>
     <nz-form-control [nzSpan]="6">
       <nz-input-group nzPrefix="₴" nzSuffix="Грн.">
-        <input nz-input formControlName="tax"/>
+        <input nz-input formControlName="tax" />
       </nz-input-group>
     </nz-form-control>
   </nz-form-item>

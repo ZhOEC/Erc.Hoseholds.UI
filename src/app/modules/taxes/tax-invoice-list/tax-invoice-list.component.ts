@@ -65,7 +65,7 @@ export class TaxInvoiceListComponent implements OnInit {
   }
 
   exportTaxInvoice(taxInvoiceId: number) {
-    this.taxInvoiceService.exportTaxInvoice(taxInvoiceId)
+    this.taxInvoiceService.export(taxInvoiceId)
       .subscribe(
         file => {
           FileSaver.saveAs(file, `${taxInvoiceId}.xml`)

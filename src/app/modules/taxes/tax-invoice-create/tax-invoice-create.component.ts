@@ -3,12 +3,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { BranchOffice } from 'src/app/shared/models/branch-office'
 import { BranchOfficeService } from './../../../shared/services/branch-office.service'
 import { TaxInvoiceService } from 'src/app/shared/services/tax-invoices.service'
-import { TaxInvoiceCreateRequest } from './../../../shared/models/tax-invoices/tax-invoice-create-request'
 import { TaxInvoiceTabLine } from 'src/app/shared/models/tax-invoices/tax-invoice-tab-line'
 import { TaxInvoiceType, taxInvoiceMap, TaxInvoiceTypeData } from './../../../shared/models/tax-invoices/tax-invoice-type'
 import { TaxInvoice } from 'src/app/shared/models/tax-invoices/tax-invoice'
 import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
 import { TrueRoundPipe } from './../../../shared/pipes/true-round.pipe'
+import { Period } from 'src/app/shared/models/period'
 
 @Component({
   selector: 'app-tax-invoice-create',
@@ -17,12 +17,13 @@ import { TrueRoundPipe } from './../../../shared/pipes/true-round.pipe'
 })
 export class TaxInvoiceCreateComponent implements OnInit {
   dateFormat = 'dd.MM.yyyy'
-  datesMoreEndDatePeriod = null
-
+  disabledDates = null
+  previousPeriod: Period
+  
   taxInvoiceForm: FormGroup
-  createTaxInvoiceData: TaxInvoiceCreateRequest[] = []
-  branchOfficesOptions: { label: string, value: BranchOffice, disabled: boolean }[] = []
-  taxInvoiceTypes: TaxInvoiceTypeData[] = []
+  branchOffices: BranchOffice[] = []
+  periods: Period[]
+  taxInvoiceTypesOptions: { label: string, value: TaxInvoiceTypeData, disabled: boolean }[] = []
   
   taxInvoice: TaxInvoice
   tabLines: TaxInvoiceTabLine[] = []
@@ -50,42 +51,47 @@ export class TaxInvoiceCreateComponent implements OnInit {
       tax: [{ value: null, disabled: true }] // Сума ПДВ
     })
 
-    this.getDataForCreateTaxInvoice()
+    this.getBranchOffices()
   }
 
-  private getDataForCreateTaxInvoice() {
-    this.branchOfficeService.getDataCreateTaxInvoice().subscribe(
-      response => {
-        this.createTaxInvoiceData = response
-        this.branchOfficesOptions = response.map(bo => {
-          return { label: bo.branchOffice.name, value: bo.branchOffice, disabled: bo.isDisabled }
-        })
-      })
+  private getBranchOffices() {
+    this.branchOfficeService.getBranchOffices().subscribe(
+      bos => this.branchOffices = bos
+    )
   }
 
   onChangeBranchOffice(branchOffice: BranchOffice) {
-    this.createTaxInvoiceData.filter(item => item.branchOffice.id == branchOffice?.id)
-      .map(i => {
-        this.taxInvoiceForm.controls.type.reset()
+      this.taxInvoiceForm.controls.type.reset()
+      this.taxInvoiceForm.controls.liabilityDate.reset()
 
-        this.taxInvoiceTypes = [taxInvoiceMap[0]] // set default type: CompensationDso
-        i.branchOffice.availableCommodities.forEach(c => {
-          this.taxInvoiceTypes.push(taxInvoiceMap[c])
-        })
-      })
+      if (branchOffice) {
+        this.branchOfficeService.getPeriods(branchOffice.id).subscribe(
+          periods => {
+            this.previousPeriod = periods.sort(x => x.id).filter(x => x.id != branchOffice.currentPeriod.id)[0]
+
+            this.taxInvoiceTypesOptions = [{ label: taxInvoiceMap[0].title, value: taxInvoiceMap[0], disabled: false }] // set default type: CompensationDso
+            branchOffice.availableCommodities.forEach(c => {
+              this.taxInvoiceService.getByPeriod(branchOffice.id, this.previousPeriod.id).subscribe(
+                response => {
+                  let isDisabled = response.find(t => t.type != TaxInvoiceType.CompensationDso) ? true : false
+                  this.taxInvoiceTypesOptions = [...this.taxInvoiceTypesOptions, { label: taxInvoiceMap[c].title, value: taxInvoiceMap[c], disabled: isDisabled }]
+                })
+            })
+          })
+      }
   }
 
-  onChangeInvoiceType() {
-    let cti = this.createTaxInvoiceData.find(x => x.branchOffice.id = this.taxInvoiceForm.controls.branchOffice.value)    
-    this.taxInvoiceForm.controls.liabilityDate.patchValue(new Date(cti.period.endDate))
-
-    // disabling dates
-    this.datesMoreEndDatePeriod = (date: Date): boolean => {
-      if(this.taxInvoiceForm.controls.type.value == TaxInvoiceType.CompensationDso)
-        return date > new Date(cti.period.endDate)
-      else
-        return date != new Date(cti.period.endDate)
-      
+  onChangeInvoiceType(invoiceTypeData: TaxInvoiceTypeData) {
+    if (invoiceTypeData) {
+      // set date previous period
+      this.taxInvoiceForm.controls.liabilityDate.patchValue(new Date(this.previousPeriod.endDate))
+      // disabling dates
+      this.disabledDates = (date: Date): boolean => {
+        if(invoiceTypeData.value == TaxInvoiceType.CompensationDso)
+          return date > new Date(this.previousPeriod.endDate)
+        else
+          return date != new Date(this.previousPeriod.endDate)
+      }
     }
 
     // Calculate quantity and set per
@@ -93,13 +99,9 @@ export class TaxInvoiceCreateComponent implements OnInit {
   }
 
   onChangePaymentsSum(paymentsSum: number) {
-    /*decimal taxSum = decimal.Round(paymentsSum / ((1 + taxKoeff) / taxKoeff), 6, MidpointRounding.AwayFromZero);
-    decimal liabilitySum = decimal.Round(paymentsSum - taxSum, 2, MidpointRounding.AwayFromZero);
-    taxSum = decimal.Round(liabilitySum / 5, 6, MidpointRounding.AwayFromZero);*/
-
-    let tax = this.trueRoundPipe.transform((paymentsSum / 6), 6)
+    let tax = this.trueRoundPipe.transform(paymentsSum / 6, 6)
     let liabilityAmount = this.trueRoundPipe.transform(paymentsSum - tax, 2)
-    tax = this.trueRoundPipe.transform((liabilityAmount / 5), 6)
+    tax = this.trueRoundPipe.transform(liabilityAmount / 5, 6)
 
     this.taxInvoiceForm.controls.liabilitiesAmount.setValue(liabilityAmount)
     this.taxInvoiceForm.controls.tax.setValue(tax)
@@ -116,16 +118,15 @@ export class TaxInvoiceCreateComponent implements OnInit {
     this.quantityCalculate()
   }
 
-  getQuantitySuffix() { return this.taxInvoiceTypes.find(x => x.value == this.taxInvoiceForm.controls.type.value)?.unit }
+  getQuantitySuffix() { return this.taxInvoiceTypesOptions.find(x => x.value == this.taxInvoiceForm.controls.type.value)?.value.unit }
 
   private quantityCalculate() {
+    let invoiceType = this.taxInvoiceForm.controls.type?.value
     let paymentsSum = this.taxInvoiceForm.controls.paymentsSum?.value
     let tariff = this.taxInvoiceForm.controls.tariff?.value
     // Get quantity
-    if (paymentsSum && tariff) {
-      let precision = this.taxInvoiceForm.controls.type.value == TaxInvoiceType.NaturalGas ? 2 : 0
-
-      let quantity = this.trueRoundPipe.transform(paymentsSum / tariff, precision)
+    if (paymentsSum && tariff && invoiceType) {
+      let quantity = this.trueRoundPipe.transform(paymentsSum / tariff, invoiceType.precision)
       this.taxInvoiceForm.controls.quantity.setValue(quantity)
     }
   }
@@ -144,14 +145,14 @@ export class TaxInvoiceCreateComponent implements OnInit {
       let taxInvoiceType = this.taxInvoiceForm.controls.type.value
       this.tabLines = [...this.tabLines, {
         rowNumber: this.tabLines.length + 1,
-        productName: taxInvoiceMap[taxInvoiceType].productName,
-        productCode: taxInvoiceMap[taxInvoiceType].productCode,
-        unit: taxInvoiceMap[taxInvoiceType].unit,
-        unitCode: taxInvoiceMap[taxInvoiceType].unitCode,
-        quantity: this.taxInvoiceForm.controls.quantity.value,
-        price: this.taxInvoiceForm.controls.price.value,
-        liabilitiesAmount: this.taxInvoiceForm.controls.liabilitiesAmount.value,
-        tax: this.taxInvoiceForm.controls.tax.value
+        productName: taxInvoiceMap[taxInvoiceType.value].productName,
+        productCode: taxInvoiceMap[taxInvoiceType.value].productCode,
+        unit: taxInvoiceMap[taxInvoiceType.value].unit,
+        unitCode: taxInvoiceMap[taxInvoiceType.value].unitCode,
+        quantity: this.trueRoundPipe.transform(this.taxInvoiceForm.controls.quantity.value, taxInvoiceType.percision),
+        liabilitiesAmount: this.trueRoundPipe.transform(this.taxInvoiceForm.controls.liabilitiesAmount.value, 2),
+        price: this.trueRoundPipe.transform(this.taxInvoiceForm.controls.price.value, 8),
+        tax: this.trueRoundPipe.transform(this.taxInvoiceForm.controls.tax.value, 6)
       }]
     }
   }
@@ -165,27 +166,28 @@ export class TaxInvoiceCreateComponent implements OnInit {
     this.isLoadingSubmit = true
 
     let branchOffice = this.taxInvoiceForm.controls.branchOffice.value
+    let invoiceType = this.taxInvoiceForm.controls.type.value
     this.taxInvoice = {
       branchOfficeId: branchOffice.id,
-      periodId: this.createTaxInvoiceData.filter(item => item.branchOffice.id == branchOffice.id)[0].period.id,
-      type: this.taxInvoiceForm.controls.type.value,
+      periodId: this.previousPeriod.id,
+      type: invoiceType.value,
       liabilityDate: this.taxInvoiceForm.controls.liabilityDate.value,
-      liabilitySum: this.tabLines.map(x => x.liabilitiesAmount).reduce((a, b) => a + b, 0),
-      quantityTotal: this.tabLines.map(x => x.quantity).reduce((a, b) => a + b, 0),
-      taxSum: this.tabLines.map(x => x.tax).reduce((a, b) => a + b, 0),
-      fullSum: this.tabLines.map(x => x.liabilitiesAmount).reduce((a, b) => a + b, 0) + this.tabLines.map(x => x.tax).reduce((a, b) => a + b, 0),
+
+      liabilitySum: this.trueRoundPipe.transform(this.tabLines.map(x => x.liabilitiesAmount).reduce((a, b) => a + b, 0), 2),
+      quantityTotal: this.trueRoundPipe.transform(this.tabLines.map(x => x.quantity).reduce((a, b) => a + b, 0), invoiceType.precision),
+      taxSum: this.trueRoundPipe.transform(this.tabLines.map(x => x.tax).reduce((a, b) => a + b, 0), 2),
+      fullSum: this.trueRoundPipe.transform(this.tabLines.map(x => x.liabilitiesAmount).reduce((a, b) => a + b, 0) + this.tabLines.map(x => x.tax).reduce((a, b) => a + b, 0), 2),
       tabLines: this.tabLines
     }
+
+    console.log(this.taxInvoice)
 
     this.taxInvoiceService.create(this.taxInvoice).subscribe(
       _ => {
         this.notification.show('success', 'Успіх', `Податкову накладну, успішно створено!`)
-        this.taxInvoiceForm.enable()
         this.taxInvoiceForm.reset()
         this.taxInvoice = null
         this.tabLines = []
-
-        this.getDataForCreateTaxInvoice()
 
         this.isLoadingSubmit = false
       },
