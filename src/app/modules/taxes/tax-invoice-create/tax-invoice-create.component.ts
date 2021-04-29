@@ -99,9 +99,9 @@ export class TaxInvoiceCreateComponent implements OnInit {
   }
 
   onChangePaymentsSum(paymentsSum: number) {
-    let tax = paymentsSum / 6
-    let liabilityAmount = paymentsSum - tax
-    tax = liabilityAmount / 5
+    let tax = this.trueRoundPipe.transform(paymentsSum / 6, 6)
+    let liabilityAmount = this.trueRoundPipe.transform(paymentsSum - tax, 2)
+    tax = this.trueRoundPipe.transform(liabilityAmount / 5, 6)
 
     this.taxInvoiceForm.controls.liabilitiesAmount.setValue(liabilityAmount)
     this.taxInvoiceForm.controls.tax.setValue(tax)
@@ -111,7 +111,7 @@ export class TaxInvoiceCreateComponent implements OnInit {
   }
 
   onChangeTariff(tariff: number) {
-    let price = tariff / 1.2 // tariff without tax
+    let price = this.trueRoundPipe.transform(tariff / 1.2, 8) // tariff without tax
     this.taxInvoiceForm.controls.price.setValue(price)
 
     // Calculate and set quantity after change tariff
@@ -151,7 +151,7 @@ export class TaxInvoiceCreateComponent implements OnInit {
         unitCode: taxInvoiceMap[taxInvoiceType.value].unitCode,
         quantity: this.trueRoundPipe.transform(this.taxInvoiceForm.controls.quantity.value, taxInvoiceType.percision),
         liabilitiesAmount: this.trueRoundPipe.transform(this.taxInvoiceForm.controls.liabilitiesAmount.value, 2),
-        price: this.trueRoundPipe.transform(this.taxInvoiceForm.controls.price.value, 2),
+        price: this.trueRoundPipe.transform(this.taxInvoiceForm.controls.price.value, 8),
         tax: this.trueRoundPipe.transform(this.taxInvoiceForm.controls.tax.value, 6)
       }]
     }
@@ -175,10 +175,12 @@ export class TaxInvoiceCreateComponent implements OnInit {
 
       liabilitySum: this.trueRoundPipe.transform(this.tabLines.map(x => x.liabilitiesAmount).reduce((a, b) => a + b, 0), 2),
       quantityTotal: this.trueRoundPipe.transform(this.tabLines.map(x => x.quantity).reduce((a, b) => a + b, 0), invoiceType.precision),
-      taxSum: this.trueRoundPipe.transform(this.tabLines.map(x => x.tax).reduce((a, b) => a + b, 0), 6),
+      taxSum: this.trueRoundPipe.transform(this.tabLines.map(x => x.tax).reduce((a, b) => a + b, 0), 2),
       fullSum: this.trueRoundPipe.transform(this.tabLines.map(x => x.liabilitiesAmount).reduce((a, b) => a + b, 0) + this.tabLines.map(x => x.tax).reduce((a, b) => a + b, 0), 2),
       tabLines: this.tabLines
     }
+
+    console.log(this.taxInvoice)
 
     this.taxInvoiceService.create(this.taxInvoice).subscribe(
       _ => {

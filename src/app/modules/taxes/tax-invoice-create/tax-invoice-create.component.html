@@ -38,7 +38,7 @@
       <nz-form-item>
         <nz-form-control nzFor="liabilitiesAmount">
           <nz-input-group nzPrefix="₴" nzSuffix="Грн.">
-            <input type="text"nz-input formControlName="liabilitiesAmount" [value]="taxInvoiceForm.get('liabilitiesAmount').value | trueRound:2" />
+            <input type="text"nz-input formControlName="liabilitiesAmount" />
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>
@@ -60,7 +60,7 @@
       <nz-form-item>
         <nz-form-control nzFor="price">
           <nz-input-group nzPrefix="₴" nzSuffix="Грн.">
-            <input type="text"nz-input formControlName="price" [value]="taxInvoiceForm.get('price').value | trueRound:2" />
+            <input type="text"nz-input formControlName="price" />
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>
@@ -80,7 +80,7 @@
     <nz-form-label [nzSpan]="5" nzFor="tax">Сумма ПДВ</nz-form-label>
     <nz-form-control [nzSpan]="6">
       <nz-input-group nzPrefix="₴" nzSuffix="Грн.">
-        <input nz-input formControlName="tax" [value]="taxInvoiceForm.get('tax').value | trueRound:6" />
+        <input nz-input formControlName="tax" />
       </nz-input-group>
     </nz-form-control>
   </nz-form-item>
