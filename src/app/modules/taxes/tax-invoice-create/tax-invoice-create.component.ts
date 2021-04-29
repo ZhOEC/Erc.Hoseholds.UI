@@ -72,8 +72,8 @@ export class TaxInvoiceCreateComponent implements OnInit {
             this.taxInvoiceTypesOptions = [{ label: taxInvoiceMap[0].title, value: taxInvoiceMap[0], disabled: false }] // set default type: CompensationDso
             branchOffice.availableCommodities.forEach(c => {
               this.taxInvoiceService.getByPeriod(branchOffice.id, this.previousPeriod.id).subscribe(
-                taxInvoice => {
-                  let isDisabled = taxInvoice ? true : false
+                response => {
+                  let isDisabled = response.find(t => t.type != TaxInvoiceType.CompensationDso) ? true : false
                   this.taxInvoiceTypesOptions = [...this.taxInvoiceTypesOptions, { label: taxInvoiceMap[c].title, value: taxInvoiceMap[c], disabled: isDisabled }]
                 })
             })
