@@ -149,7 +149,7 @@ export class TaxInvoiceCreateComponent implements OnInit {
         productCode: taxInvoiceMap[taxInvoiceType.value].productCode,
         unit: taxInvoiceMap[taxInvoiceType.value].unit,
         unitCode: taxInvoiceMap[taxInvoiceType.value].unitCode,
-        quantity: this.trueRoundPipe.transform(this.taxInvoiceForm.controls.quantity.value, taxInvoiceType.percision),
+        quantity: this.trueRoundPipe.transform(this.taxInvoiceForm.controls.quantity.value, taxInvoiceType.precision),
         liabilitiesAmount: this.trueRoundPipe.transform(this.taxInvoiceForm.controls.liabilitiesAmount.value, 2),
         price: this.trueRoundPipe.transform(this.taxInvoiceForm.controls.price.value, 8),
         tax: this.trueRoundPipe.transform(this.taxInvoiceForm.controls.tax.value, 6)
@@ -179,8 +179,6 @@ export class TaxInvoiceCreateComponent implements OnInit {
       fullSum: this.trueRoundPipe.transform(this.tabLines.map(x => x.liabilitiesAmount).reduce((a, b) => a + b, 0) + this.tabLines.map(x => x.tax).reduce((a, b) => a + b, 0), 2),
       tabLines: this.tabLines
     }
-
-    console.log(this.taxInvoice)
 
     this.taxInvoiceService.create(this.taxInvoice).subscribe(
       _ => {

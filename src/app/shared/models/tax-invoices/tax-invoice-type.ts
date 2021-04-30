@@ -24,7 +24,7 @@ export const taxInvoiceMap: Record<TaxInvoiceType, TaxInvoiceTypeData> = {
         unitCode: "2454",
         precision: 0
     },
-    [TaxInvoiceType.Electricity]: { 
+    [TaxInvoiceType.Electricity]: {
         title: "Електроенергія",
         value: TaxInvoiceType.Electricity,
         productName: "Електрична енергія",

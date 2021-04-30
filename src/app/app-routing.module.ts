@@ -20,6 +20,7 @@ import { BranchOfficeEditComponent } from './modules/branch-office/branch-office
 import { ReportsComponent } from './modules/common-references/reports/reports.component'
 import { ExportConsumptionSocialServicesComponent } from './modules/information-exchange/export-consumption-social-services/export-consumption-social-services.component'
 import { TaxInvoiceCreateComponent } from './modules/taxes/tax-invoice-create/tax-invoice-create.component'
+import { MarkersListComponent } from './modules/marker/markers-list/markers-list.component'
 
 const routes: Routes = [
   { path: 'accounting-point/new', component: AccountingPointNewComponent, },
@@ -41,7 +42,8 @@ const routes: Routes = [
   { path: 'branch-office/:id/edit', component: BranchOfficeEditComponent },
   { path: 'print-bills', component: PrintBillsComponent },
   { path: 'reports', component: ReportsComponent },
-  { path: 'export-consumption-social-services', component: ExportConsumptionSocialServicesComponent }
+  { path: 'export-consumption-social-services', component: ExportConsumptionSocialServicesComponent },
+  { path: 'markers', component: MarkersListComponent }
 ];
 
 @NgModule({
