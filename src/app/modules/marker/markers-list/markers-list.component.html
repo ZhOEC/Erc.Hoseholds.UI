@@ -1,3 +1,49 @@
-<p>
-  markers-list works!
-</p>
+<ng-template #titleTemplate>
+  <nz-row nzJustify="space-between" nzAlign="middle" nzGutter="12">
+    <nz-col>
+      <span>Список маркерів</span>
+    </nz-col>
+    <nz-col>
+      <nz-space [nzSize]="8">
+        <button *nzSpaceItem nz-button nzType="primary" (click)="showMarkerModal()">Додати</button>
+      </nz-space>
+    </nz-col>
+  </nz-row>
+</ng-template>
+<nz-table #markersTable
+  [nzData]="markers"
+  [nzFrontPagination]="false"
+  [nzTotal]="totalCount"
+  [nzPageSize]="pageSize"
+  [nzPageIndex]="pageNumber"
+  [nzShowSizeChanger]="true"
+  [nzLoading]="isMarkersLoading"
+  [nzTitle]="titleTemplate"
+  [nzFooter]="totalCount ? 'Всього: ' + totalCount : null"
+  nzSize="small"
+  nzBordered="true"
+  (nzPageIndexChange)="pageIndexChange($event)"
+  (nzPageSizeChange)="pageSizeChange($event)">
+  <thead>
+    <tr>
+      <th>Значення</th>
+      <th>Операції</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let marker of markersTable.data">
+      <td>{{ marker.value }}</td>
+      <td nzAlign="center">
+        <a>
+          <i nz-icon nzType="edit" (click)="showMarkerModal(marker)" nzTheme="outline" title="Редагувати"></i>
+        </a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a nz-popconfirm nzPopconfirmTitle="Впевнені що хочете видалити?" (nzOnConfirm)="remove(marker.id)" title="Видалити">
+          <i nz-icon nzType="delete" nzTheme="outline"></i>
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+
+<marker-modal-component (submitEvent)="updateData()"></marker-modal-component>

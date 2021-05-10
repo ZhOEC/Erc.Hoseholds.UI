@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
+import { NotificationService } from '../../../shared/components/notification/notification.service'
 import { BranchOffice } from 'src/app/shared/models/branch-office'
 import { Period } from 'src/app/shared/models/period'
 import { BillService } from 'src/app/shared/services/bill.service'
@@ -22,7 +22,7 @@ export class PrintBillsComponent implements OnInit {
   isLoadingPeriods: boolean
 
   constructor(
-    private notification: NotificationComponent,
+    private notification: NotificationService,
     private formBuilder: FormBuilder,
     private branchOfficeService: BranchOfficeService,
     private billService: BillService) { }

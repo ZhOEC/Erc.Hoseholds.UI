@@ -6,7 +6,7 @@ import { TaxInvoiceService } from 'src/app/shared/services/tax-invoices.service'
 import { TaxInvoiceTabLine } from 'src/app/shared/models/tax-invoices/tax-invoice-tab-line'
 import { TaxInvoiceType, taxInvoiceMap, TaxInvoiceTypeData } from './../../../shared/models/tax-invoices/tax-invoice-type'
 import { TaxInvoice } from 'src/app/shared/models/tax-invoices/tax-invoice'
-import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
+import { NotificationService } from '../../../shared/components/notification/notification.service'
 import { TrueRoundPipe } from './../../../shared/pipes/true-round.pipe'
 import { Period } from 'src/app/shared/models/period'
 
@@ -33,7 +33,7 @@ export class TaxInvoiceCreateComponent implements OnInit {
     private formBuilder: FormBuilder,
     private branchOfficeService: BranchOfficeService,
     private taxInvoiceService: TaxInvoiceService,
-    private notification: NotificationComponent,
+    private notification: NotificationService,
     private trueRoundPipe: TrueRoundPipe) {}
 
   ngOnInit() {

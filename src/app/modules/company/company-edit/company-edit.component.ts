@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { ActivatedRoute, ParamMap } from '@angular/router'
 import { switchMap } from 'rxjs/operators'
 import { Location } from '@angular/common'
-import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
+import { NotificationService } from '../../../shared/components/notification/notification.service'
 import { CompanyService } from 'src/app/shared/services/company.service'
 
 @Component({
@@ -20,7 +20,7 @@ export class CompanyEditComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private companyService: CompanyService,
-    private notification: NotificationComponent) { }
+    private notification: NotificationService) { }
 
   ngOnInit() {
     this.form = this.formBuilder.group({

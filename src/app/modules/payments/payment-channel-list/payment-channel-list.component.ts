@@ -10,8 +10,7 @@ import { PaymentChannelModalComponent } from '../payment-channel-modal/payment-c
 })
 
 export class PaymentChannelListComponent implements OnInit {
-
-  @ViewChild(PaymentChannelModalComponent) 
+  @ViewChild(PaymentChannelModalComponent)
   private paymentChannelModal: PaymentChannelModalComponent
   paymentChannels: PaymentChannel[]
   
@@ -22,16 +21,14 @@ export class PaymentChannelListComponent implements OnInit {
   }
 
   getList() {
-    this.paymentChannelService.getAll().subscribe(data => {
-      this.paymentChannels = data
-    });
+    this.paymentChannelService.getAll().subscribe(data => this.paymentChannels = data)
   }
 
   addNew(paymentChannels) {
     this.paymentChannelModal.openAddDialog(paymentChannels)
   }
 
-  edit(paymentChannels, paymentChannel) {
+  edit(paymentChannels, paymentChannel: PaymentChannel) {
     this.paymentChannelModal.openEditDialog(paymentChannel, paymentChannels)
   }
 

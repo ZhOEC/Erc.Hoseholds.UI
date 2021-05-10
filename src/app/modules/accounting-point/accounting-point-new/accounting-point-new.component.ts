@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router'
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms'
 import { Person } from 'src/app/shared/models/person.model'
 import { AccountingPointService } from 'src/app/shared/services/accounting-point.service'
-import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
+import { NotificationService } from '../../../shared/components/notification/notification.service'
 
 @Component({
   selector: 'app-accounting-point-new',
@@ -20,7 +20,7 @@ export class AccountingPointNewComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private accountingPointService: AccountingPointService,
-    private notification: NotificationComponent) {}
+    private notification: NotificationService) {}
 
   ngOnInit() {
     this.form = this.formBuilder.group({

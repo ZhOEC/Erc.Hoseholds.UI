@@ -1,9 +1,9 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
-import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
 import { PaymentService } from 'src/app/shared/services/payment.service'
 import { AccountingPointService } from 'src/app/shared/services/accounting-point.service'
 import { PaymentView } from '../../../shared/models/payments/payment-view.model'
+import { NotificationService } from '../../../shared/components/notification/notification.service'
 
 @Component({
   selector: 'app-payment-modal',
@@ -25,7 +25,7 @@ export class PaymentModalComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
     private accountingPointService: AccountingPointService,
     private paymentService: PaymentService,
-    private notification: NotificationComponent) {}
+    private notification: NotificationService) {}
 
   ngOnInit() {
     this.paymentForm = this.formBuilder.group({

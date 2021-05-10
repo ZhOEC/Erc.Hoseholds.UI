@@ -5,7 +5,7 @@ import { Period } from 'src/app/shared/models/period'
 import { BranchOfficeService } from 'src/app/shared/services/branch-office.service'
 import { ReportService } from 'src/app/shared/services/report.service'
 import * as FileSaver from 'file-saver'
-import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
+import { NotificationService } from '../../../shared/components/notification/notification.service'
 
 @Component({
   selector: 'app-reports',
@@ -24,7 +24,7 @@ export class ReportsComponent implements OnInit {
   slug: string
 
   constructor(
-    private notification: NotificationComponent,
+    private notification: NotificationService,
     private formBuilder: FormBuilder,
     private branchOfficeService: BranchOfficeService,
     private reportService: ReportService) { }

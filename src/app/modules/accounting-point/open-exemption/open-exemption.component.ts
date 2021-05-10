@@ -5,8 +5,8 @@ import { ExemptionCategory } from 'src/app/shared/models/exemption-category'
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms'
 import { Person } from 'src/app/shared/models/person.model'
 import { Router, ActivatedRoute, ParamMap } from '@angular/router'
-import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
 import { switchMap } from 'rxjs/operators'
+import { NotificationService } from '../../../shared/components/notification/notification.service'
 import { AccountingPointDetailService } from '../../accounting-point-view/accounting-point-detail.service'
 
 @Component({
@@ -28,7 +28,7 @@ export class OpenExemptionComponent implements OnInit {
     private exemptionCategoryService: ExemptionCategoryService,
     private accountingPointDetailService: AccountingPointDetailService,
     private accountingPointsService: AccountingPointService,
-    private notification: NotificationComponent) { }
+    private notification: NotificationService) { }
 
   ngOnInit() {
     this.openExemptionForm = this.fb.group({

@@ -1,6 +1,10 @@
-<nz-modal [nzTitle]="modalTitle" [nzVisible]="isVisible"
-  (nzOnOk)="submitForm()" [nzOkText]="isOkLoading ? 'Відправка' : 'Відправити'"
-  (nzOnCancel)="isVisible = false" (nzOnCancel)="resetForm()"
+<nz-modal 
+  [nzTitle]="modalTitle"
+  [nzVisible]="isVisible"
+  (nzOnOk)="submitForm()"
+  (nzOnCancel)="isVisible = false"
+  (nzOnCancel)="resetForm()"
+  [nzOkText]="isOkLoading ? 'Відправка' : 'Відправити'"
   [nzOkDisabled]="!paymentForm.valid || !paymentForm.touched"
   [nzOkLoading]="isOkLoading"
   nzWidth=690>
@@ -36,19 +40,3 @@
     </nz-form-item>
   </form>
 </nz-modal>
-
-
-              <!--
-                
-          [nzCustomTemplate]="optionTemplate" 
-                <nz-option nzCustomContent *ngFor="let person of foundPersons" [nzLabel]="person" [nzValue]="person">
-                <b>ПІБ:</b> {{person.lastName}} {{person.firstName}} {{person.patronymic}} <br/>
-                <b>Номер паспорта:</b> {{person.idCardNumber}} <b>Іден. номер:</b> {{person.taxCode}}
-              </nz-option>
-            </nz-select>
-            <ng-template #personTemplate let-person>
-              <span>
-                {{ person.nzLabel.lastName }} {{ person.nzLabel.firstName }} {{ person.nzLabel.patronymic }}
-                <b>{{ person.nzLabel.taxCode }} : {{ person.nzLabel.idCardNumber }}</b>
-              </span>
-            </ng-template> -->

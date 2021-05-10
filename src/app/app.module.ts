@@ -22,6 +22,8 @@ import { AccountingPointViewModule } from './modules/accounting-point-view/accou
 import { CommonReferencesModule } from './modules/common-references/common-references.module'
 import { ContractModule } from './modules/contract/contract.module'
 import { TaxesModule } from './modules/taxes/taxes.module'
+
+import { NotificationService } from './shared/components/notification/notification.service'
 import { BranchOfficeService } from './shared/services/branch-office.service'
 import { AccountingPointService } from './shared/services/accounting-point.service'
 import { DistributionSystemOperatorService } from './shared/services/distribution-system-operator.service'
@@ -74,6 +76,7 @@ registerLocaleData(uk);
     MarkerModule
   ],
   providers: [
+    NotificationService,
     DistributionSystemOperatorService,
     BranchOfficeService,
     AccountingPointService,

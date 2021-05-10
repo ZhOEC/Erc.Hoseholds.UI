@@ -1,4 +1,4 @@
 export interface Marker {
-    id: number,
+    id?: number,
     value: string
 }

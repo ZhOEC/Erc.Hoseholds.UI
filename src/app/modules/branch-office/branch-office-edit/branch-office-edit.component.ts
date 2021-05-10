@@ -2,7 +2,7 @@ import { BranchOfficeService } from 'src/app/shared/services/branch-office.servi
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, ParamMap } from '@angular/router'
-import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
+import { NotificationService } from '../../../shared/components/notification/notification.service'
 import { switchMap } from 'rxjs/operators'
 import { Location } from '@angular/common'
 
@@ -20,7 +20,7 @@ export class BranchOfficeEditComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private branchOfficeService: BranchOfficeService,
-    private notification: NotificationComponent) { }
+    private notification: NotificationService) { }
 
   ngOnInit() {
     this.form = this.formBuilder.group({

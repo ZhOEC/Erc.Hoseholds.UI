@@ -135,10 +135,10 @@
               style="white-space: nowrap; color: darkblue; float: right; margin-right: 24px;">
               <a *ngIf="isBranchOfficeEngineer() else noRole" 
                 [routerLink]="['/branch-office', branchOfficesList[0].id, 'edit']" routerLinkActive="router-link-active">
-                {{ branchOfficesList[0].currentPeriodName }}
+                {{ branchOfficesList[0].currentPeriod.name }}
               </a>
               <ng-template #noRole>
-                {{ branchOfficesList[0].currentPeriodName }}
+                {{ branchOfficesList[0].currentPeriod.name }}
               </ng-template>
             </span>
             <ng-template #manyBranchOffices>
@@ -148,7 +148,7 @@
               <ng-template #periodsTemplate>
                 <div>
                   <p *ngFor="let bo of branchOfficesList">
-                    {{ bo.name }} - {{ bo.currentPeriodName }}
+                    {{ bo.name }} - {{ bo.currentPeriod.name }}
                     <i *ngIf="isBranchOfficeEngineer()" nz-icon nzType="edit" nzTheme="outline" 
                       [routerLink]="['/branch-office', bo.id, 'edit']" routerLinkActive="router-link-active"></i>
                   </p>

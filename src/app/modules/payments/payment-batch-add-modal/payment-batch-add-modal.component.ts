@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { BranchOfficeService } from 'src/app/shared/services/branch-office.service'
 import { BranchOffice } from 'src/app/shared/models/branch-office'
 import { PaymentBatchService } from 'src/app/shared/services/payment-batch.service'
-import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
+import { NotificationService } from '../../../shared/components/notification/notification.service'
 import { PaymentChannelService } from '../../../shared/services/payment-channel.service'
 import { PaymentChannel } from '../../../shared/models/payments/payment-channel.model'
 import { PaymentBatchView } from 'src/app/shared/models/payments/payment-batch-view.model'
@@ -30,7 +30,7 @@ export class PaymentBatchAddComponent implements OnInit {
     private branchOfficeService: BranchOfficeService,
     private paymentChannelService: PaymentChannelService,
     private paymentBatchService: PaymentBatchService,
-    private notification: NotificationComponent,
+    private notification: NotificationService,
     private formBuilder: FormBuilder) {}
 
   ngOnInit() {

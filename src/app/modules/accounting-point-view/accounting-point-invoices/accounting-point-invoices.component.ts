@@ -3,7 +3,7 @@ import { AccountingPointDetailService } from '../accounting-point-detail.service
 import { NzTableQueryParams } from 'ng-zorro-antd/table/ng-zorro-antd-table';
 import { Commodity } from 'src/app/shared/models/commodity';
 import { BillService } from 'src/app/shared/services/bill.service'
-import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
+import { NotificationService } from '../../../shared/components/notification/notification.service'
 import * as FileSaver from 'file-saver'
 
 @Component({
@@ -24,7 +24,7 @@ export class AccountingPointInvoicesComponent implements OnChanges {
   constructor(
     private accountingPointDetailService: AccountingPointDetailService,
     private billService: BillService,
-    private notification: NotificationComponent) {}
+    private notification: NotificationService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     this.accountingPointId = changes['accountingPointId'].currentValue;

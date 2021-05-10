@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { PaymentChannel } from '../../../shared/models/payments/payment-channel.model'
 import { PaymentChannelService } from '../../../shared/services/payment-channel.service'
-import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
+import { NotificationService } from '../../../shared/components/notification/notification.service'
 
 @Component({
   selector: 'app-payment-channel-modal',
@@ -33,7 +33,7 @@ export class PaymentChannelModalComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, 
     private paymentChannelService: PaymentChannelService,
-    private notification: NotificationComponent
+    private notification: NotificationService
   ) {}
 
   ngOnInit() {

@@ -5,7 +5,7 @@ import { PaymentBatchService } from 'src/app/shared/services/payment-batch.servi
 import { PaymentModalComponent } from './../payment-modal/payment-modal.component'
 import { PaymentService } from 'src/app/shared/services/payment.service'
 import { PaymentView } from 'src/app/shared/models/payments/payment-view.model'
-import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
+import { NotificationService } from 'src/app/shared/components/notification/notification.service'
 
 @Component({
   selector: 'app-payment-batch-detail',
@@ -31,7 +31,7 @@ export class PaymentBatchDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private paymentBatchService: PaymentBatchService,
     private paymentService: PaymentService,
-    private notification: NotificationComponent) {}
+    private notification: NotificationService) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {

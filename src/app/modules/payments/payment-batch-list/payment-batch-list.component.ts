@@ -3,7 +3,7 @@ import { PaymentBatchService } from 'src/app/shared/services/payment-batch.servi
 import { PaymentBatchView } from 'src/app/shared/models/payments/payment-batch-view.model'
 import { PaymentBatchAddComponent } from '../payment-batch-add-modal/payment-batch-add-modal.component'
 import { PaymentChannelService } from './../../../shared/services/payment-channel.service'
-import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
+import { NotificationService } from 'src/app/shared/components/notification/notification.service'
 import { PaymentChannel } from 'src/app/shared/models/payments/payment-channel.model'
 import { switchMap } from 'rxjs/operators'
 
@@ -33,7 +33,7 @@ export class PaymentBatchListComponent implements OnInit {
 
   constructor(private paymentBatchService: PaymentBatchService,
     private paymentChannelService: PaymentChannelService,
-    private notification: NotificationComponent) {}
+    private notification: NotificationService) {}
 
   ngOnInit() {
     this.getPaymentBatches(this.pageNumber, this.pageSize, this.showClosedPaymentsBatch)

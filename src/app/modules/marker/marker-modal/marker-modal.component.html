@@ -1,0 +1,18 @@
+<nz-modal
+  [(nzVisible)]="isVisible"
+  [nzTitle]="inputMarker ? 'Редагування маркеру' : 'Додавання маркеру'"
+  (nzOnOk)="submit()"
+  (nzOnCancel)="cancel()"
+  [nzOkText]="isSubmit ? 'Відправка' : 'Відправити'"
+  [nzOkDisabled]="!formMarker.valid || !formMarker.dirty || formMarker.value.value == inputMarker?.value"
+  [nzOkLoading]="isSubmit">
+  <form nz-form [formGroup]="formMarker">
+    <nz-form-item>
+      <nz-form-control>
+        <nz-textarea-count [nzMaxCharacterCount]="maxCharacterMarkerValue">
+          <textarea nz-input rows="4" formControlName="value"></textarea>
+        </nz-textarea-count>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-modal>

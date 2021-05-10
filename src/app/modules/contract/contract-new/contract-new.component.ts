@@ -6,7 +6,7 @@ import { AccountingPointDetail } from '../../accounting-point-view/accounting-po
 import { Person } from 'src/app/shared/models/person.model'
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms'
 import { AccountingPointService } from 'src/app/shared/services/accounting-point.service'
-import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
+import { NotificationService } from '../../../shared/components/notification/notification.service'
 
 @Component({
   selector: 'app-contract-new',
@@ -27,7 +27,7 @@ export class ContractNewComponent implements OnInit {
     private formBuilder: FormBuilder,
     private accountingPointService: AccountingPointService,
     private accountingPointDetailService: AccountingPointDetailService,
-    private notification: NotificationComponent) { }
+    private notification: NotificationService) { }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
