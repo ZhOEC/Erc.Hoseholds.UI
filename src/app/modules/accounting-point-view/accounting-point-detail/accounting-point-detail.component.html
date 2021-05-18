@@ -1,4 +1,4 @@
- <div *ngIf="accountingPointDetail as a">
+<div *ngIf="accountingPointDetail as a">
     <nz-page-header [nzGhost]="false" style="padding-left: 0px; padding-right: 0px;">
         <nz-page-header-title>{{a.name}} {{a.owner.fullName}}</nz-page-header-title>
         <nz-page-header-subtitle>{{a.addressStreetLocation + ', '+ a.addressCityName + ', '+ a.addressZip}}</nz-page-header-subtitle>
@@ -47,13 +47,15 @@
                 <nz-descriptions-item nzTitle="Мобільні телефони"><span
                         *ngFor="let ph of a.owner.mobilePhones; last as isLast">{{ph + (isLast ? '' : ',')}}
                     </span></nz-descriptions-item>
-                <nz-descriptions-item nzTitle="Email">{{a.owner.email}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Email">{{ a.owner.email === null ? "-" : a.owner.email }}</nz-descriptions-item>
             </nz-descriptions>
             <nz-descriptions nzTitle="Діюча пільга" *ngIf="a.exemption">
                 <nz-descriptions-item nzTitle="Категорія">{{a.exemption.categoryName}}</nz-descriptions-item>
                 <nz-descriptions-item nzTitle="Пільговик">{{a.exemption.person.fullName}}</nz-descriptions-item>
                 <nz-descriptions-item nzTitle="Кількість осіб">{{a.exemption.personsNumber}}</nz-descriptions-item>
             </nz-descriptions>
+
+            <app-accounting-point-markers [accountingPointId]="a.id" [markers]="a.markers" (eventAddedMarker)="markerAdded()"></app-accounting-point-markers>
         </nz-collapse-panel>
         <nz-collapse-panel nzHeader="Рахунки" class="invoices-info">
             <div>
@@ -62,9 +64,8 @@
         </nz-collapse-panel>
         <nz-collapse-panel nzHeader="Платежі" class="payments-info">
             <div>
-                <app-accounting-point-payments [accountingPointId]="a.id"  ></app-accounting-point-payments>
+                <app-accounting-point-payments [accountingPointId]="a.id" ></app-accounting-point-payments>
             </div>
         </nz-collapse-panel>
     </nz-collapse>
-
 </div>

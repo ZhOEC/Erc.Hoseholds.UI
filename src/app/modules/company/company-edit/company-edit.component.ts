@@ -31,9 +31,11 @@ export class CompanyEditComponent implements OnInit {
       address: [null, [Validators.required]],
       email: [null, [Validators.required]],
       www: [null, [Validators.required]],
-      taxpayerPhone: [null, [Validators.required]],
+      taxpayerNumber: [null, [Validators.required]],
+      stateRegistryCode: [null, [Validators.required]],
       bookkeeperName: [null, [Validators.required]],
-      bookkeeperTaxNumber: [null, [Validators.required]]
+      bookkeeperTaxNumber: [null, [Validators.required]],
+      taxpayerPhone: [null, [Validators.required]]
     })
   }
 

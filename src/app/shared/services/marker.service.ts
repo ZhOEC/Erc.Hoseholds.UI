@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { HttpClient, HttpParams } from '@angular/common/http'
 import { environment } from 'src/environments/environment'
-import { Marker } from '../models/marker'
+import { MarkerBasic } from '../models/markers/marker-basic'
   
 @Injectable()
 export class MarkerService {
@@ -13,15 +13,15 @@ export class MarkerService {
         let queryParams = new HttpParams()
             .append('pageNumber', pageNumber.toString())
             .append('pageSize', pageSize.toString())
-        return this.http.get<Marker[]>(`${this.url}`, { params: queryParams, observe: 'response' })
+        return this.http.get<MarkerBasic[]>(`${this.url}`, { params: queryParams, observe: 'response' })
     }
 
-    add(marker: Marker) {
-        return this.http.post<Marker>(`${this.url}`, marker)
+    add(marker: MarkerBasic) {
+        return this.http.post<MarkerBasic>(`${this.url}`, marker)
     }
     
-    update(marker: Marker) {
-        return this.http.put<Marker>(`${this.url}/${marker.id}`, marker)
+    update(marker: MarkerBasic) {
+        return this.http.put<MarkerBasic>(`${this.url}/${marker.id}`, marker)
     }
 
     delete(markerId: number) {

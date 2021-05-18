@@ -6,43 +6,43 @@
   [nzOkLoading]="isOkLoading">
     <form nz-form [formGroup]="paymentChannelForm">
         <nz-form-item>
-            <nz-form-label [nzSpan]="9" nzRequired nzFor="name">Назва</nz-form-label>
+            <nz-form-label [nzSpan]="10" nzRequired nzFor="name">Назва</nz-form-label>
             <nz-form-control [nzSpan]="12" nzErrorTip="Обов'язкове поле">
               <textarea nz-input formControlName="name" placeholder="Назва" [nzAutosize]="{ minRows: 3, maxRows: 4 }"></textarea>
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label [nzSpan]="9" nzFor="recordpointFieldName">Колонка особового рахунку</nz-form-label>
+          <nz-form-label [nzSpan]="10" nzFor="recordpointFieldName">Колонка особового рахунку</nz-form-label>
           <nz-form-control [nzSpan]="12">
             <input nz-input formControlName="recordpointFieldName" placeholder="Назва поля в дбф" />
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label [nzSpan]="9" nzFor="sumFieldName">Колонка суми</nz-form-label>
+          <nz-form-label [nzSpan]="10" nzFor="sumFieldName">Колонка суми</nz-form-label>
           <nz-form-control [nzSpan]="12">
             <input nz-input formControlName="sumFieldName" placeholder="Назва поля в дбф" />
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label [nzSpan]="9" nzFor="dateFieldName">Колонка дати</nz-form-label>
+          <nz-form-label [nzSpan]="10" nzFor="dateFieldName">Колонка дати</nz-form-label>
           <nz-form-control [nzSpan]="12">
             <input nz-input formControlName="dateFieldName" placeholder="Назва поля в дбф" />
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label [nzSpan]="9" nzFor="textDateFormat">Формат тексту дати</nz-form-label>
+          <nz-form-label [nzSpan]="10" nzFor="textDateFormat">Формат тексту дати</nz-form-label>
           <nz-form-control [nzSpan]="12">
             <input nz-input formControlName="textDateFormat" placeholder="Формат тексту дати" />
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label [nzSpan]="9" nzFor="personFieldName">Колонка інформації</nz-form-label>
+          <nz-form-label [nzSpan]="10" nzFor="personFieldName">Колонка інформації</nz-form-label>
           <nz-form-control [nzSpan]="12">
             <input nz-input formControlName="personFieldName" placeholder="Назва поля в дбф" />
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label [nzSpan]="9" nzFor="totalRecord">Рядок суми пачки</nz-form-label>
+          <nz-form-label [nzSpan]="10" nzFor="totalRecord">Рядок суми пачки</nz-form-label>
           <nz-form-control [nzSpan]="12">
             <nz-select nzPlaceHolder="Рядок суми" formControlName="totalRecord">
               <nz-option *ngFor="let totalRecord of totalRecordList" [nzValue]="totalRecord.id" [nzLabel]="totalRecord.name"></nz-option>
@@ -50,7 +50,7 @@
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label [nzSpan]="9" nzRequired nzFor="paymentsType">Тип платежу</nz-form-label>
+          <nz-form-label [nzSpan]="10" nzRequired nzFor="paymentsType">Тип платежу</nz-form-label>
           <nz-form-control [nzSpan]="12" nzErrorTip="Обов'язкове поле">
             <nz-select nzPlaceHolder="Тип платежу" formControlName="paymentsType">
               <nz-option *ngFor="let paymentsType of paymentsTypeList" [nzValue]="paymentsType.id" [nzLabel]="paymentsType.name"></nz-option>

@@ -1,8 +1,9 @@
-import { Component, EventEmitter, OnChanges, Output, SimpleChanges } from "@angular/core"
+import { Component, EventEmitter, Output } from "@angular/core"
 import { FormBuilder, FormGroup, Validators } from "@angular/forms"
 import { NotificationService } from "src/app/shared/components/notification/notification.service"
-import { Marker } from "src/app/shared/models/marker"
+import { MarkerBasic } from "src/app/shared/models/markers/marker-basic"
 import { MarkerService } from "src/app/shared/services/marker.service"
+import { markerTypesMap } from './../../../shared/models/markers/marker-type'
 
 @Component({
   selector: 'marker-modal-component',
@@ -12,11 +13,14 @@ import { MarkerService } from "src/app/shared/services/marker.service"
 export class MarkerModalComponent {
   @Output() submitEvent = new EventEmitter<boolean>()
   
-  inputMarker: Marker
+  inputMarker: MarkerBasic
   isVisible = false
-  formMarker: FormGroup
-  maxCharacterMarkerValue = 100
   isSubmit = false
+
+  markerTypes = markerTypesMap
+
+  formMarker: FormGroup
+  maxCharacterMarkerValue = 50
 
   constructor(
     private formBuilder: FormBuilder,
@@ -26,11 +30,12 @@ export class MarkerModalComponent {
 
   ngOnInit() {
     this.formMarker = this.formBuilder.group({
+      type: [null, [ Validators.required ]],
       value: [null, [ Validators.maxLength(this.maxCharacterMarkerValue) ]]
     })
   }
 
-  add(marker: Marker) {
+  add(marker: MarkerBasic) {
     this.markerService.add(marker).subscribe(
       _ => {
         this.submitEvent.emit(true)
@@ -44,7 +49,7 @@ export class MarkerModalComponent {
       })
   }
 
-  update(marker: Marker) {
+  update(marker: MarkerBasic) {
     this.markerService.update(marker).subscribe(
       _ => {
         this.notification.show('success', 'Успіх', `Маркер успішно оновлено!`)
@@ -58,7 +63,7 @@ export class MarkerModalComponent {
       })
   }
 
-  showModal(marker?: Marker) {
+  showModal(marker?: MarkerBasic) {
     this.inputMarker = marker
 
     if (this.inputMarker) {
@@ -70,7 +75,7 @@ export class MarkerModalComponent {
 
   submit() {
     if (this.inputMarker) {
-      const marker = { id: this.inputMarker.id, value: this.formMarker.value.value }
+      const marker = { id: this.inputMarker.id, type: this.formMarker.value.type, value: this.formMarker.value.value }
       this.update(marker)
     } else {
       this.add(this.formMarker.value)

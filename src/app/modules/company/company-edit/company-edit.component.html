@@ -43,8 +43,22 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSpan]="5" nzRequired nzFor="taxpayerPhone">ЄДРПОУ компанії</nz-form-label>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="taxpayerNumber">ІПН</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Не введено ІПН компанії">
+      <input type="text" nz-input formControlName="taxpayerNumber"/>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="stateRegistryCode">ЄДРПОУ компанії</nz-form-label>
     <nz-form-control [nzSpan]="12" nzErrorTip="Не введено ЄДРПОУ компанії">
+      <input type="text" nz-input formControlName="stateRegistryCode"/>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="taxpayerPhone">Номер телефону</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Не введено номер телефону компанії">
       <input type="text" nz-input formControlName="taxpayerPhone"/>
     </nz-form-control>
   </nz-form-item>

@@ -1,8 +1,9 @@
 import { MarkerModalComponent } from './../marker-modal/marker-modal.component';
-import { Component, EventEmitter, OnInit, ViewChild } from '@angular/core'
-import { Marker } from 'src/app/shared/models/marker'
+import { Component, OnInit, ViewChild } from '@angular/core'
+import { MarkerBasic } from 'src/app/shared/models/markers/marker-basic'
 import { MarkerService } from 'src/app/shared/services/marker.service'
 import { NotificationService } from '../../../shared/components/notification/notification.service'
+import { markerTypesMap } from './../../../shared/models/markers/marker-type'
 
 @Component({
   selector: 'app-markers-list',
@@ -13,14 +14,16 @@ export class MarkersListComponent implements OnInit {
   @ViewChild(MarkerModalComponent)
   private markerModalComponent: MarkerModalComponent
 
-  markers: Marker[] = []
+  markers: MarkerBasic[] = []
   totalCount: number
   pageNumber = 1
   pageSize = 10
   isMarkersLoading = false
+  markerTypesMap = markerTypesMap
 
   constructor(
-    private markerService: MarkerService
+    private markerService: MarkerService,
+    private notification: NotificationService
   ) {}
 
   ngOnInit() {
@@ -55,13 +58,15 @@ export class MarkersListComponent implements OnInit {
     this.markerService.delete(id).subscribe(
       _ => {
         this.getMarkers(this.pageNumber, this.pageSize)
+        this.notification.show('success', 'Успіх', 'Маркер успішно видалено!')
       },
       error => {
         console.error(error)
+        this.notification.show('success', 'Помилка', 'Не вдалося видалити маркер!')
       })
   }
 
-  showMarkerModal(marker?: Marker) {
+  showMarkerModal(marker?: MarkerBasic) {
     this.markerModalComponent.showModal(marker)
   }
 

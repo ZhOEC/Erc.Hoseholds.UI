@@ -136,7 +136,6 @@ export class PaymentBatchListComponent implements OnInit {
       .subscribe(
         _ => {
           this.getPaymentBatches(this.pageNumber, this.pageSize, this.showClosedPaymentsBatch)
-          this.totalCount--
           this.notification.show('success', 'Успіх', `Пачку успішно видалено!`)
         },
         _ => {

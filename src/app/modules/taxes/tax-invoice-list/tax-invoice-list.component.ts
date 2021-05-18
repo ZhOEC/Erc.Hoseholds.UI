@@ -78,8 +78,9 @@ export class TaxInvoiceListComponent implements OnInit {
         this.notification.show('success', 'Успіх', `Податкову накладну, успішно видалено!`)
         this.taxInvoicesList = this.taxInvoicesList.filter(ti => ti.id != taxInvoiceId)
       },
-      error => {
-        this.notification.show('error', 'Фіаско', `${error}`)
+      errorRequest => {
+        console.log(errorRequest)
+        this.notification.show('error', 'Фіаско', `${ errorRequest.error }`)
       })
   }
 }
