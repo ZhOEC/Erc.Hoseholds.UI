@@ -4,14 +4,14 @@
 
 export const environment = {
   production: false,
-  authUri: 'http://10.67.1.238:8080/auth/realms/master/protocol/openid-connect/auth',
+  authUri: 'http://10.67.5.67:8080/auth/realms/master/protocol/openid-connect/auth',
+  logoutUri: 'http://10.67.5.67:8080/auth/realms/master/protocol/openid-connect/logout',
+  tokenUri: 'http://10.67.5.67:8080/auth/realms/master/protocol/openid-connect/token',
   clientId: 'erc-households',
   responseType: 'code',
-  tokenUri: 'http://10.67.1.238:8080/auth/realms/master/protocol/openid-connect/token',
   client_secret: '5ee672aa-4daa-4cfc-aafb-30deb8eb42d7',
   apiServer: 'http://localhost:5000/api/',
   userNotificationHub: 'http://localhost:5000/user-notification-hub',
-  logoutUri: 'http://10.67.1.238:8080/auth/realms/master/protocol/openid-connect/logout',
   units: 'кВт⋅год'
 };
 
