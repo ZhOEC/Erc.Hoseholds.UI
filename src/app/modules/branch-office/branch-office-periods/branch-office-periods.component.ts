@@ -3,7 +3,7 @@ import { BranchOfficeService } from 'src/app/shared/services/branch-office.servi
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { BranchOffice } from 'src/app/shared/models/branch-office';
 import { switchMap, tap, catchError } from 'rxjs/operators';
-import { NotificationComponent } from 'src/app/shared/components/notification/notification.component';
+import { NotificationService } from '../../../shared/components/notification/notification.service'
 import { of } from 'rxjs/internal/observable/of';
 import { throwError, Observable, BehaviorSubject } from 'rxjs';
 
@@ -18,7 +18,7 @@ export class BranchOfficePeriodsComponent implements OnInit {
   openPeriodDlg?: NzModalRef;
 
   constructor(private modalService: NzModalService, private branchOfficeService: BranchOfficeService,
-    private notification: NotificationComponent) { }
+    private notification: NotificationService) { }
 
   ngOnInit(): void {
     this.branchOffices$ = this.branchOfficeService.branchOffices$

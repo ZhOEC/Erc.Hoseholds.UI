@@ -1,20 +1,22 @@
-<nz-modal [nzTitle]="modalTitle" [nzVisible]="isVisible"
-  (nzOnOk)="submitForm()" [nzOkText]="isOkLoading ? 'Відправка' : 'Відправити'"
-  (nzOnCancel)="isVisible = false" (nzOnCancel)="resetForm()"
+<nz-modal 
+  [nzTitle]="modalTitle"
+  [nzVisible]="isVisible"
+  (nzOnOk)="submitForm()"
+  (nzOnCancel)="isVisible = false"
+  (nzOnCancel)="resetForm()"
+  [nzOkText]="isOkLoading ? 'Відправка' : 'Відправити'"
   [nzOkDisabled]="!paymentForm.valid || !paymentForm.touched"
-  [nzOkLoading]="isOkLoading"
-  nzWidth=690>
+  [nzOkLoading]="isOkLoading">
   <form nz-form [formGroup]="paymentForm" (ngSubmit)="submitForm()">
+    <!-- TODO replace item on AccountingPointsSearch component -->
     <nz-form-item>
-      <nz-form-label [nzSpan]="4" nzRequired>Точка обліку</nz-form-label>
-      <nz-form-control [nzSpan]="19" nzErrorTip="Не введено точку обліку">
+      <nz-form-label [nzSpan]="6" nzRequired>Точка обліку</nz-form-label>
+      <nz-form-control [nzSpan]="18" nzErrorTip="Не введено точку обліку">
         <nz-select
           nzShowSearch
           nzServerSearch
           nzPlaceHolder="Точка обліку"
           [ngModel]="selectedAccountingPoint"
-          [ngModelOptions]="{ standalone: true }"
-          [nzShowArrow]="false"
           (nzOnSearch)="searchAccountingPoint($event)"
           (ngModelChange)="selectedFoundAccountingPoint($event)"
         >
@@ -23,32 +25,16 @@
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSpan]="4" nzFor="payDate" nzRequired>Дата платежу</nz-form-label>
-      <nz-form-control [nzSpan]="19" nzErrorTip="Не обрано дату платежу">
+      <nz-form-label [nzSpan]="6" nzFor="payDate" nzRequired>Дата платежу</nz-form-label>
+      <nz-form-control [nzSpan]="18" nzErrorTip="Не обрано дату платежу">
         <nz-date-picker [nzFormat]="'dd.MM.yyyy'" formControlName="payDate" [nzDisabledDate]="datesMoreToday"></nz-date-picker>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSpan]="4" nzFor="amount" nzRequired>Сумма</nz-form-label>
-      <nz-form-control [nzSpan]="19" nzErrorTip="Не введено суму платежу">
+      <nz-form-label [nzSpan]="6" nzFor="amount" nzRequired>Сумма</nz-form-label>
+      <nz-form-control [nzSpan]="18" nzErrorTip="Не введено суму платежу">
         <nz-input-number nz-input formControlName="amount" [nzMin]="1" [nzStep]="1"></nz-input-number>
       </nz-form-control>
     </nz-form-item>
   </form>
 </nz-modal>
-
-
-              <!--
-                
-          [nzCustomTemplate]="optionTemplate" 
-                <nz-option nzCustomContent *ngFor="let person of foundPersons" [nzLabel]="person" [nzValue]="person">
-                <b>ПІБ:</b> {{person.lastName}} {{person.firstName}} {{person.patronymic}} <br/>
-                <b>Номер паспорта:</b> {{person.idCardNumber}} <b>Іден. номер:</b> {{person.taxCode}}
-              </nz-option>
-            </nz-select>
-            <ng-template #personTemplate let-person>
-              <span>
-                {{ person.nzLabel.lastName }} {{ person.nzLabel.firstName }} {{ person.nzLabel.patronymic }}
-                <b>{{ person.nzLabel.taxCode }} : {{ person.nzLabel.idCardNumber }}</b>
-              </span>
-            </ng-template> -->

@@ -1,0 +1,28 @@
+<nz-modal
+  [(nzVisible)]="isVisible"
+  [nzTitle]="inputMarker ? 'Редагування маркеру' : 'Додавання маркеру'"
+  (nzOnOk)="submit()"
+  (nzOnCancel)="cancel()"
+  [nzOkText]="isSubmit ? 'Відправка' : 'Відправити'"
+  [nzOkDisabled]="!formMarker.valid || !formMarker.dirty"
+  [nzOkLoading]="isSubmit">
+  <ng-container *nzModalContent>
+    <form nz-form [formGroup]="formMarker">
+      <nz-form-item>
+        <nz-form-control>
+          <nz-select nzPlaceHolder="Тип маркеру" formControlName="type">
+            <nz-option *ngFor="let type of markerTypes" [nzValue]="type.value" [nzLabel]="type.title">
+            </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control>
+          <nz-textarea-count [nzMaxCharacterCount]="maxCharacterMarkerValue">
+            <textarea nz-input rows="4" formControlName="value" placeholder="Текст маркеру"></textarea>
+          </nz-textarea-count>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-container>
+</nz-modal>

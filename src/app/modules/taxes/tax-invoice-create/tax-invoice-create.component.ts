@@ -6,7 +6,7 @@ import { TaxInvoiceService } from 'src/app/shared/services/tax-invoices.service'
 import { TaxInvoiceTabLine } from 'src/app/shared/models/tax-invoices/tax-invoice-tab-line'
 import { TaxInvoiceType, taxInvoiceMap, TaxInvoiceTypeData } from './../../../shared/models/tax-invoices/tax-invoice-type'
 import { TaxInvoice } from 'src/app/shared/models/tax-invoices/tax-invoice'
-import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
+import { NotificationService } from '../../../shared/components/notification/notification.service'
 import { TrueRoundPipe } from './../../../shared/pipes/true-round.pipe'
 import { Period } from 'src/app/shared/models/period'
 
@@ -33,7 +33,7 @@ export class TaxInvoiceCreateComponent implements OnInit {
     private formBuilder: FormBuilder,
     private branchOfficeService: BranchOfficeService,
     private taxInvoiceService: TaxInvoiceService,
-    private notification: NotificationComponent,
+    private notification: NotificationService,
     private trueRoundPipe: TrueRoundPipe) {}
 
   ngOnInit() {
@@ -149,7 +149,7 @@ export class TaxInvoiceCreateComponent implements OnInit {
         productCode: taxInvoiceMap[taxInvoiceType.value].productCode,
         unit: taxInvoiceMap[taxInvoiceType.value].unit,
         unitCode: taxInvoiceMap[taxInvoiceType.value].unitCode,
-        quantity: this.trueRoundPipe.transform(this.taxInvoiceForm.controls.quantity.value, taxInvoiceType.percision),
+        quantity: this.trueRoundPipe.transform(this.taxInvoiceForm.controls.quantity.value, taxInvoiceType.precision),
         liabilitiesAmount: this.trueRoundPipe.transform(this.taxInvoiceForm.controls.liabilitiesAmount.value, 2),
         price: this.trueRoundPipe.transform(this.taxInvoiceForm.controls.price.value, 8),
         tax: this.trueRoundPipe.transform(this.taxInvoiceForm.controls.tax.value, 6)
@@ -179,8 +179,6 @@ export class TaxInvoiceCreateComponent implements OnInit {
       fullSum: this.trueRoundPipe.transform(this.tabLines.map(x => x.liabilitiesAmount).reduce((a, b) => a + b, 0) + this.tabLines.map(x => x.tax).reduce((a, b) => a + b, 0), 2),
       tabLines: this.tabLines
     }
-
-    console.log(this.taxInvoice)
 
     this.taxInvoiceService.create(this.taxInvoice).subscribe(
       _ => {

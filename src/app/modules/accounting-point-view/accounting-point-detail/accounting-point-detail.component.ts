@@ -49,4 +49,8 @@ export class AccountingPointDetailComponent implements OnInit {
         }
       });
   }
+
+  markerAdded() {
+    this.reloadAccountingPointDetail()
+  }
 }

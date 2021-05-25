@@ -22,6 +22,8 @@ import { AccountingPointViewModule } from './modules/accounting-point-view/accou
 import { CommonReferencesModule } from './modules/common-references/common-references.module'
 import { ContractModule } from './modules/contract/contract.module'
 import { TaxesModule } from './modules/taxes/taxes.module'
+
+import { NotificationService } from './shared/components/notification/notification.service'
 import { BranchOfficeService } from './shared/services/branch-office.service'
 import { AccountingPointService } from './shared/services/accounting-point.service'
 import { DistributionSystemOperatorService } from './shared/services/distribution-system-operator.service'
@@ -41,6 +43,8 @@ import { BillService } from './shared/services/bill.service'
 import { ReportService } from './shared/services/report.service'
 import { InformationExchangeModule } from './modules/information-exchange/information-exchange.module'
 import { InformationExchangeService } from 'src/app/shared/services/information-exchange.service'
+import { MarkerModule } from './modules/marker/marker.module'
+import { MarkerService } from './shared/services/marker.service'
 
 registerLocaleData(uk);
 
@@ -68,9 +72,11 @@ registerLocaleData(uk);
     ContractModule,
     TaxesModule,
     CompanyModule,
-    InformationExchangeModule
+    InformationExchangeModule,
+    MarkerModule
   ],
   providers: [
+    NotificationService,
     DistributionSystemOperatorService,
     BranchOfficeService,
     AccountingPointService,
@@ -88,6 +94,7 @@ registerLocaleData(uk);
     ReportService,
     InformationExchangeService,
     DatePipe,
+    MarkerService,
     { provide: NZ_I18N, useValue: uk_UA },
     { provide: LOCALE_ID, useValue: 'uk-UA' },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

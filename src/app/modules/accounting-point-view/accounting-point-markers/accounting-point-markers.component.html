@@ -1,0 +1,23 @@
+<nz-space nzDirection="vertical" nzSize="middle">
+  <h3>
+    <strong>Маркери</strong>
+  </h3>
+
+  <div *nzSpaceItem>
+    <a *ngFor="let m of markers" [ngClass]="['marker', markerTypesMap[m.marker.type].style]" nz-tooltip 
+      [nzTooltipTitle]="tooltipTemplate" nzTooltipPlacement="topLeft">
+      {{ m.marker.value }}
+      <i *ngIf="!isRemoveMarker[m.id]?.removeEvent" nz-icon nzType="close-circle" nzTheme="outline" nz-popconfirm nzPopconfirmTitle="Видалити маркер?"
+        (nzOnConfirm)="removeMarker(m.id)" nzPopconfirmPlacement="topRight">
+      </i>
+      <i *ngIf="isRemoveMarker[m.id]?.removeEvent" nz-icon nzType="loading" nzTheme="outline"></i>
+      <ng-template #tooltipTemplate>
+        <span>Тип: {{ markerTypesMap[m.marker.type].title }}</span>
+        <hr>
+        <span *ngIf="m.note">Нотатка : {{ m.note }}</span>
+      </ng-template>
+    </a>
+    
+    <accounting-point-marker-add [accountingPointId]="accountingPointId" (successSubmitEvent)="addMarkerEvent()"></accounting-point-marker-add>
+  </div>
+</nz-space>

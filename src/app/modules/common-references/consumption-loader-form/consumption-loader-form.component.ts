@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { NzUploadFile  } from 'ng-zorro-antd/upload'
 import { ConsumptionService } from 'src/app/shared/services/consumption.service'
 import { ConsumptionRecord } from 'src/app/shared/models/consumption-record'
-import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
+import { NotificationService } from '../../../shared/components/notification/notification.service'
 
 @Component({
   selector: 'app-consumption-loader-form',
@@ -17,7 +17,7 @@ export class ConsumptionLoaderFormComponent implements OnInit {
   problematicDisplayRecords: ConsumptionRecord[] = []
 
   constructor(private readonly consumptionService: ConsumptionService,
-    private notification: NotificationComponent) {}
+    private notification: NotificationService) {}
   ngOnInit() {}
 
   beforeUpload = (file: NzUploadFile): boolean => {

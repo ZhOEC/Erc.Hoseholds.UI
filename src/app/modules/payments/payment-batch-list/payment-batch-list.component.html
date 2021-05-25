@@ -44,7 +44,7 @@
         <td>{{ pb.incomingDate | date: dateFormat }}</td>
         <td>{{ pb.totalCount }}</td>
         <td>{{ pb.totalAmount }}</td>
-        <td>{{ pb.isClosed ? 'Закрита' : 'Відкрита'}}</td> <!-- <nz-badge [nzStatus]="'success'" [nzText]="'Finished'"></nz-badge> -->
+        <td>{{ pb.isClosed ? 'Закрита' : 'Відкрита'}}</td>
       </ng-container>
       <ng-template #editTemplate>
         <td>{{ pb.branchOfficeName }}</td>

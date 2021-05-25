@@ -1,10 +1,10 @@
-import { NotificationComponent } from 'src/app/shared/components/notification/notification.component';
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { BranchOffice } from 'src/app/shared/models/branch-office'
 import { Period } from 'src/app/shared/models/period'
 import { BranchOfficeService } from 'src/app/shared/services/branch-office.service'
 import { InformationExchangeService } from 'src/app/shared/services/information-exchange.service'
+import { NotificationService } from '../../../shared/components/notification/notification.service'
 import * as FileSaver from 'file-saver'
 
 @Component({
@@ -22,7 +22,7 @@ export class ExportConsumptionSocialServicesComponent implements OnInit {
   periodStartDate: Date
   
   constructor(
-    private notification: NotificationComponent,
+    private notification: NotificationService,
     private formBuilder: FormBuilder,
     private branchOfficeService: BranchOfficeService,
     private informationExchangeService: InformationExchangeService) { }

@@ -4,7 +4,7 @@ import { TaxInvoice } from 'src/app/shared/models/tax-invoices/tax-invoice'
 import { BranchOfficeService } from 'src/app/shared/services/branch-office.service'
 import { TaxInvoiceService } from 'src/app/shared/services/tax-invoices.service'
 import * as FileSaver from 'file-saver'
-import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
+import { NotificationService } from '../../../shared/components/notification/notification.service'
 
 @Component({
   selector: 'app-tax-invoice-list',
@@ -26,7 +26,7 @@ export class TaxInvoiceListComponent implements OnInit {
   constructor(
     private branchOfficeService: BranchOfficeService,
     private taxInvoiceService: TaxInvoiceService,
-    private notification: NotificationComponent) { }
+    private notification: NotificationService) { }
 
   ngOnInit() {
     this.getBranchOffices()
@@ -78,8 +78,9 @@ export class TaxInvoiceListComponent implements OnInit {
         this.notification.show('success', 'Успіх', `Податкову накладну, успішно видалено!`)
         this.taxInvoicesList = this.taxInvoicesList.filter(ti => ti.id != taxInvoiceId)
       },
-      error => {
-        this.notification.show('error', 'Фіаско', `${error}`)
+      errorRequest => {
+        console.log(errorRequest)
+        this.notification.show('error', 'Фіаско', `${ errorRequest.error }`)
       })
   }
 }

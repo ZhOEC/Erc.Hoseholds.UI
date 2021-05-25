@@ -4,7 +4,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router'
 import { Location } from '@angular/common'
 import { switchMap } from 'rxjs/operators'
 import { Person } from 'src/app/shared/models/person.model'
-import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
+import { NotificationService } from '../../../shared/components/notification/notification.service'
 import { FormBuilder, FormGroup } from '@angular/forms'
 
 @Component({
@@ -22,7 +22,7 @@ export class PersonEditComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private personService: PersonService,
-    private notification: NotificationComponent) { }
+    private notification: NotificationService) { }
 
   ngOnInit() {
     this.form = this.formBuilder.group({})

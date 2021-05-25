@@ -1,0 +1,38 @@
+<button nz-button nzType="default" nzSize="middle" (click)="showModal()" [ngClass]="['marker', 'add']">
+  <i nz-icon nzType="plus-circle"></i>
+  Додати
+</button>
+
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="Маркер"
+  (nzOnOk)="submit()"
+  (nzOnCancel)="cancel()"
+  [nzOkText]="isSubmit ? 'Відправка' : 'Відправити'"
+  [nzOkDisabled]="!form.valid || !form.dirty"
+  [nzOkLoading]="isSubmit">
+  <ng-container *nzModalContent>
+    <form nz-form [formGroup]="form">
+      <nz-form-item>
+        <nz-form-label nzSpan="3" nzFor="type">Маркер</nz-form-label>
+        <nz-form-control nzSpan="22">
+          <nz-select nzPlaceHolder="Тип маркеру" formControlName="markerId" [nzLoading]="isMarkersLoading">
+            <div *ngFor="let markerGroup of markersGroups">
+              <nz-option-group [nzLabel]="markerGroup.markerType.title">
+                <nz-option *ngFor="let marker of markerGroup.markers" [nzValue]="marker.id" [nzLabel]="marker.value"></nz-option>
+              </nz-option-group>
+            </div>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzSpan="3" nzFor="note">Нотатка</nz-form-label>
+        <nz-form-control nzSpan="22">
+          <nz-textarea-count [nzMaxCharacterCount]="maxCharacterMarkerValue">
+            <textarea nz-input rows="4" formControlName="note" placeholder="Нотатка"></textarea>
+          </nz-textarea-count>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-container>
+</nz-modal>

@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core'
 import { Router, ActivatedRoute, ParamMap } from '@angular/router'
 import { FormBuilder, FormGroup } from '@angular/forms'
 import { switchMap } from 'rxjs/operators'
-import { NotificationComponent } from 'src/app/shared/components/notification/notification.component'
 import { AccountingPointService } from 'src/app/shared/services/accounting-point.service'
+import { NotificationService } from '../../../shared/components/notification/notification.service'
 import { AccountingPointDetailService } from '../../accounting-point-view/accounting-point-detail.service'
 
 @Component({
@@ -21,7 +21,7 @@ export class AccountingPointEditComponent implements OnInit {
     private formBuilder: FormBuilder,
     private accountingPointService: AccountingPointService,
     private accountingPointDetailService: AccountingPointDetailService,
-    private notification: NotificationComponent) { }
+    private notification: NotificationService) { }
 
   ngOnInit() {
     this.form = this.formBuilder.group({})

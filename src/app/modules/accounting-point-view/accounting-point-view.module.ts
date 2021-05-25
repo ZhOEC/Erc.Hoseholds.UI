@@ -5,10 +5,16 @@ import { AccountingPointInvoicesComponent } from './accounting-point-invoices/ac
 import { RouterModule } from '@angular/router'
 import { ErcSharedModule } from 'src/app/shared/modules/erc-shared.module';
 import { AccountingPointPaymentsComponent } from './accounting-point-payments/accounting-point-payments.component';
+import { AccountingPointMarkersComponent } from './accounting-point-markers/accounting-point-markers.component'
+import { AccountingPointMarkerAdd } from './accounting-point-marker-add/accounting-point-marker-add.component'
 
 @NgModule({
   declarations: [
-    AccountingPointDetailComponent, AccountingPointInvoicesComponent, AccountingPointPaymentsComponent
+    AccountingPointDetailComponent, 
+    AccountingPointInvoicesComponent, 
+    AccountingPointPaymentsComponent,
+    AccountingPointMarkersComponent,
+    AccountingPointMarkerAdd
   ],
   imports: [
     CommonModule,

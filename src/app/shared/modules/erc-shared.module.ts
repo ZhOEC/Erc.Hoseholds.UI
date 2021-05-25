@@ -30,6 +30,8 @@ import { NzNotificationModule } from 'ng-zorro-antd/notification'
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm'
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number'
 import { TrueRoundPipe } from './../pipes/true-round.pipe'
+import { NzSwitchModule } from 'ng-zorro-antd/switch'
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip'
 
 @NgModule({
   declarations: [
@@ -66,7 +68,9 @@ import { TrueRoundPipe } from './../pipes/true-round.pipe'
     NzPopoverModule,
     NzNotificationModule,
     NzPopconfirmModule,
-    NzInputNumberModule
+    NzInputNumberModule,
+    NzSwitchModule,
+    NzToolTipModule
   ],
   exports: [
     NzPageHeaderModule, 
@@ -100,7 +104,9 @@ import { TrueRoundPipe } from './../pipes/true-round.pipe'
     NzNotificationModule,
     NzPopconfirmModule,
     NzInputNumberModule,
-    TrueRoundPipe
+    TrueRoundPipe,
+    NzSwitchModule,
+    NzToolTipModule
   ],
   providers: [
     TrueRoundPipe

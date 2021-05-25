@@ -1,5 +1,6 @@
 import { Person } from '../../shared/models/person.model';
 import { Exemption } from './exemption';
+import { Marker } from './marker'
 
 export interface AccountingPointDetail {
     id: number
@@ -15,4 +16,5 @@ export interface AccountingPointDetail {
     currentContractSendPaperBill: boolean
     debt: number
     exemption: Exemption
+    markers: Marker[]
 }

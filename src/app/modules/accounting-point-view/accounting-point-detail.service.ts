@@ -6,7 +6,7 @@ import { map, catchError } from 'rxjs/operators';
 import { Invoice } from './invoice';
 import { AccountingPointDetail } from './accounting-point-detail.model';
 import { Observable, of } from 'rxjs';
-import { privateEncrypt } from 'crypto';
+import { Marker } from './marker'
 
 @Injectable({
   providedIn: 'root'
@@ -78,6 +78,18 @@ export class AccountingPointDetailService {
           totalCount: Number(response.headers.get('X-Total-Count'))
         } as InvoiceList
       }));
+  }
+
+  addMarker(marker: Marker) {
+    return this.http
+      .post(`${this.accountingpointsUri}${marker.accountingPointId}/add-marker`, marker)
+  }
+
+  removeMarker(accountingPointId: number, markerId: number) {
+    const params = new HttpParams()
+      .append('markerId', markerId.toString())
+
+    return this.http.delete(`${this.accountingpointsUri}${accountingPointId}/remove-marker`, { params: params })
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
