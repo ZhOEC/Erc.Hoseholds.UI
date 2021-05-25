@@ -1,8 +1,8 @@
 export const environment = {
   production: true,
-  authUri: 'http://10.67.1.238:8080/auth/realms/master/protocol/openid-connect/auth',
-  tokenUri: 'http://10.67.1.238:8080/auth/realms/master/protocol/openid-connect/token',
-  logoutUri: 'http://10.67.1.238:8080/auth/realms/master/protocol/openid-connect/logout',
+  authUri: 'http://10.67.5.67:8080/auth/realms/master/protocol/openid-connect/auth',
+  tokenUri: 'http://10.67.5.67:8080/auth/realms/master/protocol/openid-connect/token',
+  logoutUri: 'http://10.67.5.67:8080/auth/realms/master/protocol/openid-connect/logout',
   clientId: 'erc-households',
   responseType: 'code',
   client_secret: '5ee672aa-4daa-4cfc-aafb-30deb8eb42d7',
