@@ -9,7 +9,7 @@
           Створити
           <i nz-icon nzType="plus"></i>
         </a>
-        <nz-select *nzSpaceItem [(ngModel)]="selectedBranchOffice" (ngModelChange)="onChangeBranchOffice($event)" nzPlaceHolder="Оберіть ЦОК">
+        <nz-select *nzSpaceItem [(ngModel)]="selectedBranchOffice" (ngModelChange)="onChangeBranchOffice($event)" nzPlaceHolder="Оберіть ЦОК" style="width: 250px;">
           <nz-option *ngFor="let branchOffice of branchOfficesList" [nzValue]="branchOffice" [nzLabel]="branchOffice.name"></nz-option>
         </nz-select>
       </nz-space>

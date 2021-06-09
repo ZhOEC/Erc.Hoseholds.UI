@@ -86,14 +86,8 @@ export class TaxInvoiceCreateComponent implements OnInit {
       // set date previous period
       this.taxInvoiceForm.controls.liabilityDate.patchValue(new Date(this.previousPeriod.endDate))
       // disabling dates
-      this.disabledDates = (date: Date): boolean => {
-        if(invoiceTypeData.value == TaxInvoiceType.CompensationDso)
-          return date > new Date(this.previousPeriod.endDate)
-        else
-          return date != new Date(this.previousPeriod.endDate)
+      this.disabledDates = (date: Date): boolean => invoiceTypeData.value !== TaxInvoiceType.CompensationDso && date != new Date(this.previousPeriod.endDate)
       }
-    }
-
     // Calculate quantity and set per
     this.quantityCalculate()
   }
@@ -111,7 +105,11 @@ export class TaxInvoiceCreateComponent implements OnInit {
   }
 
   onChangeTariff(tariff: number) {
-    let price = this.trueRoundPipe.transform(tariff / 1.2, 8) // tariff without tax
+    const precision = (this.taxInvoiceForm.controls.type?.value.value == TaxInvoiceType.CompensationDso) ? 2 : 8
+    console.log(this.taxInvoiceForm.controls.type?.value.value);
+    console.log(precision);
+    
+    let price = this.trueRoundPipe.transform(tariff / 1.2, precision) // tariff without tax
     this.taxInvoiceForm.controls.price.setValue(price)
 
     // Calculate and set quantity after change tariff

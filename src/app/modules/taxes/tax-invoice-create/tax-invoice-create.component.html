@@ -2,7 +2,7 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="5" nzRequired nzFor="branchOffice">ЦОК</nz-form-label>
     <nz-form-control [nzSpan]="6" nzErrorTip="Не обрано ЦОК">
-      <nz-select formControlName="branchOffice" nzPlaceHolder="Оберіть ЦОК" (ngModelChange)="onChangeBranchOffice($event)">
+      <nz-select formControlName="branchOffice" nzPlaceHolder="Оберіть ЦОК" (ngModelChange)="onChangeBranchOffice($event)" [nzDisabled]="tabLines.length > 0">
         <nz-option *ngFor="let branchOffice of branchOffices" [nzValue]="branchOffice" [nzLabel]="branchOffice.name"></nz-option>
       </nz-select>
     </nz-form-control>
